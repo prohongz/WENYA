@@ -1,0 +1,365 @@
+package finalcut;
+
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.swing.JTextArea;
+
+import javax.swing.UIManager;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.JLayeredPane;
+import javax.swing.JLabel;
+
+import Simulator.DrawSim;
+
+@SuppressWarnings("serial")
+public class SimulatorWindow extends JFrame {
+
+	private JPanel contentPane;
+	int sscount;
+
+	/**
+	 * Create the frame.
+	 */
+	public SimulatorWindow() {
+		setTitle("Wenya Industrial Simulator");
+		setFont(new Font("Arial", Font.PLAIN, 12));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1280, 720);
+		setMinimumSize(new Dimension(1280, 720));
+		Toolkit t = Toolkit.getDefaultToolkit();
+        int x = (int)((t.getScreenSize().getWidth() - getWidth()) / 2);
+        int y = (int)((t.getScreenSize().getHeight() - getHeight()) / 2);
+        setLocation(x, y);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		//ADDING IN SIMULATOR THREAD
+		JPanel panel = new JPanel();
+		DrawSim Simu = new DrawSim();
+		Simu.setPreferredSize(new Dimension(962, 639));
+		panel.add(Simu);
+		Simu.start();
+		
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		
+		JButton btnPause = new JButton("Pause");
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				if (btnPause.getText() == "Pause"){
+					btnPause.setText("Resume");
+					
+					//PROCEED TO PAUSE THE SIMULATOR
+				}
+				else{
+					btnPause.setText("Pause");
+					
+					//PROCEED TO RESUME THE SIMULATOR
+				}
+				
+			}
+		});
+		
+		JButton btnExit = new JButton("Exit");
+		
+		
+		JButton btnScreenshot = new JButton("Screenshot");
+		btnScreenshot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// capture the whole screen
+				BufferedImage image;
+				File file = new File("screencapture" + sscount + ".jpg");
+				try {
+					image = new Robot().createScreenCapture( 
+							new Rectangle( getX(), getY(), getWidth(), getHeight() ) );
+					ImageIO.write(image, "jpg", file);
+				} catch (AWTException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				sscount++;
+			}
+		});
+		
+		JPanel timepanel = new JPanel();
+		
+		JButton button = new JButton("<<");
+		
+		JButton button_1 = new JButton(">>");
+		GroupLayout gl_timepanel = new GroupLayout(timepanel);
+		gl_timepanel.setHorizontalGroup(
+			gl_timepanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_timepanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(button)
+					.addPreferredGap(ComponentPlacement.RELATED, 146, Short.MAX_VALUE)
+					.addComponent(button_1)
+					.addContainerGap())
+		);
+		gl_timepanel.setVerticalGroup(
+			gl_timepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_timepanel.createSequentialGroup()
+					.addGroup(gl_timepanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(button)
+						.addComponent(button_1))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		timepanel.setLayout(gl_timepanel);
+		
+		JPanel Settingpanel = new JPanel();
+		tabbedPane.addTab("Parameters", null, Settingpanel, null);
+		
+		JButton btnSave = new JButton("Save");
+		
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setViewportBorder(null);
+		scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+		GroupLayout gl_Settingpanel = new GroupLayout(Settingpanel);
+		gl_Settingpanel.setHorizontalGroup(
+			gl_Settingpanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Settingpanel.createSequentialGroup()
+					.addGroup(gl_Settingpanel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Settingpanel.createSequentialGroup()
+							.addGap(214)
+							.addComponent(btnSave))
+						.addGroup(gl_Settingpanel.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_Settingpanel.setVerticalGroup(
+			gl_Settingpanel.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_Settingpanel.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnSave)
+					.addContainerGap())
+		);
+		
+		JTextArea parameter = new JTextArea();
+		parameter.setFont(new Font("Calibri", Font.PLAIN, 12));
+		parameter.setEditable(false);
+		parameter.setBackground(UIManager.getColor("Button.background"));
+		parameter.setText("GENERAL\n---------------------------------------------------------------\n" + 
+				"Start Time: " + String.format("%02d", Constant.starthour) + ":" + String.format("%02d", Constant.startminute) +
+				"\nEnd Day: Day " + Constant.endday +
+				"\nEnd Time: " + String.format("%02d", Constant.endhour) + ":" + String.format("%02d", Constant.endminute) + "\n\n");
+		parameter.append("CARGO\n---------------------------------------------------------------\n");
+				
+		parameter.append("CDC\n---------------------------------------------------------------\n" +
+				"Operation Hours: " + String.format("%02d", Constant.CDCstarth) + ":" + String.format("%02d", Constant.CDCstartm) + " - " + String.format("%02d", Constant.CDCendh) + ":" + String.format("%02d", Constant.CDCendm) + "\n");
+		parameter.append("Cargo processing time: " + Constant.CDCcargoto + " min\n\n");
+				
+		parameter.append("Factory\n---------------------------------------------------------------\n" +
+				"Operation Hours: " + String.format("%02d", Constant.Factstarth) + ":" + String.format("%02d", Constant.Factstartm) + " - " + String.format("%02d", Constant.Factendh) + ":" + String.format("%02d", Constant.Factendm) + "\n");
+		parameter.append("Cargo processing time: " + Constant.Factcargoto + " min\n\n");
+				
+		parameter.append("Truck\n---------------------------------------------------------------\n");
+		if(Constant.TruckMode == true){
+			parameter.append("Truck Quantity: " + Constant.TruckQty);
+			parameter.append("\nTruck Top Speed: " + Constant.TruckSpd);
+			parameter.append("\nTruck Acceleration Speed: " + Constant.TruckAccSpd);
+			parameter.append("\nTruck Deceleration Speed: " + Constant.TruckDecSpd);
+			parameter.append("\nTruck Time Gap: " + Constant.TruckTimeGap);
+			parameter.append("\nTruck Distance Gap: " + Constant.TruckDistGap);
+			parameter.append("\nTruck Politeness: " + Constant.TruckPoliteness);
+			parameter.append("\nTruck Changing Lane duration: " + Constant.TruckChanging + "\n\n");
+		}else{
+			parameter.append("DISABLED\n\n");
+		}
+				
+		parameter.append("AGV\n---------------------------------------------------------------\n");
+		if(Constant.AgvMode == true){
+			parameter.append("AGV Quantity: " + Constant.AgvQty);
+			parameter.append("\nAGV Top Speed: " + Constant.AgvSpd);
+			parameter.append("\nAGV Acceleration Speed: " + Constant.AgvAccSpd);
+			parameter.append("\nAGV Deceleration Speed: " + Constant.AgvDecSpd);
+			parameter.append("\nAGV Time Gap: " + Constant.AgvTimeGap);
+			parameter.append("\nAGV Distance Gap: " + Constant.AgvDistGap + "\n\n");
+		}else{
+			parameter.append("DISABLED\n\n");
+		}
+		
+		parameter.setCaretPosition(0);
+		
+		scrollPane_1.setViewportView(parameter);
+		Settingpanel.setLayout(gl_Settingpanel);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 286, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(749)
+							.addComponent(btnScreenshot)
+							.addGap(6)
+							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+						.addComponent(tabbedPane, 0, 0, Short.MAX_VALUE)
+						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnScreenshot)
+						.addComponent(btnPause)
+						.addComponent(btnExit)))
+		);
+		
+		JPanel realtimepanel = new JPanel();
+		tabbedPane.addTab("Real Time", null, realtimepanel, null);
+		
+		JButton btnCdc = new JButton("CDC");
+		
+		
+		JButton btnFactory = new JButton("Factory");
+		
+		JButton btnTruck = new JButton("Truck");
+		if(Constant.TruckMode == false){
+			btnTruck.setEnabled(false);
+		}
+		
+		JButton btnAgv = new JButton("AGV");
+		if(Constant.AgvMode == false){
+			btnAgv.setEnabled(false);
+		}
+		
+		JLayeredPane layeredPane = new JLayeredPane();
+		GroupLayout gl_realtimepanel = new GroupLayout(realtimepanel);
+		gl_realtimepanel.setHorizontalGroup(
+			gl_realtimepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_realtimepanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_realtimepanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 262, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_realtimepanel.createSequentialGroup()
+							.addComponent(btnCdc)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnFactory)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnTruck)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAgv)))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_realtimepanel.setVerticalGroup(
+			gl_realtimepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_realtimepanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_realtimepanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnCdc)
+						.addComponent(btnFactory)
+						.addComponent(btnTruck)
+						.addComponent(btnAgv))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JPanel rtcdc = new JPanel();
+		rtcdc.setBounds(0, 0, 262, 560);
+		layeredPane.add(rtcdc);
+		
+		final JLabel lblCdc = new JLabel("cdc");
+		lblCdc.setText(Result.active + "");
+		rtcdc.add(lblCdc);
+		
+		JPanel rtfact = new JPanel();
+		rtfact.setBounds(0, 0, 262, 560);
+		layeredPane.add(rtfact);
+		
+		JLabel lblFact = new JLabel("fact");
+		rtfact.add(lblFact);
+		
+		JPanel rttruck = new JPanel();
+		rttruck.setBounds(0, 0, 262, 560);
+		layeredPane.add(rttruck);
+		
+		JPanel rtagv = new JPanel();
+		rtagv.setBounds(0, 0, 262, 560);
+		layeredPane.add(rtagv);
+		realtimepanel.setLayout(gl_realtimepanel);
+		contentPane.setLayout(gl_contentPane);
+		
+		btnCdc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rtfact.setVisible(false);
+				rtcdc.setVisible(true);
+			}
+		});
+		
+		btnFactory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				rtcdc.setVisible(false);
+				rtfact.setVisible(true);
+			}
+		});
+		
+		//SAVE BUTTON ACTION
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Save frame = new Save();
+				frame.setVisible(true);
+			}
+		});
+		
+		//EXIT BUTTON ACTION
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frame = null;
+				int n = JOptionPane.showConfirmDialog(
+					    frame,
+					    "Are you sure you want to quit the Simulation?",
+					    "Wenya Industrial Simulator",
+					    JOptionPane.YES_NO_OPTION);
+				
+				if(n == JOptionPane.YES_OPTION){
+					//PROCEED TO SAVE ALL THE DATA INTO A NOTE FILE
+					
+					Simu.stop();
+					setVisible(false);
+					dispose();
+				}	
+			}
+		});
+	}
+}

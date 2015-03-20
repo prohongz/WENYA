@@ -1,0 +1,23 @@
+package Simulator;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+
+public class Main {
+  public static void main(String args[]) {
+    JFrame f = new JFrame("JColorChooser Sample");
+    f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    final JButton button = new JButton("Pick to Change Background");
+    Color myBlack = new Color(0,0,0);           // Color black
+//    Color myWhite = new Color(255,255,255);     // Color white
+  //  Color myGreen = new Color(0,200,0);         // A shade of green
+    
+    button.setBackground(myBlack);
+    f.add(button, BorderLayout.CENTER);
+    f.setSize(300, 200);
+    f.setVisible(true);
+  }
+}

@@ -1,0 +1,52 @@
+package Simulator;
+
+public class Constant {
+
+	public static int starthour;
+	public static int startminute;
+	
+	public static int endday;
+	
+	public static int endhour;
+	public static int endminute;
+	
+	public static int CDCstarth;
+	public static int CDCstartm;
+	public static int CDCendh;
+	public static int CDCendm;
+	public static int CDCdemandh[] = new int[16];
+	
+	
+	public static int Factstarth;
+	public static int Factstartm;
+	public static int Factendh;
+	public static int Factendm;
+	public static int Factdemandh[] = new int[16];
+	
+	public static int CDCcargoto;
+	public static int Factcargoto;
+	
+	public static boolean TruckMode;
+	public static int TruckQty;
+	public static double TruckSpd;
+	public static double TruckAccSpd;
+	public static double TruckDecSpd;
+	public static double TruckTimeGap;
+	public static double TruckDistGap;
+	public static double TruckPoliteness;
+	public static double TruckChanging;
+	
+	public static boolean AgvMode;
+	public static int AgvQty;
+	public static double AgvSpd;
+	public static double AgvAccSpd;
+	public static double AgvDecSpd;
+	public static double AgvTimeGap;
+	public static double AgvDistGap;
+	
+	static final double TIMESTEP_S = 0.2;   // simulation time step
+	public static int tsleep_ms = 20;
+	
+
+	
+}

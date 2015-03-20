@@ -1,0 +1,970 @@
+package finalcut;
+
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JButton;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
+
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
+
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JSeparator;
+
+import java.util.Hashtable;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import javax.swing.SwingConstants;
+
+import finalcut.Constant;
+
+@SuppressWarnings("serial")
+public class StartUI extends JFrame{
+
+	private JPanel contentPane;
+
+	/**
+	 * Create the frame.
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public StartUI() {
+		setTitle("Wenya Industrial Simulator");
+		setFont(new Font("Arial", Font.PLAIN, 12));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setMinimumSize(new Dimension(640, 480));
+		setBounds(100, 100, 640, 480);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setFont(new Font("Arial", tabbedPane.getFont().getStyle(), tabbedPane.getFont().getSize()));
+		
+		//RUN BUTTON;
+		JButton btnRun = new JButton("Run");
+		
+		
+		//RESET BUTTON
+		JButton btnReset = new JButton("Reset");
+		
+		
+		JLabel lblDevelopedByNanyang = new JLabel("<html>\u00A9 2015 Nanyang Technological University<br>By School of Electrial And Electronic Engineering<html>");
+		lblDevelopedByNanyang.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		
+		JButton btnExit = new JButton("Exit");
+		
+		JSeparator separator_4 = new JSeparator();
+		separator_4.setOrientation(SwingConstants.VERTICAL);
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(lblDevelopedByNanyang, GroupLayout.PREFERRED_SIZE, 237, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 157, Short.MAX_VALUE)
+					.addComponent(btnReset, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnRun, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_4, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 58, GroupLayout.PREFERRED_SIZE))
+				.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 401, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblDevelopedByNanyang, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+							.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnRun, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnReset, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addComponent(separator_4, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnExit))
+					.addContainerGap())
+		);
+		
+		JPanel General = new JPanel();
+		tabbedPane.addTab("General", null, General, null );
+		
+		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.LEFT);
+		GroupLayout gl_General = new GroupLayout(General);
+		gl_General.setHorizontalGroup(
+			gl_General.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_General.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_2, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_General.setVerticalGroup(
+			gl_General.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_General.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_2, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JPanel time = new JPanel();
+		tabbedPane_2.addTab("Time", null, time, null);
+		
+		JLabel lblSimulationStartTime = new JLabel("Simulation Start Time: ");
+		
+		JComboBox SimuStart = new JComboBox();
+		SimuStart.setModel(new DefaultComboBoxModel(new String[] {"00:00 AM", "01:00 AM", "02:00 AM", "03:00 AM", "04:00 AM", "05:00 AM", "06:00 AM", "07:00 AM", "08:00 AM", "09:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "13:00 PM", "14:00 PM", "15:00 PM", "16:00 PM", "17:00 PM", "18:00 PM", "19:00 PM", "20:00 PM", "21:00 PM", "22:00 PM", "23:00 PM"}));
+		GroupLayout gl_time = new GroupLayout(time);
+		gl_time.setHorizontalGroup(
+			gl_time.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_time.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblSimulationStartTime)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(SimuStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(390, Short.MAX_VALUE))
+		);
+		gl_time.setVerticalGroup(
+			gl_time.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_time.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_time.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblSimulationStartTime)
+						.addComponent(SimuStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(321, Short.MAX_VALUE))
+		);
+		time.setLayout(gl_time);
+		
+		JPanel cargo = new JPanel();
+		tabbedPane_2.addTab("Cargo", null, cargo, null);
+		General.setLayout(gl_General);
+		
+		JPanel CDC = new JPanel();
+		tabbedPane.addTab("CDC", null, CDC, null);
+		
+		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.LEFT);
+		GroupLayout gl_CDC = new GroupLayout(CDC);
+		gl_CDC.setHorizontalGroup(
+			gl_CDC.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_CDC.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_3, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_CDC.setVerticalGroup(
+			gl_CDC.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_CDC.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_3, GroupLayout.DEFAULT_SIZE, 351, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JPanel cdcoperation = new JPanel();
+		tabbedPane_3.addTab("Operation", null, cdcoperation, null);
+		
+		JLabel lblOperationHours = new JLabel("Operation Hours: ");
+		
+		JComboBox CDCStart = new JComboBox();
+		
+		CDCStart.setModel(new DefaultComboBoxModel(new String[] {"06:00 AM", "06:30 AM", "07:00 AM", "07:30 AM", "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM"}));
+		
+		JLabel label_1 = new JLabel("-");
+		
+		JComboBox CDCEnd = new JComboBox();
+		
+		CDCEnd.setModel(new DefaultComboBoxModel(new String[] {"17:00 PM", "17:30 PM", "18:00 PM", "18:30 PM", "19:00 PM", "19:30 PM", "20:00 PM", "20:30 PM", "21:00 PM"}));
+		GroupLayout gl_cdcoperation = new GroupLayout(cdcoperation);
+		gl_cdcoperation.setHorizontalGroup(
+			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_cdcoperation.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblOperationHours)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(CDCStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(label_1)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(CDCEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(352, Short.MAX_VALUE))
+		);
+		gl_cdcoperation.setVerticalGroup(
+			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_cdcoperation.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblOperationHours)
+						.addComponent(CDCStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label_1)
+						.addComponent(CDCEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(321, Short.MAX_VALUE))
+		);
+		cdcoperation.setLayout(gl_cdcoperation);
+		
+		JPanel cdcdemand = new JPanel();
+		tabbedPane_3.addTab("Demand", null, cdcdemand, null);
+		CDC.setLayout(gl_CDC);
+		
+		JPanel Factory = new JPanel();
+		tabbedPane.addTab("Factory", null, Factory, null);
+		
+		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.LEFT);
+		GroupLayout gl_Factory = new GroupLayout(Factory);
+		gl_Factory.setHorizontalGroup(
+			gl_Factory.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Factory.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_1, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_Factory.setVerticalGroup(
+			gl_Factory.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Factory.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(tabbedPane_1, GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JPanel agvoperation = new JPanel();
+		tabbedPane_1.addTab("Operation", null, agvoperation, null);
+		
+		JLabel lblOperationHours_1 = new JLabel("Operation Hours: ");
+		
+		JComboBox FactoryStart = new JComboBox();
+		FactoryStart.setModel(new DefaultComboBoxModel(new String[] {"06:00 AM", "06:30 AM", "07:00 AM", "07:30 AM", "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM", "10:00 AM"}));
+		
+		JLabel label = new JLabel("-");
+		
+		JComboBox FactoryEnd = new JComboBox();
+		FactoryEnd.setModel(new DefaultComboBoxModel(new String[] {"17:00 PM", "17:30 PM", "18:00 PM", "18:30 PM", "19:00 PM", "19:30 PM", "20:00 PM", "20:30 PM", "21:00 PM"}));
+		
+		JCheckBox chckbxSameAsCdc = new JCheckBox("Same as CDC");
+		chckbxSameAsCdc.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				if(FactoryStart.isEnabled()== true){
+					FactoryStart.setSelectedIndex(CDCStart.getSelectedIndex());
+					FactoryEnd.setSelectedIndex(CDCEnd.getSelectedIndex());
+					FactoryStart.setEnabled(false);
+					FactoryEnd.setEnabled(false);
+				}
+				else if(FactoryStart.isEnabled()== false){
+					FactoryStart.setEnabled(true);
+					FactoryEnd.setEnabled(true);
+				}
+			}
+		});
+		GroupLayout gl_agvoperation = new GroupLayout(agvoperation);
+		gl_agvoperation.setHorizontalGroup(
+			gl_agvoperation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_agvoperation.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblOperationHours_1)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(FactoryStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(label)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(FactoryEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+					.addComponent(chckbxSameAsCdc)
+					.addGap(28))
+		);
+		gl_agvoperation.setVerticalGroup(
+			gl_agvoperation.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_agvoperation.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_agvoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblOperationHours_1)
+						.addComponent(FactoryStart, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(label)
+						.addComponent(FactoryEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxSameAsCdc))
+					.addContainerGap(321, Short.MAX_VALUE))
+		);
+		agvoperation.setLayout(gl_agvoperation);
+		
+		JPanel agvdemand = new JPanel();
+		tabbedPane_1.addTab("Demand", null, agvdemand, null);
+		Factory.setLayout(gl_Factory);
+		
+		JPanel Truck = new JPanel();
+		tabbedPane.addTab("Truck", null, Truck, null);
+		
+		JCheckBox chckbxEnableTruckOperation = new JCheckBox("Enable Truck Operation");
+		
+		JPanel Subtruck = new JPanel();
+		GroupLayout gl_Truck = new GroupLayout(Truck);
+		gl_Truck.setHorizontalGroup(
+			gl_Truck.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Truck.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_Truck.createParallelGroup(Alignment.LEADING)
+						.addComponent(chckbxEnableTruckOperation)
+						.addComponent(Subtruck, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_Truck.setVerticalGroup(
+			gl_Truck.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Truck.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(chckbxEnableTruckOperation)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(Subtruck, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JLabel lblQuantity = new JLabel("Quantity: ");
+		lblQuantity.setEnabled(false);
+		
+		JSeparator separator = new JSeparator();
+		
+		JLabel lblMaximumSpeed = new JLabel("Maximum Speed:");
+		lblMaximumSpeed.setEnabled(false);
+		
+		JLabel lblPresetMode = new JLabel("Preset Mode:");
+		lblPresetMode.setEnabled(false);
+		
+		JLabel lblMaximumAcceleration = new JLabel("Maximum Acceleration:");
+		lblMaximumAcceleration.setEnabled(false);
+
+		Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+		labelTable.put( new Integer( 0 ), new JLabel("0") );
+		labelTable.put( new Integer( 5 ), new JLabel("0.5") );
+		labelTable.put( new Integer( 10 ), new JLabel("1.0") );
+		
+		JLabel lblMaximumDeceleration = new JLabel("Maximum Deceleration:");
+		lblMaximumDeceleration.setEnabled(false);
+		
+		JLabel lblTimeGap = new JLabel("Time Gap:");
+		lblTimeGap.setEnabled(false);
+		
+		JLabel lblMinimumDistanceGap = new JLabel("Minimum Distance Gap:");
+		lblMinimumDistanceGap.setEnabled(false);
+		
+		JComboBox TruckQty = new JComboBox();
+		TruckQty.setEnabled(false);
+		TruckQty.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
+		
+		JComboBox TruckMode = new JComboBox();
+		TruckMode.setEnabled(false);
+		TruckMode.setModel(new DefaultComboBoxModel(new String[] {"Custom", "Patient", "Normal", "Aggressive"}));
+
+		
+		JComboBox TruckSpd = new JComboBox();
+		TruckSpd.setEnabled(false);
+		TruckSpd.setModel(new DefaultComboBoxModel(new String[] {"12", "24", "36", "48", "60", "72", "84", "96", "108"}));
+		
+		JComboBox TruckAccSpd = new JComboBox();
+		TruckAccSpd.setEnabled(false);
+		TruckAccSpd.setModel(new DefaultComboBoxModel(new String[] {"0.5", "0.6", "0.7", "0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5"}));
+		
+		JComboBox TruckDecSpd = new JComboBox();
+		TruckDecSpd.setEnabled(false);
+		TruckDecSpd.setModel(new DefaultComboBoxModel(new String[] {"0.5", "0.6", "0.7", "0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6", "4.7", "4.8", "4.9", "5.0"}));
+		
+		JSeparator separator_1 = new JSeparator();
+		
+		JLabel lblPolitenessFactor = new JLabel("Politeness Factor:");
+		lblPolitenessFactor.setEnabled(false);
+		
+		JLabel lblChangingThreshold = new JLabel("Changing Threshold:");
+		lblChangingThreshold.setEnabled(false);
+		
+		JComboBox TruckTimeGap = new JComboBox();
+		TruckTimeGap.setEnabled(false);
+		TruckTimeGap.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0"}));
+		
+		JComboBox TruckDistGap = new JComboBox();
+		TruckDistGap.setEnabled(false);
+		TruckDistGap.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7"}));
+		
+		JComboBox TruckPolite = new JComboBox();
+		TruckPolite.setEnabled(false);
+		TruckPolite.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0"}));
+		
+		JComboBox TruckChanging = new JComboBox();
+		TruckChanging.setEnabled(false);
+		TruckChanging.setModel(new DefaultComboBoxModel(new String[] {"0.1", "0.2", "0.3", "0.4", "0.5", "0.6", "0.7", "0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0"}));
+		
+		JLabel lblKmh_1 = new JLabel("km/h");
+		lblKmh_1.setEnabled(false);
+		
+		JLabel lblMs_2 = new JLabel("m/s\u00B2");
+		lblMs_2.setEnabled(false);
+		
+		JLabel lblNewLabel_1 = new JLabel("m/s\u00B2");
+		lblNewLabel_1.setEnabled(false);
+		
+		JLabel lblS_1 = new JLabel("s");
+		lblS_1.setEnabled(false);
+		
+		JLabel lblM_1 = new JLabel("m");
+		lblM_1.setEnabled(false);
+		
+		JLabel lblMs_3 = new JLabel("m/s\u00B2");
+		lblMs_3.setEnabled(false);
+		
+		GroupLayout gl_Subtruck = new GroupLayout(Subtruck);
+		gl_Subtruck.setHorizontalGroup(
+			gl_Subtruck.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Subtruck.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+							.addContainerGap())
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(lblQuantity)
+							.addGap(18)
+							.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(lblPresetMode)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(TruckMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+									.addComponent(lblMaximumAcceleration)
+									.addComponent(lblMaximumDeceleration, Alignment.TRAILING))
+								.addComponent(lblTimeGap)
+								.addComponent(lblMaximumSpeed))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_Subtruck.createSequentialGroup()
+									.addComponent(TruckTimeGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblS_1))
+								.addGroup(gl_Subtruck.createSequentialGroup()
+									.addComponent(TruckDecSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblNewLabel_1))
+								.addGroup(gl_Subtruck.createSequentialGroup()
+									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+										.addComponent(TruckAccSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+										.addComponent(TruckSpd, 0, 36, Short.MAX_VALUE))
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblKmh_1)
+										.addComponent(lblMs_2))))
+							.addGap(394))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(lblMinimumDistanceGap)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(TruckDistGap, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblM_1)
+							.addGap(422))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 562, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(17, Short.MAX_VALUE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(lblPolitenessFactor)
+							.addGap(18)
+							.addComponent(TruckPolite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(434, Short.MAX_VALUE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(lblChangingThreshold)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(TruckChanging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblMs_3)
+							.addContainerGap(409, Short.MAX_VALUE))))
+		);
+		gl_Subtruck.setVerticalGroup(
+			gl_Subtruck.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Subtruck.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblQuantity)
+						.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPresetMode)
+						.addComponent(TruckMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(7)
+					.addComponent(separator, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumSpeed)
+						.addComponent(TruckSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblKmh_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumAcceleration)
+						.addComponent(TruckAccSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMs_2))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumDeceleration)
+						.addComponent(TruckDecSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblNewLabel_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTimeGap)
+						.addComponent(TruckTimeGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblS_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMinimumDistanceGap)
+						.addComponent(TruckDistGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblM_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblPolitenessFactor)
+						.addComponent(TruckPolite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblChangingThreshold)
+						.addComponent(TruckChanging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMs_3))
+					.addContainerGap(74, Short.MAX_VALUE))
+		);
+		Subtruck.setLayout(gl_Subtruck);
+		Truck.setLayout(gl_Truck);
+			
+		JPanel AGV = new JPanel();
+		tabbedPane.addTab("AGV", null, AGV, null);
+		
+		JCheckBox chckbxEnableAgvOperation = new JCheckBox("Enable AGV Operation");
+		
+		JPanel SubAGV = new JPanel();
+		GroupLayout gl_AGV = new GroupLayout(AGV);
+		gl_AGV.setHorizontalGroup(
+			gl_AGV.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_AGV.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_AGV.createParallelGroup(Alignment.LEADING)
+						.addComponent(SubAGV, GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+						.addComponent(chckbxEnableAgvOperation))
+					.addContainerGap())
+		);
+		gl_AGV.setVerticalGroup(
+			gl_AGV.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_AGV.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(chckbxEnableAgvOperation)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(SubAGV, GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		
+		JLabel lblQuantity_1 = new JLabel("Quantity:");
+		lblQuantity_1.setEnabled(false);
+		
+		JLabel lblAgvMode = new JLabel("Preset Mode:");
+		lblAgvMode.setEnabled(false);
+		
+		JSeparator separator_2 = new JSeparator();
+		
+		JSeparator separator_3 = new JSeparator();
+		
+		JComboBox AgvQty = new JComboBox();
+		AgvQty.setEnabled(false);
+		AgvQty.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20"}));
+		
+		JComboBox AgvMode = new JComboBox();
+		AgvMode.setEnabled(false);
+		AgvMode.setModel(new DefaultComboBoxModel(new String[] {"Custom", "Slow", "Normal", "Fast"}));
+		
+		JLabel lblMaximumSpeed_1 = new JLabel("Maximum Speed:");
+		lblMaximumSpeed_1.setEnabled(false);
+		
+		JLabel lblMaximumAcceleration_1 = new JLabel("Maximum Acceleration:");
+		lblMaximumAcceleration_1.setEnabled(false);
+		
+		JLabel lblMaximumDeceleration_1 = new JLabel("Maximum Deceleration:");
+		lblMaximumDeceleration_1.setEnabled(false);
+		
+		JLabel lblTimeGap_1 = new JLabel("Time Gap:");
+		lblTimeGap_1.setEnabled(false);
+		
+		JLabel lblNewLabel = new JLabel("Minimum Distance Gap:");
+		lblNewLabel.setEnabled(false);
+		
+		JComboBox AgvSpd = new JComboBox();
+		AgvSpd.setEnabled(false);
+		AgvSpd.setModel(new DefaultComboBoxModel(new String[] {"12", "24", "36", "48", "60", "72"}));
+		
+		JComboBox AgvAccSpd = new JComboBox();
+		AgvAccSpd.setEnabled(false);
+		AgvAccSpd.setModel(new DefaultComboBoxModel(new String[] {"0.5", "0.6", "0.7", "0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5"}));
+		
+		JComboBox AgvDecSpd = new JComboBox();
+		AgvDecSpd.setEnabled(false);
+		AgvDecSpd.setModel(new DefaultComboBoxModel(new String[] {"0.5", "0.6", "0.7", "0.8", "0.9", "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "1.8", "1.9", "2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "3.0", "3.1", "3.2", "3.3", "3.4", "3.5", "3.6", "3.7", "3.8", "3.9", "4.0", "4.1", "4.2", "4.3", "4.4", "4.5", "4.6", "4.7", "4.8", "4.9", "5.0"}));
+		
+		JComboBox AgvTimeGap = new JComboBox();
+		AgvTimeGap.setEnabled(false);
+		AgvTimeGap.setModel(new DefaultComboBoxModel(new String[] {"0.0", "0.5", "1.0", "1.5", "2.0", "2.5", "3.0"}));
+		
+		JComboBox AgvDistGap = new JComboBox();
+		AgvDistGap.setEnabled(false);
+		AgvDistGap.setModel(new DefaultComboBoxModel(new String[] {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
+		
+		JLabel lblKmh = new JLabel("km/h");
+		lblKmh.setEnabled(false);
+		
+		JLabel lblMs = new JLabel("m/s\u00B2");
+		lblMs.setEnabled(false);
+		
+		JLabel lblMs_1 = new JLabel("m/s\u00B2");
+		lblMs_1.setEnabled(false);
+		
+		JLabel lblS = new JLabel("s");
+		lblS.setEnabled(false);
+		
+		JLabel lblM = new JLabel("m");
+		lblM.setEnabled(false);
+		
+
+		GroupLayout gl_SubAGV = new GroupLayout(SubAGV);
+		gl_SubAGV.setHorizontalGroup(
+			gl_SubAGV.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_SubAGV.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+						.addComponent(separator_3, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+						.addGroup(gl_SubAGV.createSequentialGroup()
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblQuantity_1)
+								.addComponent(lblAgvMode))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(AgvMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_SubAGV.createSequentialGroup()
+							.addComponent(lblNewLabel)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(AgvDistGap, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(lblM))
+						.addGroup(gl_SubAGV.createSequentialGroup()
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMaximumAcceleration_1)
+								.addComponent(lblMaximumSpeed_1))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(AgvSpd, Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(AgvAccSpd, Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_SubAGV.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblMs))
+								.addGroup(Alignment.TRAILING, gl_SubAGV.createSequentialGroup()
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblKmh))))
+						.addGroup(gl_SubAGV.createSequentialGroup()
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblMaximumDeceleration_1)
+								.addComponent(lblTimeGap_1))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_SubAGV.createSequentialGroup()
+									.addComponent(AgvTimeGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblS))
+								.addGroup(gl_SubAGV.createSequentialGroup()
+									.addComponent(AgvDecSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(lblMs_1)))))
+					.addContainerGap())
+		);
+		gl_SubAGV.setVerticalGroup(
+			gl_SubAGV.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_SubAGV.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblQuantity_1)
+						.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblAgvMode)
+						.addComponent(AgvMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_3, GroupLayout.PREFERRED_SIZE, 4, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumSpeed_1)
+						.addComponent(AgvSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblKmh))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumAcceleration_1)
+						.addComponent(AgvAccSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMs))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumDeceleration_1)
+						.addComponent(AgvDecSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblMs_1))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTimeGap_1)
+						.addComponent(AgvTimeGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblS))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNewLabel)
+						.addComponent(AgvDistGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblM))
+					.addContainerGap(133, Short.MAX_VALUE))
+		);
+		SubAGV.setLayout(gl_SubAGV);
+		AGV.setLayout(gl_AGV);
+		contentPane.setLayout(gl_contentPane);
+		
+		//CDC Set Factory Operation Hour if "Same as CDC" is enabled;
+		CDCStart.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxSameAsCdc.isSelected()==true){
+					FactoryStart.setSelectedIndex(CDCStart.getSelectedIndex());
+				}
+			}
+		});
+		CDCEnd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(chckbxSameAsCdc.isSelected()==true){
+					FactoryEnd.setSelectedIndex(CDCEnd.getSelectedIndex());
+				}
+			}
+		});
+		
+		//ENABLER FOR BOTH TRUCK AND AGV
+		chckbxEnableTruckOperation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				TruckMode.setSelectedIndex(0);
+				enableComponents(Subtruck, chckbxEnableTruckOperation.isSelected());				
+			}
+		});
+		
+		chckbxEnableAgvOperation.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				AgvMode.setSelectedIndex(0);				
+				enableComponents(SubAGV, chckbxEnableAgvOperation.isSelected());			
+			}
+		});
+		
+		//MODE CHANGE FOR TRUCK;
+		TruckMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(TruckMode.getSelectedItem()=="Custom"){
+					System.out.println("Be custom");
+					TruckSpd.setEnabled(true);
+					TruckAccSpd.setEnabled(true);
+					TruckDecSpd.setEnabled(true);
+					TruckTimeGap.setEnabled(true);
+					TruckDistGap.setEnabled(true);
+					TruckPolite.setEnabled(true);
+					TruckChanging.setEnabled(true);
+				}
+				if(TruckMode.getSelectedItem()=="Patient"){
+					System.out.println("Be patient");
+					TruckSpd.setSelectedIndex(0);
+					TruckAccSpd.setSelectedIndex(0);
+					TruckDecSpd.setSelectedIndex(0);
+					TruckTimeGap.setSelectedIndex(0);
+					TruckDistGap.setSelectedIndex(0);
+					TruckPolite.setSelectedIndex(0);
+					TruckChanging.setSelectedIndex(0);
+					TruckSpd.setEnabled(false);
+					TruckAccSpd.setEnabled(false);
+					TruckDecSpd.setEnabled(false);
+					TruckTimeGap.setEnabled(false);
+					TruckDistGap.setEnabled(false);
+					TruckPolite.setEnabled(false);
+					TruckChanging.setEnabled(false);
+				}
+				if(TruckMode.getSelectedItem()=="Normal"){
+					System.out.println("Be patient");
+					TruckSpd.setSelectedIndex(0);
+					TruckAccSpd.setSelectedIndex(0);
+					TruckDecSpd.setSelectedIndex(0);
+					TruckTimeGap.setSelectedIndex(0);
+					TruckDistGap.setSelectedIndex(0);
+					TruckPolite.setSelectedIndex(0);
+					TruckChanging.setSelectedIndex(0);
+					TruckSpd.setEnabled(false);
+					TruckAccSpd.setEnabled(false);
+					TruckDecSpd.setEnabled(false);
+					TruckTimeGap.setEnabled(false);
+					TruckDistGap.setEnabled(false);
+					TruckPolite.setEnabled(false);
+					TruckChanging.setEnabled(false);
+				}
+				if(TruckMode.getSelectedItem()=="Aggressive"){
+					System.out.println("Be patient");
+					TruckSpd.setSelectedIndex(0);
+					TruckAccSpd.setSelectedIndex(0);
+					TruckDecSpd.setSelectedIndex(0);
+					TruckTimeGap.setSelectedIndex(0);
+					TruckDistGap.setSelectedIndex(0);
+					TruckPolite.setSelectedIndex(0);
+					TruckChanging.setSelectedIndex(0);
+					TruckSpd.setEnabled(false);
+					TruckAccSpd.setEnabled(false);
+					TruckDecSpd.setEnabled(false);
+					TruckTimeGap.setEnabled(false);
+					TruckDistGap.setEnabled(false);
+					TruckPolite.setEnabled(false);
+					TruckChanging.setEnabled(false);
+				}	
+			}
+		});
+		
+		//MODE CHANGE FOR AGV;
+		AgvMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(AgvMode.getSelectedItem()=="Custom"){
+					System.out.println("Be custom");
+					AgvSpd.setEnabled(true);
+					AgvAccSpd.setEnabled(true);
+					AgvDecSpd.setEnabled(true);
+					AgvTimeGap.setEnabled(true);
+					AgvDistGap.setEnabled(true);
+				}
+				if(AgvMode.getSelectedItem()=="Slow"){
+					System.out.println("Be slow");
+					AgvSpd.setSelectedIndex(0);
+					AgvAccSpd.setSelectedIndex(0);
+					AgvDecSpd.setSelectedIndex(0);
+					AgvTimeGap.setSelectedIndex(0);
+					AgvDistGap.setSelectedIndex(0);
+					AgvSpd.setEnabled(false);
+					AgvAccSpd.setEnabled(false);
+					AgvDecSpd.setEnabled(false);
+					AgvTimeGap.setEnabled(false);
+					AgvDistGap.setEnabled(false);
+				}
+				if(AgvMode.getSelectedItem()=="Normal"){
+					System.out.println("Be normal");
+					AgvSpd.setSelectedIndex(0);
+					AgvAccSpd.setSelectedIndex(0);
+					AgvDecSpd.setSelectedIndex(0);
+					AgvTimeGap.setSelectedIndex(0);
+					AgvDistGap.setSelectedIndex(0);
+					AgvSpd.setEnabled(false);
+					AgvAccSpd.setEnabled(false);
+					AgvDecSpd.setEnabled(false);
+					AgvTimeGap.setEnabled(false);
+					AgvDistGap.setEnabled(false);
+				}
+				if(AgvMode.getSelectedItem()=="Fast"){
+					System.out.println("Be fast");
+					AgvSpd.setSelectedIndex(0);
+					AgvAccSpd.setSelectedIndex(0);
+					AgvDecSpd.setSelectedIndex(0);
+					AgvTimeGap.setSelectedIndex(0);
+					AgvDistGap.setSelectedIndex(0);
+					AgvSpd.setEnabled(false);
+					AgvAccSpd.setEnabled(false);
+					AgvDecSpd.setEnabled(false);
+					AgvTimeGap.setEnabled(false);
+					AgvDistGap.setEnabled(false);
+				}	
+			}
+		});
+		
+		//RUN BUTTON EXE
+		btnRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				System.out.println("Hello, we are starting soon!");
+				
+				Constant.TruckMode = chckbxEnableTruckOperation.isSelected();
+				if(chckbxEnableTruckOperation.isSelected()==true){
+					Constant.TruckQty = Integer.valueOf((String) TruckQty.getSelectedItem());
+					Constant.TruckSpd = Double.parseDouble((String) TruckSpd.getSelectedItem());
+					Constant.TruckAccSpd = Double.parseDouble((String) TruckAccSpd.getSelectedItem());
+					Constant.TruckDecSpd = Double.parseDouble((String) TruckDecSpd.getSelectedItem());
+					Constant.TruckTimeGap = Double.parseDouble((String) TruckTimeGap.getSelectedItem());
+					Constant.TruckDistGap = Double.parseDouble((String) TruckDistGap.getSelectedItem());
+					Constant.TruckPoliteness = Double.parseDouble((String) TruckPolite.getSelectedItem());
+					Constant.TruckChanging = Double.parseDouble((String) TruckChanging.getSelectedItem());
+					
+					/*
+					System.out.println(Constant.TruckMode);
+					System.out.println(Constant.TruckQty);
+					System.out.println(Constant.TruckSpd);
+					System.out.println(Constant.TruckAccSpd);
+					System.out.println(Constant.TruckDecSpd);
+					System.out.println(Constant.TruckTimeGap);
+					System.out.println(Constant.TruckDistGap);
+					System.out.println(Constant.TruckPoliteness);
+					System.out.println(Constant.TruckChanging);
+					*/
+				}
+				
+				Constant.AgvMode = chckbxEnableAgvOperation.isSelected();
+				if(chckbxEnableAgvOperation.isSelected()==true){
+					Constant.AgvQty = Integer.valueOf((String) AgvQty.getSelectedItem());
+					Constant.AgvSpd = Double.parseDouble((String) AgvSpd.getSelectedItem());
+					Constant.AgvAccSpd = Double.parseDouble((String) AgvAccSpd.getSelectedItem());
+					Constant.AgvDecSpd = Double.parseDouble((String) AgvDecSpd.getSelectedItem());
+					Constant.AgvTimeGap = Double.parseDouble((String) AgvTimeGap.getSelectedItem());
+					Constant.AgvDistGap = Double.parseDouble((String) AgvDistGap.getSelectedItem());
+
+					/*
+					System.out.println(Constant.AgvMode);
+					System.out.println(Constant.AgvQty);
+					System.out.println(Constant.AgvSpd);
+					System.out.println(Constant.AgvAccSpd);
+					System.out.println(Constant.AgvDecSpd);
+					System.out.println(Constant.AgvTimeGap);
+					System.out.println(Constant.AgvDistGap);
+					*/
+				}
+				
+				//CALL FOR THE NEXT WINDOW
+				//????;
+			}
+		});
+		
+		//RESET BUTTON EXECUTION;
+		btnReset.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				setVisible(false);
+				dispose();
+				StartUI frame = new StartUI();
+				frame.setVisible(true);
+			}
+		});
+		
+		//Exit button
+		btnExit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				setVisible(false);
+				dispose();
+			}
+		});
+	}
+	
+	public void enableComponents(Container container, boolean state) {
+        Component[] components = container.getComponents();
+        for (Component component : components) {
+            component.setEnabled(state);
+            if (component instanceof Container) {
+                enableComponents((Container)component, state);
+            }
+        }
+    }
+}

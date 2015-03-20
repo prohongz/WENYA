@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.wb.internal.core.model.util.RenameConvertSupport$RenameDialog">
+		<item value="-903" key="x"/>
+		<item value="525" key="width"/>
+		<item value="405" key="y"/>
+		<item value="281" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.model.util.factory.FactoryCreateAction$FactoryCreateDialog">
+		<item value="209" key="x"/>
+		<item value="947" key="width"/>
+		<item value="0" key="y"/>
+		<item value="738" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.editor.errors.report2.CreateReportDialog">
+		<item value="697" key="x"/>
+		<item value="525" key="width"/>
+		<item value="362" key="y"/>
+		<item value="325" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.model.property.order.ReorderDialog">
+		<item value="700" key="x"/>
+		<item value="520" key="width"/>
+		<item value="342" key="y"/>
+		<item value="366" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.nls.ui.NlsDialog">
+		<item value="341" key="x"/>
+		<item value="683" key="width"/>
+		<item value="184" key="y"/>
+		<item value="369" key="height"/>
+	</section>
+	<section name="org.eclipse.wb.internal.core.model.property.editor.string.StringPropertyDialog">
+		<item value="744" key="x"/>
+		<item value="530" key="width"/>
+		<item value="392" key="y"/>
+		<item value="346" key="height"/>
+	</section>
+</section>
