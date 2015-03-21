@@ -33,6 +33,7 @@ import java.util.Map;
 
 import Simulator.Constant;
 import Simulator.DrawSim;
+import Simulator.Save;
 import Simulator.liveupdate;
 
 import java.awt.GridLayout;
@@ -154,14 +155,27 @@ public class SimulatorWindow extends JFrame {
 		);
 		timepanel.setLayout(gl_timepanel);
 		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Simu.suspend();
+				realtime.suspend();
+				Save frame = new Save();
+				frame.setVisible(true);
+				
+			}
+		});
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 453, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
+							.addComponent(btnSave)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnScreenshot)
 							.addGap(6)
 							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
@@ -179,16 +193,15 @@ public class SimulatorWindow extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
 						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnScreenshot)
-								.addComponent(btnPause)
-								.addComponent(btnExit)))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(btnSave))
+							.addComponent(btnPause)
+							.addComponent(btnExit))
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
 		);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		

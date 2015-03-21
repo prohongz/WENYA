@@ -25,28 +25,28 @@ public class Constant {
 	public static int Factendm =0;
 	public static int Factcargoto =0;
 	public static int Factbay =0;
-	public static int Factdemandh[] = new int[16];
+	public static int Factdemandh[] = new int[15];
 	
 	
 	
 	
-	public static boolean TruckMode;
-	public static int TruckQty;
-	public static double TruckSpd;
-	public static double TruckAccSpd;
-	public static double TruckDecSpd;
-	public static double TruckTimeGap;
-	public static double TruckDistGap;
-	public static double TruckPoliteness;
-	public static double TruckChanging;
+	public static boolean TruckMode = false;
+	public static int TruckQty = 0;
+	public static double TruckSpd = .0;
+	public static double TruckAccSpd = .0;
+	public static double TruckDecSpd = .0;
+	public static double TruckTimeGap = .0;
+	public static double TruckDistGap = .0;
+	public static double TruckPoliteness = .0;
+	public static double TruckChanging = .0;
 	
-	public static boolean AgvMode;
-	public static int AgvQty;
-	public static double AgvSpd;
-	public static double AgvAccSpd;
-	public static double AgvDecSpd;
-	public static double AgvTimeGap;
-	public static double AgvDistGap;
+	public static boolean AgvMode = false;
+	public static int AgvQty = 0;
+	public static double AgvSpd = .0;
+	public static double AgvAccSpd = .0;
+	public static double AgvDecSpd = .0;
+	public static double AgvTimeGap = .0;
+	public static double AgvDistGap = .0;
 	
 	static final double TIMESTEP_S = 0.2;   // simulation time step
 	public static int tsleep_ms = 20;

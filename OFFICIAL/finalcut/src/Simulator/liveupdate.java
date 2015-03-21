@@ -13,9 +13,6 @@ import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
-
-import finalcut.Save;
-
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JLayeredPane;
 
@@ -162,28 +159,20 @@ public class liveupdate extends JPanel implements Runnable {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
-		JButton btnSave = new JButton("Save");
-		
 		GroupLayout gl_Settingpanel = new GroupLayout(Settingpanel);
 		gl_Settingpanel.setHorizontalGroup(
-			gl_Settingpanel.createParallelGroup(Alignment.TRAILING)
+			gl_Settingpanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Settingpanel.createSequentialGroup()
-					.addContainerGap(204, Short.MAX_VALUE)
-					.addComponent(btnSave)
-					.addContainerGap())
-				.addGroup(Alignment.LEADING, gl_Settingpanel.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 251, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		gl_Settingpanel.setVerticalGroup(
 			gl_Settingpanel.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_Settingpanel.createSequentialGroup()
+				.addGroup(Alignment.LEADING, gl_Settingpanel.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 578, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(btnSave)
-					.addGap(4))
+					.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		
 		JTextArea parameter = new JTextArea();
@@ -234,13 +223,6 @@ public class liveupdate extends JPanel implements Runnable {
 		
 		scrollPane.setViewportView(parameter);
 		Settingpanel.setLayout(gl_Settingpanel);
-		
-		btnSave.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				Save frame = new Save();
-				frame.setVisible(true);
-			}
-		});
 		setLayout(groupLayout);
 		
 		btnCdc.addActionListener(new ActionListener() {
@@ -311,6 +293,10 @@ public class liveupdate extends JPanel implements Runnable {
 	public void stop() {
 		runner = null;
 	} 
+	
+	public void suspend(){
+		Constant.suspended = true;
+	}
 	
 	public synchronized void resume() {
 		System.out.println("Real time data resuming...");
