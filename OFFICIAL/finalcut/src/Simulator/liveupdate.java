@@ -286,8 +286,19 @@ public class liveupdate extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		while(!stopthreadVariable){
+		while (Thread.currentThread() == runner) {
 			lblCdc.setText(Integer.toString(Result.active));
+			
+			synchronized (this) {
+				while (Constant.suspended){
+					try {
+						wait();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}				
+			}
 		}
 	}
 	
@@ -299,6 +310,11 @@ public class liveupdate extends JPanel implements Runnable {
 	} 
 	
 	public void stop() {
-		stopthreadVariable = true;
+		runner = null;
 	} 
+	
+	public synchronized void resume() {
+		System.out.println("Real time data resuming...");
+		notify();
+	}
 }

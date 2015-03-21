@@ -1665,14 +1665,7 @@ public class StartUI extends JFrame{
 		            e.printStackTrace();
 		        }
 				
-				//VALIDATOR FOR AT LEAST ONE FORM OF TRANSPORTATION
-				if(chckbxEnableTruckOperation.isSelected() == false){
-					if(chckbxEnableAgvOperation.isSelected() == false){
-						tabbedPane.setSelectedIndex(3);
-						JOptionPane.showMessageDialog(null, "Please select at least one mode of transportation.");
-						return;
-					}
-				}
+				
 				
 				//TRANSFER VALUE INTO CONSTANT FOR SIMULATOR USAGE
 				System.out.println("Hello, we are starting soon!");
@@ -1800,7 +1793,14 @@ public class StartUI extends JFrame{
 				Constant.Factdemandh[13] = (int) (((float) Constant.Factdemandh[13]/facttotal)* factcargode);
 				Constant.Factdemandh[14] = (int) (((float) Constant.Factdemandh[14]/facttotal)* factcargode);
 		
-				
+				//VALIDATOR FOR AT LEAST ONE FORM OF TRANSPORTATION
+				if(chckbxEnableTruckOperation.isSelected() == false){
+					if(chckbxEnableAgvOperation.isSelected() == false){
+						tabbedPane.setSelectedIndex(3);
+						JOptionPane.showMessageDialog(null, "Please select at least one mode of transportation.");
+						return;
+					}
+				}
 				
 				//TRANSFER TRUCK VARIABLES
 				Constant.TruckMode = chckbxEnableTruckOperation.isSelected();

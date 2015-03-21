@@ -51,6 +51,6 @@ public class Constant {
 	static final double TIMESTEP_S = 0.2;   // simulation time step
 	public static int tsleep_ms = 20;
 	
-
+	static boolean suspended = false;
 	
 }

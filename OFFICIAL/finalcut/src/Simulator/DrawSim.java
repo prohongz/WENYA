@@ -24,14 +24,15 @@ public class DrawSim extends JPanel implements Runnable{
 	
 	
 	//THREAD RELATED VARIABLES
-	boolean suspended = false;
+	
+	private Thread runner = null;
+	boolean simuend = false;
 	
 	//TIME RELATED VARIABLES
 	private double time = 0.;
 	private double endtime = 0.;
 	
-	private Thread runner = null;
-	boolean simuend = false;
+	
 	
 	//MAIN CONTENT
 	public DrawSim(){
@@ -207,7 +208,7 @@ public class DrawSim extends JPanel implements Runnable{
 			//Check for end of simulation
 			if(time >= endtime){
 				if(simuend == false){
-					suspended = true;
+					Constant.suspended = true;
 				}
 			}
 
@@ -224,7 +225,7 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			//FOR SUSPENSION OF THREAD
 			synchronized (this) {
-				while (suspended){
+				while (Constant.suspended){
 					try {
 						wait();
 					} catch (InterruptedException e) {
@@ -250,12 +251,12 @@ public class DrawSim extends JPanel implements Runnable{
 	} 
 	
 	public void suspend() {
-		suspended = true;
+		Constant.suspended = true;
 	}
 	   
 	public synchronized void resume() {
-		System.out.println("Resume");
-		suspended = false;
+		System.out.println("Simulator resuming...");
+		Constant.suspended = false;
 		notify();
 	}
 	

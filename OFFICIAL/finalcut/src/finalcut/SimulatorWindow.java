@@ -79,6 +79,7 @@ public class SimulatorWindow extends JFrame {
 					
 					//PROCEED TO RESUME THE SIMULATOR
 					Simu.resume();
+					realtime.resume();
 				}
 				
 			}
@@ -475,9 +476,8 @@ public class SimulatorWindow extends JFrame {
 		//EXIT BUTTON ACTION
 		btnExit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JFrame frame = null;
 				int n = JOptionPane.showConfirmDialog(
-					    frame,
+					    null,
 					    "Are you sure you want to quit the Simulation?",
 					    "Wenya Industrial Simulator",
 					    JOptionPane.YES_NO_OPTION);
