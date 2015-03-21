@@ -29,7 +29,6 @@ public class liveupdate extends JPanel implements Runnable {
 	
 	////////////
 	
-	private static boolean stopthreadVariable = false;
 	private Thread runner = null;
 	
 	

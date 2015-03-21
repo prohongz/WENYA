@@ -1,9 +1,13 @@
 package finalcut;
 
 import java.awt.AWTException;
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 
@@ -16,18 +20,28 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
+import javax.swing.Painter;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+
 import Simulator.Constant;
 import Simulator.DrawSim;
 import Simulator.liveupdate;
 
 import java.awt.GridLayout;
+
 import javax.swing.ImageIcon;
+import javax.swing.JSlider;
+import javax.swing.JLabel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 @SuppressWarnings("serial")
 public class SimulatorWindow extends JFrame {
@@ -114,52 +128,29 @@ public class SimulatorWindow extends JFrame {
 			}
 		});
 		
-		JPanel timepanel = new JPanel();
+		JPanel timepanel = new JPanel();      
+		JSlider simuspeedbar = new JSlider();
+		simuspeedbar.setValue(20);
+		simuspeedbar.setMaximum(21);
+		simuspeedbar.setInverted(true);
 		
-		JButton button = new JButton("<<");
-		button.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(Constant.tsleep_ms < 10 && Constant.tsleep_ms >= 0){
-					Constant.tsleep_ms+=1;
-					System.out.print(Constant.tsleep_ms);
-				}
-				else if(Constant.tsleep_ms < 200){
-					Constant.tsleep_ms+=10;
-					System.out.print(Constant.tsleep_ms);
-				}		
-			}
-		});
-		
-		JButton button_1 = new JButton(">>");
-		button_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(Constant.tsleep_ms <= 10 && Constant.tsleep_ms > 0){
-					Constant.tsleep_ms-=1;
-					System.out.print(Constant.tsleep_ms);
-				}
-				else if(Constant.tsleep_ms > 10){
-					Constant.tsleep_ms-=10;
-					System.out.print(Constant.tsleep_ms);
-				}		
-			}
-		});
+		JLabel lblSimulatorSpeed = new JLabel("Simulator Speed:");
 		GroupLayout gl_timepanel = new GroupLayout(timepanel);
 		gl_timepanel.setHorizontalGroup(
 			gl_timepanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_timepanel.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(button)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(button_1)
-					.addContainerGap(168, Short.MAX_VALUE))
+					.addComponent(lblSimulatorSpeed)
+					.addGap(18)
+					.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(150, Short.MAX_VALUE))
 		);
 		gl_timepanel.setVerticalGroup(
 			gl_timepanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_timepanel.createSequentialGroup()
-					.addGroup(gl_timepanel.createParallelGroup(Alignment.BASELINE)
-						.addComponent(button)
-						.addComponent(button_1))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+					.addGroup(gl_timepanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSimulatorSpeed, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+						.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
 		);
 		timepanel.setLayout(gl_timepanel);
 		
@@ -168,9 +159,9 @@ public class SimulatorWindow extends JFrame {
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 885, Short.MAX_VALUE)
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 453, Short.MAX_VALUE)
 							.addComponent(btnScreenshot)
 							.addGap(6)
 							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
@@ -188,13 +179,16 @@ public class SimulatorWindow extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
 						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
-					.addGap(6)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addComponent(btnScreenshot)
-							.addComponent(btnPause)
-							.addComponent(btnExit))))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnScreenshot)
+								.addComponent(btnPause)
+								.addComponent(btnExit)))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE))))
 		);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -472,6 +466,17 @@ public class SimulatorWindow extends JFrame {
 		realtimepanel.setLayout(new GridLayout(0, 1, 0, 0));
 		realtimepanel.add(realtime);
 		contentPane.setLayout(gl_contentPane);
+		
+		simuspeedbar.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				int temp = 20;
+				temp = simuspeedbar.getValue();
+				if(temp == 21){
+					temp = 200;
+				}
+				Constant.tsleep_ms = temp;
+			}
+		});
 		
 		//EXIT BUTTON ACTION
 		btnExit.addActionListener(new ActionListener() {
