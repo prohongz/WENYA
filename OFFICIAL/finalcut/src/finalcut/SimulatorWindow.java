@@ -1,13 +1,9 @@
 package finalcut;
 
 import java.awt.AWTException;
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Robot;
 import java.awt.Toolkit;
 
@@ -20,19 +16,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JOptionPane;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
-import javax.swing.Painter;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
 
 import Simulator.Constant;
 import Simulator.DrawSim;
+import Simulator.Buildingframe;
 import Simulator.Save;
 import Simulator.liveupdate;
 
@@ -158,8 +151,6 @@ public class SimulatorWindow extends JFrame {
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Simu.suspend();
-				realtime.suspend();
 				Save frame = new Save();
 				frame.setVisible(true);
 				
@@ -209,9 +200,12 @@ public class SimulatorWindow extends JFrame {
 		btnf01.setContentAreaFilled(false);
 		btnf01.setBorderPainted(false);
 		btnf01.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf01.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				System.out.print("HELLO");
+				Buildingframe frame = new Buildingframe(1);
+				frame.start();
+				frame.setVisible(true);
 			}
 		});
 		
@@ -219,151 +213,391 @@ public class SimulatorWindow extends JFrame {
 		btnf02.setContentAreaFilled(false);
 		btnf02.setBorderPainted(false);
 		btnf02.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf02.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf02.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(2);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf03 = new JButton("");
 		btnf03.setContentAreaFilled(false);
 		btnf03.setBorderPainted(false);
 		btnf03.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf03.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf03.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(3);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf04 = new JButton("");
 		btnf04.setContentAreaFilled(false);
 		btnf04.setBorderPainted(false);
 		btnf04.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf04.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf04.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(4);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf05 = new JButton("");
 		btnf05.setContentAreaFilled(false);
 		btnf05.setBorderPainted(false);
 		btnf05.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf05.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf05.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(5);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf06 = new JButton("");
 		btnf06.setContentAreaFilled(false);
 		btnf06.setBorderPainted(false);
 		btnf06.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf06.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf06.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(6);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf07 = new JButton("");
 		btnf07.setContentAreaFilled(false);
 		btnf07.setBorderPainted(false);
 		btnf07.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf07.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf07.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(7);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf08 = new JButton("");
 		btnf08.setContentAreaFilled(false);
 		btnf08.setBorderPainted(false);
 		btnf08.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf08.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf08.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(8);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf09 = new JButton("");
 		btnf09.setContentAreaFilled(false);
 		btnf09.setBorderPainted(false);
 		btnf09.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf09.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf09.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(9);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf10 = new JButton("");
 		btnf10.setContentAreaFilled(false);
 		btnf10.setBorderPainted(false);
 		btnf10.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf10.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(10);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf11 = new JButton("");
 		btnf11.setContentAreaFilled(false);
 		btnf11.setBorderPainted(false);
 		btnf11.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf11.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(11);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf12 = new JButton("");
 		btnf12.setContentAreaFilled(false);
 		btnf12.setBorderPainted(false);
 		btnf12.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf12.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(12);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf13 = new JButton("");
 		btnf13.setContentAreaFilled(false);
 		btnf13.setBorderPainted(false);
 		btnf13.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf13.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(13);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf14 = new JButton("");
 		btnf14.setContentAreaFilled(false);
 		btnf14.setBorderPainted(false);
 		btnf14.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf14.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(14);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf15 = new JButton("");
 		btnf15.setContentAreaFilled(false);
 		btnf15.setBorderPainted(false);
 		btnf15.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf15.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(15);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf30 = new JButton("");
 		btnf30.setContentAreaFilled(false);
 		btnf30.setBorderPainted(false);
 		btnf30.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf30.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf30.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(30);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf29 = new JButton("");
 		btnf29.setContentAreaFilled(false);
 		btnf29.setBorderPainted(false);
 		btnf29.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf29.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf29.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(29);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf28 = new JButton("");
 		btnf28.setContentAreaFilled(false);
 		btnf28.setBorderPainted(false);
 		btnf28.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf28.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf28.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(28);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf27 = new JButton("");
 		btnf27.setContentAreaFilled(false);
 		btnf27.setBorderPainted(false);
 		btnf27.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf27.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(27);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf26 = new JButton("");
 		btnf26.setContentAreaFilled(false);
 		btnf26.setBorderPainted(false);
 		btnf26.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf26.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(26);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf25 = new JButton("");
 		btnf25.setContentAreaFilled(false);
 		btnf25.setBorderPainted(false);
 		btnf25.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf25.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf25.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(25);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf24 = new JButton("");
 		btnf24.setContentAreaFilled(false);
 		btnf24.setBorderPainted(false);
 		btnf24.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf24.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf24.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(24);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf23 = new JButton("");
 		btnf23.setContentAreaFilled(false);
 		btnf23.setBorderPainted(false);
 		btnf23.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf23.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(23);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf22 = new JButton("");
 		btnf22.setContentAreaFilled(false);
 		btnf22.setBorderPainted(false);
 		btnf22.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf22.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(22);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf21 = new JButton("");
 		btnf21.setContentAreaFilled(false);
 		btnf21.setBorderPainted(false);
 		btnf21.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf21.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(21);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf20 = new JButton("");
 		btnf20.setContentAreaFilled(false);
 		btnf20.setBorderPainted(false);
 		btnf20.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf20.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(20);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf19 = new JButton("");
 		btnf19.setContentAreaFilled(false);
 		btnf19.setBorderPainted(false);
 		btnf19.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf19.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(19);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf18 = new JButton("");
 		btnf18.setContentAreaFilled(false);
 		btnf18.setBorderPainted(false);
 		btnf18.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf18.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf18.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(18);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf17 = new JButton("");
 		btnf17.setContentAreaFilled(false);
 		btnf17.setBorderPainted(false);
 		btnf17.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf17.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(17);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnf16 = new JButton("");
 		btnf16.setContentAreaFilled(false);
 		btnf16.setBorderPainted(false);
 		btnf16.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf16.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(16);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		JButton btnCDC = new JButton("");
 		btnCDC.setContentAreaFilled(false);
 		btnCDC.setBorderPainted(false);
 		btnCDC.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/cdc.gif")));
+		btnCDC.setRolloverIcon(new ImageIcon("src/misc/cdcover.gif"));
+		btnCDC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Buildingframe frame = new Buildingframe(0);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
 		
 		GroupLayout gl_Simu = new GroupLayout(Simu);
 		gl_Simu.setHorizontalGroup(

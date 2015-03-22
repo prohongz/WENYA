@@ -48,4 +48,5 @@
 <fullyQualifiedTypeName name="java.awt.RenderingHints"/>
 <fullyQualifiedTypeName name="java.io.Writer"/>
 <fullyQualifiedTypeName name="Simulator.Save"/>
+<fullyQualifiedTypeName name="Simulator.Factoryframe"/>
 </qualifiedTypeNameHistroy>

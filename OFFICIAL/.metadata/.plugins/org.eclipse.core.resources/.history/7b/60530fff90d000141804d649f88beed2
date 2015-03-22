@@ -1,0 +1,739 @@
+package finalcut;
+
+import java.awt.AWTException;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+
+import javax.imageio.ImageIO;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JOptionPane;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import Simulator.Constant;
+import Simulator.DrawSim;
+import Simulator.Factoryframe;
+import Simulator.Save;
+import Simulator.liveupdate;
+
+import java.awt.GridLayout;
+
+import javax.swing.ImageIcon;
+import javax.swing.JSlider;
+import javax.swing.JLabel;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
+
+@SuppressWarnings("serial")
+public class SimulatorWindow extends JFrame {
+
+	private JPanel contentPane;
+	int sscount;
+
+	/**
+	 * Create the frame.
+	 */
+	public SimulatorWindow() {
+		setTitle("Wenya Industrial Simulator");
+		setFont(new Font("Arial", Font.PLAIN, 12));
+		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setSize(1280, 727);
+		setMinimumSize(new Dimension(1280, 720));
+		Toolkit t = Toolkit.getDefaultToolkit();
+        int x = (int)((t.getScreenSize().getWidth() - getWidth()) / 2);
+        int y = (int)((t.getScreenSize().getHeight() - getHeight()) / 2);
+        setLocation(x, y);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		
+		//ADDING IN SIMULATOR THREAD
+		JPanel panel = new JPanel();
+		DrawSim Simu = new DrawSim();
+		Simu.setPreferredSize(new Dimension(962, 650));
+		Simu.start();
+		
+		//ADDING IN REAL TIME THREAD
+		JPanel realtimepanel = new JPanel();
+		liveupdate realtime = new liveupdate();
+		realtime.setPreferredSize(new Dimension(276, 650));
+		realtime.start();
+		
+		JButton btnPause = new JButton("Pause");
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				if (btnPause.getText() == "Pause"){
+					btnPause.setText("Resume");
+					
+					//PROCEED TO PAUSE THE SIMULATOR
+					Simu.suspend();
+				}
+				else{
+					btnPause.setText("Pause");
+					
+					//PROCEED TO RESUME THE SIMULATOR
+					Simu.resume();
+					realtime.resume();
+				}
+				
+			}
+		});
+		
+		JButton btnExit = new JButton("Exit");
+		
+		
+		JButton btnScreenshot = new JButton("Screenshot");
+		btnScreenshot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				File file = new File("src/Screen Capture");
+				if (!file.exists()) {
+					if (file.mkdir()) {
+						System.out.println("Directory is created!");
+					} else {
+						System.out.println("Failed to create directory!");
+					}
+				}
+				// capture the whole screen
+				BufferedImage image;
+				File file1 = new File("src/Screen Capture/screencapture" + sscount + ".jpg");
+				try {
+					image = new Robot().createScreenCapture( 
+							new Rectangle( getX(), getY(), getWidth(), getHeight() ) );
+					ImageIO.write(image, "jpg", file1);
+				} catch (AWTException | IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				sscount++;
+			}
+		});
+		
+		JPanel timepanel = new JPanel();      
+		JSlider simuspeedbar = new JSlider();
+		simuspeedbar.setValue(20);
+		simuspeedbar.setMaximum(21);
+		simuspeedbar.setInverted(true);
+		
+		JLabel lblSimulatorSpeed = new JLabel("Simulator Speed:");
+		GroupLayout gl_timepanel = new GroupLayout(timepanel);
+		gl_timepanel.setHorizontalGroup(
+			gl_timepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_timepanel.createSequentialGroup()
+					.addComponent(lblSimulatorSpeed)
+					.addGap(18)
+					.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(150, Short.MAX_VALUE))
+		);
+		gl_timepanel.setVerticalGroup(
+			gl_timepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_timepanel.createSequentialGroup()
+					.addGroup(gl_timepanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblSimulatorSpeed, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+						.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		timepanel.setLayout(gl_timepanel);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Save frame = new Save();
+				frame.setVisible(true);
+				
+			}
+		});
+		
+		GroupLayout gl_contentPane = new GroupLayout(contentPane);
+		gl_contentPane.setHorizontalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
+							.addComponent(btnSave)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnScreenshot)
+							.addGap(6)
+							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+							.addGap(6)
+							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+					.addContainerGap())
+		);
+		gl_contentPane.setVerticalGroup(
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+								.addComponent(btnScreenshot)
+								.addComponent(btnSave))
+							.addComponent(btnPause)
+							.addComponent(btnExit))
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+		);
+		panel.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JButton btnf01 = new JButton("");
+		btnf01.setContentAreaFilled(false);
+		btnf01.setBorderPainted(false);
+		btnf01.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf01.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf01.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(1);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf02 = new JButton("");
+		btnf02.setContentAreaFilled(false);
+		btnf02.setBorderPainted(false);
+		btnf02.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf02.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf02.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(2);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf03 = new JButton("");
+		btnf03.setContentAreaFilled(false);
+		btnf03.setBorderPainted(false);
+		btnf03.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf03.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf03.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(3);
+				frame.start();
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf04 = new JButton("");
+		btnf04.setContentAreaFilled(false);
+		btnf04.setBorderPainted(false);
+		btnf04.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf04.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf04.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(4);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf05 = new JButton("");
+		btnf05.setContentAreaFilled(false);
+		btnf05.setBorderPainted(false);
+		btnf05.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf05.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf05.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(5);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf06 = new JButton("");
+		btnf06.setContentAreaFilled(false);
+		btnf06.setBorderPainted(false);
+		btnf06.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf06.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf06.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(6);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf07 = new JButton("");
+		btnf07.setContentAreaFilled(false);
+		btnf07.setBorderPainted(false);
+		btnf07.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf07.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf07.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(7);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf08 = new JButton("");
+		btnf08.setContentAreaFilled(false);
+		btnf08.setBorderPainted(false);
+		btnf08.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf08.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf08.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(8);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf09 = new JButton("");
+		btnf09.setContentAreaFilled(false);
+		btnf09.setBorderPainted(false);
+		btnf09.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf09.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf09.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(9);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf10 = new JButton("");
+		btnf10.setContentAreaFilled(false);
+		btnf10.setBorderPainted(false);
+		btnf10.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf10.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf10.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(10);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf11 = new JButton("");
+		btnf11.setContentAreaFilled(false);
+		btnf11.setBorderPainted(false);
+		btnf11.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf11.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf11.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(11);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf12 = new JButton("");
+		btnf12.setContentAreaFilled(false);
+		btnf12.setBorderPainted(false);
+		btnf12.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf12.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf12.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(12);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf13 = new JButton("");
+		btnf13.setContentAreaFilled(false);
+		btnf13.setBorderPainted(false);
+		btnf13.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf13.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf13.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(13);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf14 = new JButton("");
+		btnf14.setContentAreaFilled(false);
+		btnf14.setBorderPainted(false);
+		btnf14.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf14.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf14.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(14);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf15 = new JButton("");
+		btnf15.setContentAreaFilled(false);
+		btnf15.setBorderPainted(false);
+		btnf15.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf15.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf15.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(15);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf30 = new JButton("");
+		btnf30.setContentAreaFilled(false);
+		btnf30.setBorderPainted(false);
+		btnf30.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf30.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf30.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(30);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf29 = new JButton("");
+		btnf29.setContentAreaFilled(false);
+		btnf29.setBorderPainted(false);
+		btnf29.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf29.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf29.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(29);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf28 = new JButton("");
+		btnf28.setContentAreaFilled(false);
+		btnf28.setBorderPainted(false);
+		btnf28.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf28.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf28.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(28);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf27 = new JButton("");
+		btnf27.setContentAreaFilled(false);
+		btnf27.setBorderPainted(false);
+		btnf27.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf27.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf27.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(27);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf26 = new JButton("");
+		btnf26.setContentAreaFilled(false);
+		btnf26.setBorderPainted(false);
+		btnf26.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf26.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf26.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(26);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf25 = new JButton("");
+		btnf25.setContentAreaFilled(false);
+		btnf25.setBorderPainted(false);
+		btnf25.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf25.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf25.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(25);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf24 = new JButton("");
+		btnf24.setContentAreaFilled(false);
+		btnf24.setBorderPainted(false);
+		btnf24.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf24.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf24.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(24);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf23 = new JButton("");
+		btnf23.setContentAreaFilled(false);
+		btnf23.setBorderPainted(false);
+		btnf23.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf23.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf23.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(23);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf22 = new JButton("");
+		btnf22.setContentAreaFilled(false);
+		btnf22.setBorderPainted(false);
+		btnf22.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf22.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf22.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(22);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf21 = new JButton("");
+		btnf21.setContentAreaFilled(false);
+		btnf21.setBorderPainted(false);
+		btnf21.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf21.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf21.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(21);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf20 = new JButton("");
+		btnf20.setContentAreaFilled(false);
+		btnf20.setBorderPainted(false);
+		btnf20.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf20.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf20.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(20);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf19 = new JButton("");
+		btnf19.setContentAreaFilled(false);
+		btnf19.setBorderPainted(false);
+		btnf19.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf19.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf19.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(19);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf18 = new JButton("");
+		btnf18.setContentAreaFilled(false);
+		btnf18.setBorderPainted(false);
+		btnf18.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf18.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf18.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(18);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf17 = new JButton("");
+		btnf17.setContentAreaFilled(false);
+		btnf17.setBorderPainted(false);
+		btnf17.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf17.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf17.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(17);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnf16 = new JButton("");
+		btnf16.setContentAreaFilled(false);
+		btnf16.setBorderPainted(false);
+		btnf16.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
+		btnf16.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf16.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Factoryframe frame = new Factoryframe(16);
+				frame.setVisible(true);
+			}
+		});
+		
+		JButton btnCDC = new JButton("");
+		btnCDC.setContentAreaFilled(false);
+		btnCDC.setBorderPainted(false);
+		btnCDC.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/cdc.gif")));
+		btnCDC.setRolloverIcon(new ImageIcon("src/misc/cdcover.gif"));
+		btnCDC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
+		GroupLayout gl_Simu = new GroupLayout(Simu);
+		gl_Simu.setHorizontalGroup(
+			gl_Simu.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_Simu.createSequentialGroup()
+					.addContainerGap(199, Short.MAX_VALUE)
+					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnCDC, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_Simu.createSequentialGroup()
+							.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf03, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf04, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf05, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf06, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf07, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf08, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf09, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf11, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Simu.createSequentialGroup()
+							.addComponent(btnf30, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf28, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf27, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf25, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf24, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf23, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf22, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf21, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf20, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf19, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGap(3)
+							.addComponent(btnf16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addGap(121))
+		);
+		gl_Simu.setVerticalGroup(
+			gl_Simu.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_Simu.createSequentialGroup()
+					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf03, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf04, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf05, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf06, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf07, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf08, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf09, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf11, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addGap(109)
+					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+						.addComponent(btnf26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf30, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf28, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf27, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf25, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf24, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf23, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf22, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf21, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf20, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf19, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnf16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+					.addComponent(btnCDC)
+					.addGap(123))
+		);
+		Simu.setLayout(gl_Simu);
+		panel.add(Simu);
+		realtimepanel.setLayout(new GridLayout(0, 1, 0, 0));
+		realtimepanel.add(realtime);
+		contentPane.setLayout(gl_contentPane);
+		
+		simuspeedbar.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				int temp = 20;
+				temp = simuspeedbar.getValue();
+				if(temp == 21){
+					temp = 200;
+				}
+				Constant.tsleep_ms = temp;
+			}
+		});
+		
+		//EXIT BUTTON ACTION
+		btnExit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				int n = JOptionPane.showConfirmDialog(
+					    null,
+					    "Are you sure you want to quit the Simulation?",
+					    "Wenya Industrial Simulator",
+					    JOptionPane.YES_NO_OPTION);
+				
+				if(n == JOptionPane.YES_OPTION){
+					
+					File file = new File("src/Datafiles");
+					if (!file.exists()) {
+						if (file.mkdir()) {
+							System.out.println("Directory is created!");
+						} else {
+							System.out.println("Failed to create directory!");
+						}
+					}
+					
+							
+					
+					//PROCEED TO SAVE ALL THE DATA INTO A NOTE FILE
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					Simu.stop();
+					realtime.stop();
+					dispose();
+					System.exit(1);
+				}	
+			}
+		});
+	}
+}
