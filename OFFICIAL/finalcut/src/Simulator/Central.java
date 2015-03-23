@@ -6,8 +6,10 @@ import java.util.Random;
 
 public class Central {
 
-	public static int[] cdcdemandcount = new int[Constant.CDCcargolimit];
-	public static int[] factdemandcount = new int[Constant.Factcargolimit];
+	public static int cdcdemandcount = 0;
+	public static int[] factdemandcount = new int[30];
+	public static int cdcprioritycount = 0;
+	public static int[] factprioritycount = new int[30];
 	
 	public static int[][] factdock = new int[30][Constant.Factbay];
 	public static int[] cdcdock = new int[Constant.CDCbay];
