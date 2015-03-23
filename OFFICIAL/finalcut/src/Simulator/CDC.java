@@ -1,5 +1,6 @@
 package Simulator;
 
-public class CDC {
+public class CDC extends Building{
 
+	
 }

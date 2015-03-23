@@ -1,0 +1,9 @@
+package Simulator;
+
+
+import java.util.Queue;
+
+public class Building {
+
+	Queue<Cargo> CargoList;
+}

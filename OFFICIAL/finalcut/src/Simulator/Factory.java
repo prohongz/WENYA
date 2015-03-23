@@ -1,5 +1,5 @@
 package Simulator;
 
-public class Factory {
+public class Factory extends Building{
 
 }

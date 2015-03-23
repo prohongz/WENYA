@@ -171,6 +171,7 @@ public class StartUI extends JFrame{
         JComboBox SimuStarttime = new JComboBox();
         
         SimuStarttime.setModel(new DefaultComboBoxModel(new String[] {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00 ", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}));
+        SimuStarttime.setSelectedIndex(5);
         
         SimuEndday = new JTextField();
         SimuEndday.setText("100");
@@ -360,7 +361,7 @@ public class StartUI extends JFrame{
 		JLabel lblCargoDemandPer = new JLabel("Cargo Demand Per Day: ");
 		
 		cdccargo = new JTextField();
-		cdccargo.setText("100");
+		cdccargo.setText("10");
 		cdccargo.setColumns(10);
 		
 		JLabel lblDemandCurve = new JLabel("Demand:");
@@ -658,7 +659,7 @@ public class StartUI extends JFrame{
 		JLabel lblCargoDemandPer_1 = new JLabel("Cargo Demand Per Day: ");
 		
 		factcargo = new JTextField();
-		factcargo.setText("100");
+		factcargo.setText("10");
 		factcargo.setColumns(10);
 		
 		JLabel lblDemand = new JLabel("Demand:");

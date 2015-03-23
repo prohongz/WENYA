@@ -1,0 +1,72 @@
+package Simulator;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+
+public class Clock {
+
+	static int day, hour, min, sec;
+	static int x0 = 10; // start position of time display (left upper corner)
+	static int y0 = 20;
+	static double time = 0; 
+	
+	Clock(){
+		;
+	}
+	
+	static void clockupdate(Graphics g, double t) {
+		// TODO Auto-generated method stub
+		time = t;
+
+		min = (int) (time / 60.0);
+		sec = (int) (time - min * 60.0);
+		
+		hour = (int) (min / 60.0);
+		min = (int) (min - hour * 60.0);
+		
+		day = (int) (hour / 24.0);
+		hour = (int) (hour - day * 24.0);
+		
+		String str_time = "Day / Time: ";
+		String timeString = "DAY " + (new Integer(day)).toString()
+				+ ((hour > 9) ? " / " : " / 0") +(new Integer(hour)).toString()
+				+ ((min > 9) ? ":" : ":0") +(new Integer(min)).toString()
+				+ ((sec > 9) ? ":" : ":0") + (new Integer(sec)).toString();
+
+		g.setColor(Color.BLACK);
+		// g.setColor(Color.white);
+
+		// display new time
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.setColor(Color.black);
+		x0 = 10; // start position of time display (left upper corner)
+		y0 = 20;
+		g.drawString(str_time, x0, y0);
+		
+		x0 = 10; // start position of time display (left upper corner)
+		y0 = 40;
+		g.drawString(timeString, x0, y0);
+	}
+	
+	int returnhour(double t){
+
+		min = (int) (t / 60.0);
+		sec = (int) (t - min * 60.0);
+		
+		hour = (int) (min / 60.0);
+		min = (int) (min - hour * 60.0);
+		
+		day = (int) (hour / 24.0);
+		return hour = (int) (hour - day * 24.0);
+	}
+	
+	int returnminute(double t){
+
+		min = (int) (t / 60.0);
+		sec = (int) (t - min * 60.0);
+		
+		hour = (int) (min / 60.0);
+		return min = (int) (min - hour * 60.0);
+	}
+}

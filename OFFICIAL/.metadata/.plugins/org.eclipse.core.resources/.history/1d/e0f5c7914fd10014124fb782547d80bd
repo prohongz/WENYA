@@ -1,0 +1,14 @@
+package Simulator;
+
+import java.awt.Graphics;
+
+public class Vehicle {
+
+	void Vehicle(){
+		
+	}
+	
+	void drawupdate(Graphics g){
+		
+	}
+}

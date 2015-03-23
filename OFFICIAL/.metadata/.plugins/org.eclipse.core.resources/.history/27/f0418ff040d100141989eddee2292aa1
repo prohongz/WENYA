@@ -1,0 +1,12 @@
+package Simulator;
+
+public class Cargo {
+
+	int spawnhour = 0;
+	int spawnmin = 0;
+	int destination = 0;
+	
+	Cargo(){
+		
+	}
+}

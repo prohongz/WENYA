@@ -1,0 +1,8 @@
+package Simulator;
+
+public class AGV extends vehicle{
+
+	AGV(){
+		
+	}
+}

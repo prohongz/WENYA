@@ -1,17 +1,17 @@
 package Simulator;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class DrawSim extends JPanel implements Runnable{
 	
-	//DRAW VARIABLES
+	//DRAWING VARIABLES
 	Color DARKGREEN = new Color(56, 138, 30);
 	Color LIGHTGRAY = new Color(189,189,189);
 	
@@ -20,20 +20,25 @@ public class DrawSim extends JPanel implements Runnable{
 	int hzlength = 650;
 	int vrlength = 433;
 	
-	
-	
 	//THREAD RELATED VARIABLES
-	
 	private Thread runner = null;
 	boolean simuend = false;
 	
 	//TIME RELATED VARIABLES
 	private double time = 0.;
 	private double endtime = 0.;
+	private int demandtiming = 1;
+	private long simTime_ms = 0;
 	
 	//DEMAND VARIABLES
 	int hour = 0;
 	int day = 0;
+	
+	//VARIABLES
+	ArrayList<AGV> Agvforce = new ArrayList<AGV>();
+	ArrayList<Truck> Truckforce = new ArrayList<Truck>();
+	ArrayList<Factory> Factoryforce = new ArrayList<Factory>();
+	ArrayList<CDC> CDCforce = new ArrayList<CDC>();
 	
 	//MAIN CONTENT
 	public DrawSim(){
@@ -42,21 +47,37 @@ public class DrawSim extends JPanel implements Runnable{
 		endtime = calendtime();
 		//DECLARE ALL THE VEHICLE FACTORY 
 		
+		for(int i=0; i < Constant.AgvQty; i++){
+			Agvforce.add(new AGV());
+		}
 		
-		
-		
+		for(int i=0; i < Constant.TruckQty; i++){
+			Truckforce.add(new Truck());
+		}		
 		
 	}
 	
 	public void paintComponent(Graphics g) {
 	       super.paintComponent(g);
 	       setBackground(DARKGREEN);
-
-
 	       paintroad(g);
 	       Clock.clockupdate(g, time);
-	       //PAINT AGV
-	       //PAINT TRUCK
+	       
+	       //AGV
+	       if(Constant.AgvMode == true){
+				//CALCULATE NEW LOCATION
+				for(AGV x: Agvforce){
+					x.drawupdate(g);
+				}
+	       }
+			
+	       //TRUCK
+	       if(Constant.TruckMode == true){
+				//CALCULATE NEW LOCATION
+				for(Truck x: Truckforce){
+					x.drawupdate(g);
+				}
+	       }
 	}
 
 	private void paintroad(Graphics g) {
@@ -158,7 +179,7 @@ public class DrawSim extends JPanel implements Runnable{
 	public void run() {
 		
 		//Initialize start time of simulation
-		time = 0;
+		time = 0+(Constant.starthour*60*60);
 		
 		while (Thread.currentThread() == runner) {
 			
@@ -172,6 +193,8 @@ public class DrawSim extends JPanel implements Runnable{
 				;
 			}
 			
+			long timeBeforeSim_ms = System.currentTimeMillis();
+			
 			//Check for end of simulation
 			if(time >= endtime){
 				if(simuend == false){
@@ -182,48 +205,85 @@ public class DrawSim extends JPanel implements Runnable{
 			///////////////////////////////////////////////////////
 			//SIMULATE NEW TIMESTEP (IE UPDATE ALL THE VARIABLES)//
 			///////////////////////////////////////////////////////
-	
+			
+			
 			//CENTRAL HEADQUARTER
-			if(time%3600 == 0){
-				hour = (int) ((time / 60.0) / 60.0);
-				day = (int) (hour / 24.0);
-				hour = (int) (hour - day * 24.0);
+			if((int) time%3600 == 0){
 				
-				//OPERATION FROM 06:00 - 21:00, BUT LAST DEMAND AT 20:00
-				if(hour >= 6 && hour <= 20){
-					//GENERATE A NEW DEMAND WITH TIMING ALLOCATION
-					for(int i = 0; i < (Constant.Factdemandh[hour-6]); i++){
-						//?????[Central.spawnfactdemand()].demandcount++;
-						//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
-						//NOT SPAWN IMMEDIATELY
+				if(demandtiming == 5){  //CHANGE THIS IF TIMESTEP_S IS CHANGED
+
+					//OPERATION FROM 06:00 - 21:00, BUT LAST DEMAND AT 20:00
+					if(Clock.returnhour(time) >= 6 && Clock.returnhour(time) <= 20){
 						
-						//SET CARGO TIMING
+						//GENERATE A NEW DEMAND WITH TIMING ALLOCATION						
+						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour(time)-6]); i++){
+							//DETERMINE WHICH FACTORY TO DELIVER THE CARGO TO
+							//IS TO TELL CDC IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+							//NOT SPAWN IMMEDIATELY
+							//[DELIVER LOCATION: RANDOM FACTORY (0-29) (Default)]
+							
+							//?????.demandcount++;
+							
+							//SET TIMING & DESTINATION
+							Clock.returnhour(time);
+							Central.spawndemandtime();
+							Central.spawndemandtarget();
+						}
 						
+						for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(time)-6]); i++){
+							//DETERMINE WHICH FACTORY TO SPAWN THE DEMAND
+							//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+							//NOT SPAWN IMMEDIATELY
+							//[DELIVER LOCATION: CDC (100) (Default)]
+							//MODIFY HERE TO CHANGE THE DELIVER LOCATION
+							
+							//?????[Central.spawnfactdemand()].demandcount++;
+							//System.out.println("Count " + i + ": " + Central.spawnfactdemand());
+							
+							//SET CARGO TIMING
+							Clock.returnhour(time);
+							Central.spawndemandtime();
+							//TARGET = 100
+						}
 					}
-					
-					for(int i = 0; i < (Constant.CDCdemandh[hour-6]); i++){
-						//?????.demandcount++;
-						//?????.cargo = spawndemandtarget();
-						
-						//SET TIMING
-					
-					}
+					demandtiming = 1;
+				}else{
+					demandtiming++;
 				}
 			}
+			
+			////////////////////////////////////////////////////////
+			//CDC AND FACTORY CALL FOR VEHICLES TO CLEAR DEMAND   //
+			//PRIORTY GOES TO TRUCK FIRST THEN AGV IF BOTH ENABLED//
+			////////////////////////////////////////////////////////
 			
 			//CDC
 			
 			//FACTORY
-			
-			//AGV
-			if(Constant.AgvMode == true){
+			for(Factory x: Factoryforce){
 				
 			}
 			
 			//TRUCK
 			if(Constant.TruckMode == true){
-				
+				//CALCULATE NEW LOCATION
+				for(Truck x: Truckforce){
+					
+				}
 			}
+			
+			//AGV
+			if(Constant.AgvMode == true){
+				//CALCULATE NEW LOCATION
+				for(AGV x: Agvforce){
+					
+				}
+			}
+			
+			//FOR CALCULATING THE TIME TAKEN TO DO ALL THE SIMULATION CALCULATIONS
+			//SIMTIMES_MS SHOULD ALWAYS BE SMALLER THAN TIMESTEP_S
+			simTime_ms = (long) (System.currentTimeMillis() - timeBeforeSim_ms);
+			//System.out.println(simTime_ms);
 			
 			//CALCULATE THE NEW TIME BASED ON THE TIME SPEED
 			time+=Constant.TIMESTEP_S;

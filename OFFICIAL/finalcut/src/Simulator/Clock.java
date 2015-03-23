@@ -6,16 +6,16 @@ import java.awt.Graphics;
 
 public class Clock {
 
-	static int day, hour, min, sec;
-	static int x0 = 10; // start position of time display (left upper corner)
-	static int y0 = 20;
-	static double time = 0; 
+	private static int day, hour, min, sec;
+	private static int x0 = 10; // start position of time display (left upper corner)
+	private static int y0 = 20;
+	private static double time = 0; 
 	
 	Clock(){
 		;
 	}
 	
-	static void clockupdate(Graphics g, double t) {
+	public static void clockupdate(Graphics g, double t) {
 		// TODO Auto-generated method stub
 		time = t;
 
@@ -47,5 +47,26 @@ public class Clock {
 		x0 = 10; // start position of time display (left upper corner)
 		y0 = 40;
 		g.drawString(timeString, x0, y0);
+	}
+	
+	public static int returnhour(double t){
+
+		min = (int) (t / 60.0);
+		sec = (int) (t - min * 60.0);
+		
+		hour = (int) (min / 60.0);
+		min = (int) (min - hour * 60.0);
+		
+		day = (int) (hour / 24.0);
+		return hour = (int) (hour - day * 24.0);
+	}
+	
+	public int returnminute(double t){
+
+		min = (int) (t / 60.0);
+		sec = (int) (t - min * 60.0);
+		
+		hour = (int) (min / 60.0);
+		return min = (int) (min - hour * 60.0);
 	}
 }
