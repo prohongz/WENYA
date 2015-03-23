@@ -73,7 +73,7 @@ public class Save extends JFrame {
 				File file1 = new File("src/Preset/Preset.txt");
 				FileWriter fileWritter = null;
 				try {
-					fileWritter = new FileWriter(file.getName(),true);
+					fileWritter = new FileWriter(file1.getName(),true);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

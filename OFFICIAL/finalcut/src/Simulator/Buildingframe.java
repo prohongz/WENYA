@@ -1,8 +1,11 @@
 package Simulator;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -26,19 +29,18 @@ public class Buildingframe extends JFrame implements Runnable {
 
 	private JPanel contentPane;
 	private Thread runner = null;
-	private int factoryaddress;
+	private int factoryaddress = 0, i=0;
 	
 	//for testing
-	int i=0;
 	JLabel lblNewLabel = new JLabel("New label");
 	
 	public Buildingframe(int i) {
 		
-		factoryaddress = i;
+		factoryaddress = i-1;
 		if(i==0){
 			setTitle("Properties of CDC");
 		}else{
-			setTitle("Properties of Factory " + factoryaddress);
+			setTitle("Properties of Factory " + (factoryaddress+1));
 		}	
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
@@ -63,18 +65,18 @@ public class Buildingframe extends JFrame implements Runnable {
 		});
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(275, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap(312, Short.MAX_VALUE)
 					.addComponent(Close)
 					.addContainerGap())
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 371, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addComponent(panel, GroupLayout.PREFERRED_SIZE, 271, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(103, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(Close))
@@ -101,9 +103,27 @@ public class Buildingframe extends JFrame implements Runnable {
 	}
 
 	public void paint(Graphics g){
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		        RenderingHints.VALUE_ANTIALIAS_ON);
+		
 		lblNewLabel.setText(Integer.toString(i));
 		
-		//PAINT THE LOADING/UNLOADING BAY
+		for(int i=0; i < Constant.Factbay; i++){
+			g2.setColor(Color.black);
+			g2.drawRect(310, 40+(40*i), 70, 30);
+			if(Central.factdock[factoryaddress][i]==1){
+				g2.setColor(Color.cyan);
+				g2.fillRect(315, 45+(40*i), 60, 20);
+				g2.setColor(Color.black);
+				g2.drawString("Loading", 315, 60+(40*i));
+			}else if(Central.factdock[factoryaddress][i]==2){
+				g2.setColor(Color.cyan);
+				g2.fillRect(315, 45+(40*i), 60, 20);
+				g2.setColor(Color.black);
+				g2.drawString("Unloading", 315, 60+(40*i));
+			}
+		}
 	}
 	
 	@Override
@@ -118,8 +138,10 @@ public class Buildingframe extends JFrame implements Runnable {
 			} catch (InterruptedException e) {
 				;
 			}
-			
 			i++;
+			System.out.print(Central.factdock[factoryaddress][0]);
+			Central.factdock[factoryaddress][0]=1;
+			Central.factdock[factoryaddress][1]=2;
 			repaint();
 		}
 	}
@@ -127,6 +149,7 @@ public class Buildingframe extends JFrame implements Runnable {
 	public void start() {
 		if (runner == null) {
 			runner = new Thread(this);
+			runner.setName("Building " + (factoryaddress+1));
 			runner.start();
 		}
 	} 

@@ -7,6 +7,9 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
 public class DrawSim extends JPanel implements Runnable{
@@ -45,8 +48,9 @@ public class DrawSim extends JPanel implements Runnable{
 		System.out.println("BEEN HERE");
 		
 		endtime = calendtime();
-		//DECLARE ALL THE VEHICLE FACTORY 
 		
+		
+		//DECLARE ALL THE VEHICLE
 		for(int i=0; i < Constant.AgvQty; i++){
 			Agvforce.add(new AGV());
 		}
@@ -202,9 +206,9 @@ public class DrawSim extends JPanel implements Runnable{
 				}
 			}
 
-			///////////////////////////////////////////////////////
-			//SIMULATE NEW TIMESTEP (IE UPDATE ALL THE VARIABLES)//
-			///////////////////////////////////////////////////////
+			/////////////////////////////////////////////////////////
+			//SIMULATE NEW TIMESTEP (I.E. UPDATE ALL THE VARIABLES)//
+			/////////////////////////////////////////////////////////
 			
 			
 			//CENTRAL HEADQUARTER
@@ -225,6 +229,7 @@ public class DrawSim extends JPanel implements Runnable{
 							//?????.demandcount++;
 							
 							//SET TIMING & DESTINATION
+							//STORE TO CDC
 							Clock.returnhour(time);
 							Central.spawndemandtime();
 							Central.spawndemandtarget();
@@ -241,6 +246,7 @@ public class DrawSim extends JPanel implements Runnable{
 							//System.out.println("Count " + i + ": " + Central.spawnfactdemand());
 							
 							//SET CARGO TIMING
+							//STORE TO FACTORY
 							Clock.returnhour(time);
 							Central.spawndemandtime();
 							//TARGET = 100
@@ -259,24 +265,35 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			//CDC
 			
+			//IF THERE IS DEMAND INFORM CENTRAL
+			//NORMAL OR PRIORITY QUEUE
+			
 			//FACTORY
 			for(Factory x: Factoryforce){
-				
+				//IF THERE IS DEMAND, INFORM CENTRAL
+				//NORMAL OR PRIORTY QUEUE
 			}
 			
 			//TRUCK
 			if(Constant.TruckMode == true){
-				//CALCULATE NEW LOCATION
 				for(Truck x: Truckforce){
+					//CHECK WITH CENTRAL FOR DEMAND IN NORMAL OR PRIORITY QUEUE
 					
+					//PLOT ROUTE TO DESTINATION
+					
+					//CALCULATE NEW LOCATION
 				}
 			}
 			
 			//AGV
 			if(Constant.AgvMode == true){
-				//CALCULATE NEW LOCATION
+
 				for(AGV x: Agvforce){
+					//CHECK WITH CENTRAL FOR DEMAND IN NORMAL OR PRIORITY QUEUE
 					
+					//PLOT ROUTE TO DESTINATION
+					
+					//CALCULATE NEW LOCATION
 				}
 			}
 			
@@ -287,7 +304,7 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			//CALCULATE THE NEW TIME BASED ON THE TIME SPEED
 			time+=Constant.TIMESTEP_S;
-			repaint();
+			//repaint();
 			
 			//FOR SUSPENSION OF THREAD
 			synchronized (this) {
@@ -324,5 +341,4 @@ public class DrawSim extends JPanel implements Runnable{
 		Constant.suspended = false;
 		notify();
 	}
-	
 }

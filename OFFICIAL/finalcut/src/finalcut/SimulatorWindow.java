@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
+import Simulator.Central;
 import Simulator.Constant;
 import Simulator.DrawSim;
 import Simulator.Buildingframe;
