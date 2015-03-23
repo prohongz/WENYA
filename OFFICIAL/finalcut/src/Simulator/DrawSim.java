@@ -28,10 +28,12 @@ public class DrawSim extends JPanel implements Runnable{
 	boolean simuend = false;
 	
 	//TIME RELATED VARIABLES
-	private double time = 0.;
-	private double endtime = 0.;
 	private int demandtiming = 1;
+	private int demandtiming2 = 1;
+	
 	private long simTime_ms = 0;
+	private long saveTime_ms = 0;
+	private long TotalTime_ms = 0;
 	
 	//DEMAND VARIABLES
 	int hour = 0;
@@ -45,10 +47,7 @@ public class DrawSim extends JPanel implements Runnable{
 	
 	//MAIN CONTENT
 	public DrawSim(){
-		System.out.println("BEEN HERE");
-		
-		endtime = Clock.calendtime();
-		
+		System.out.println("Entering Simulator...");	
 		
 		//DECLARE ALL THE VEHICLE
 		for(int i=0; i < Constant.AgvQty; i++){
@@ -65,7 +64,6 @@ public class DrawSim extends JPanel implements Runnable{
 	       super.paintComponent(g);
 	       setBackground(DARKGREEN);
 	       Painting.paintroad(g);
-	       Clock.clockupdate(g, time);
 	       
 	       //AGV
 	       if(Constant.AgvMode == true){
@@ -90,9 +88,12 @@ public class DrawSim extends JPanel implements Runnable{
 	public void run() {
 		
 		//Initialize start time of simulation
-		time = 0+(Constant.starthour*60*60);
+		Clock.time = 0+(Constant.starthour*60*60);
 		
 		while (Thread.currentThread() == runner) {
+			
+			//Update the clock (i.e. sec min hour day)
+			Clock.clockupdate();
 			
 			try {
 				//ADJUST THE SPEED OF THE SIMULATOR HERE (
@@ -106,12 +107,7 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			long timeBeforeSim_ms = System.currentTimeMillis();
 			
-			//Check for end of simulation
-			if(time >= endtime){
-				if(simuend == false){
-					Constant.suspended = true;
-				}
-			}
+			
 
 			/////////////////////////////////////////////////////////
 			//SIMULATE NEW TIMESTEP (I.E. UPDATE ALL THE VARIABLES)//
@@ -119,15 +115,15 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			
 			//CENTRAL HEADQUARTER
-			if((int) time%3600 == 0){
+			if((int) Clock.time%3600 == 0){
 				
 				if(demandtiming == 5){  //CHANGE THIS IF TIMESTEP_S IS CHANGED
 
 					//OPERATION FROM 06:00 - 21:00, BUT LAST DEMAND AT 20:00
-					if(Clock.returnhour(time) >= 6 && Clock.returnhour(time) <= 20){
+					if(Clock.returnhour(Clock.time) >= 6 && Clock.returnhour(Clock.time) <= 20){
 						
 						//GENERATE A NEW DEMAND WITH TIMING ALLOCATION						
-						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour(time)-6]); i++){
+						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour(Clock.time)-6]); i++){
 							//DETERMINE WHICH FACTORY TO DELIVER THE CARGO TO
 							//IS TO TELL CDC IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
 							//NOT SPAWN IMMEDIATELY
@@ -137,12 +133,12 @@ public class DrawSim extends JPanel implements Runnable{
 							
 							//SET TIMING & DESTINATION
 							//STORE TO CDC
-							Clock.returnhour(time);
+							Clock.returnhour(Clock.time);
 							Central.spawndemandtime();
 							Central.spawndemandtarget();
 						}
 						
-						for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(time)-6]); i++){
+						for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(Clock.time)-6]); i++){
 							//DETERMINE WHICH FACTORY TO SPAWN THE DEMAND
 							//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
 							//NOT SPAWN IMMEDIATELY
@@ -154,7 +150,7 @@ public class DrawSim extends JPanel implements Runnable{
 							
 							//SET CARGO TIMING
 							//STORE TO FACTORY
-							Clock.returnhour(time);
+							Clock.returnhour(Clock.time);
 							Central.spawndemandtime();
 							//TARGET = 100
 						}
@@ -205,13 +201,68 @@ public class DrawSim extends JPanel implements Runnable{
 			}
 			
 			//FOR CALCULATING THE TIME TAKEN TO DO ALL THE SIMULATION CALCULATIONS
-			//SIMTIMES_MS SHOULD ALWAYS BE SMALLER THAN TIMESTEP_S
 			simTime_ms = (long) (System.currentTimeMillis() - timeBeforeSim_ms);
 			//System.out.println(simTime_ms);
+			long timeBeforeSave_ms = System.currentTimeMillis();
+			
+			//FOR EVERY 15min, 30min, 1h and 1day, TRIGGER SAVE_STATE INTO RESULT CLASS
+			if((int) Clock.time%900 == 0){
+				if(demandtiming2 == 5){
+					Result.savestate(15);
+					demandtiming2 = 1;
+				}
+				else
+					demandtiming2++;
+			}
+			
+			if((int) Clock.time%1800 == 0){
+				if(demandtiming2 == 5){
+					Result.savestate(30);
+					demandtiming2 = 1;
+				}
+				else
+					demandtiming2++;
+			}
+			
+			if((int) Clock.time%3600 == 0){
+				if(demandtiming2 == 5){
+					Result.savestate(60);
+					demandtiming2 = 1;
+				}
+				else
+					demandtiming2++;
+			}
+			
+			if((int) Clock.time%86400 == 0){
+				if(demandtiming2 == 5){
+					Result.savestate(24);
+					demandtiming2 = 1;
+				}
+				else
+					demandtiming2++;
+			}
+			
+			//FOR CALCULATING THE TIME TAKEN TO DO ALL THE SIMULATION CALCULATIONS
+			//TOTALTIMES_MS SHOULD ALWAYS BE SMALLER THAN TIMESTEP_S
+			saveTime_ms = (long) (System.currentTimeMillis() - timeBeforeSim_ms);
+			//System.out.println(saveTime_ms);
+			TotalTime_ms = simTime_ms + saveTime_ms;
+			//System.out.println(TotalTime_ms);
+			
+			
+			//PAINT ALL THE COMPONENTS BEFORE ADDING NEW TIME
+			repaint();
 			
 			//CALCULATE THE NEW TIME BASED ON THE TIME SPEED
-			time+=Constant.TIMESTEP_S;
-			//repaint();
+			Clock.time+=Constant.TIMESTEP_S;
+			Clock.clockupdate();
+			
+			//Check for end of simulation
+			if(Clock.time >= Clock.calendtime()){
+				if(simuend == false){
+					Constant.suspended = true;
+				}
+			}
 			
 			//FOR SUSPENSION OF THREAD
 			synchronized (this) {

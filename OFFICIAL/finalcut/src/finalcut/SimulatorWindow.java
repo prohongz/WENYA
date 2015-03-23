@@ -129,10 +129,10 @@ public class SimulatorWindow extends JFrame {
 		);
 		gl_timepanel.setVerticalGroup(
 			gl_timepanel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_timepanel.createSequentialGroup()
-					.addGroup(gl_timepanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblSimulatorSpeed, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
-						.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+				.addGroup(Alignment.TRAILING, gl_timepanel.createSequentialGroup()
+					.addGroup(gl_timepanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblSimulatorSpeed, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+						.addComponent(simuspeedbar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		timepanel.setLayout(gl_timepanel);
@@ -146,6 +146,9 @@ public class SimulatorWindow extends JFrame {
 			}
 		});
 		
+		JLabel lblScale = new JLabel("Scale - 1 pixel : 2.31 metres");
+		lblScale.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -155,15 +158,17 @@ public class SimulatorWindow extends JFrame {
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnScreenshot))
 						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(162)
 							.addComponent(btnSave)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -181,7 +186,8 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 							.addComponent(btnScreenshot)
-							.addComponent(btnPause))
+							.addComponent(btnPause)
+							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 							.addComponent(btnExit)
 							.addComponent(btnSave)))

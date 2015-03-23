@@ -1,0 +1,83 @@
+package Simulator;
+
+import java.util.ArrayList;
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
+public class Result {
+	
+	//For Offline Usage
+	public static int starthour = 0;
+	public static int startminute = 0;
+	
+	public static int endday = 0;
+	
+	public static int endhour = 0;
+	public static int endminute = 0;
+	
+	static ArrayList<Integer> active15 = new ArrayList<Integer>();
+	static ArrayList<Integer> active30 = new ArrayList<Integer>();
+	static ArrayList<Integer> active60 = new ArrayList<Integer>();
+	static ArrayList<Integer> active24 = new ArrayList<Integer>();
+	
+	static ArrayList<Integer> inactive15 = new ArrayList<Integer>();
+	static ArrayList<Integer> inactive30 = new ArrayList<Integer>();
+	static ArrayList<Integer> inactive60 = new ArrayList<Integer>();
+	static ArrayList<Integer> inactive24 = new ArrayList<Integer>();
+	
+	static ArrayList<Integer> cargoserve15 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargoserve30 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargoserve60 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargoserve24 = new ArrayList<Integer>();
+
+	static ArrayList<Integer> cargounserve15 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargounserve30 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargounserve60 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargounserve24 = new ArrayList<Integer>();
+	
+	static ArrayList<Integer> cargocount15 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargocount30 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargocount60 = new ArrayList<Integer>();
+	static ArrayList<Integer> cargocount24 = new ArrayList<Integer>();
+	
+	public static void savestate(int i){
+		if(i==15){
+			active15.add(Central.active);
+			inactive15.add(Central.active);
+			
+			cargoserve15.add(Central.active);
+			cargounserve15.add(Central.active);
+			cargocount15.add(Central.active);
+		}
+		
+		if(i==30){
+			active30.add(Central.active);
+			inactive30.add(Central.active);
+			
+			cargoserve30.add(Central.active);
+			cargounserve30.add(Central.active);
+			cargocount30.add(Central.active);
+		}
+		
+		if(i==60){
+			active60.add(Central.active);
+			inactive60.add(Central.active);
+			
+			cargoserve60.add(Central.active);
+			cargounserve60.add(Central.active);
+			cargocount60.add(Central.active);
+		}
+		
+		if(i==24){
+			active24.add(Central.active);
+			inactive24.add(Central.active);
+			
+			cargoserve24.add(Central.active);
+			cargounserve24.add(Central.active);
+			cargocount24.add(Central.active);
+		}
+		
+	}
+}

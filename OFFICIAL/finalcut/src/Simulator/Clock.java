@@ -1,23 +1,17 @@
 package Simulator;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-
 public class Clock {
 
-	private static int day, hour, min, sec;
-	private static int x0 = 10; // start position of time display (left upper corner)
-	private static int y0 = 20;
-	private static double time = 0; 
+	static double time = 0.;
+	double endtime = 0.;
+	static int day=0, hour=0, min=0, sec=0;
 	
 	Clock(){
 		;
 	}
 	
-	public static void clockupdate(Graphics g, double t) {
+	public static void clockupdate() {
 		// TODO Auto-generated method stub
-		time = t;
 
 		min = (int) (time / 60.0);
 		sec = (int) (time - min * 60.0);
@@ -27,26 +21,6 @@ public class Clock {
 		
 		day = (int) (hour / 24.0);
 		hour = (int) (hour - day * 24.0);
-		
-		String str_time = "Day / Time: ";
-		String timeString = "DAY " + (new Integer(day)).toString()
-				+ ((hour > 9) ? " / " : " / 0") +(new Integer(hour)).toString()
-				+ ((min > 9) ? ":" : ":0") +(new Integer(min)).toString()
-				+ ((sec > 9) ? ":" : ":0") + (new Integer(sec)).toString();
-
-		g.setColor(Color.BLACK);
-		// g.setColor(Color.white);
-
-		// display new time
-		g.setFont(new Font("Arial", Font.BOLD, 16));
-		g.setColor(Color.black);
-		x0 = 10; // start position of time display (left upper corner)
-		y0 = 20;
-		g.drawString(str_time, x0, y0);
-		
-		x0 = 10; // start position of time display (left upper corner)
-		y0 = 40;
-		g.drawString(timeString, x0, y0);
 	}
 	
 	public static int returnhour(double t){
@@ -71,7 +45,7 @@ public class Clock {
 	}
 	
 	public static double calendtime() {
-		double temp = (Constant.endday * 24 * 60 * 60) + (Constant.endhour * 60 * 60) - (Constant.starthour * 60 * 60);
+		double temp = (Constant.endday * 24 * 60 * 60) + (Constant.endhour * 60 * 60);
 		
 		return temp;
 	}

@@ -261,6 +261,7 @@ public class StartUI extends JFrame{
 		Preferences.setLayout(gl_Preferences);
 		
 		JPanel CDC = new JPanel();
+		
 		tabbedPane.addTab("CDC", null, CDC, null);
 		
 		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.LEFT);
@@ -1701,7 +1702,6 @@ public class StartUI extends JFrame{
 				
 				
 				//TRANSFER VALUE INTO CONSTANT FOR SIMULATOR USAGE
-				System.out.println("Hello, we are starting soon!");
 				
 				//TRANSFER START TIME, END DAY AND END TIME
 				String time = (String) SimuStarttime.getSelectedItem();
@@ -1883,6 +1883,8 @@ public class StartUI extends JFrame{
 					System.out.println(Constant.AgvDistGap);
 					*/
 				}
+				
+				System.out.println("Be patient, we are starting soon!");
 				
 				//KILL CURRRENT WINDOW AND CALL FOR THE NEXT WINDOW
 				setVisible(false);

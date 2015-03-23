@@ -10,6 +10,7 @@ import java.util.Random;
 
 public class Central {
 
+	//MAIN PLOT
 	public static int cdcdemandcount = 0;
 	public static int[] factdemandcount = new int[30];
 	public static int cdcprioritycount = 0;
@@ -17,6 +18,22 @@ public class Central {
 	
 	public static int[][] factdock = new int[30][Constant.Factbay];
 	public static int[] cdcdock = new int[Constant.CDCbay];
+	
+	//REAL TIME PLOT
+	public static int truckactive = 0;
+	public static int truckinactive = Constant.TruckQty;
+	
+	public static int agvactive = 0;
+	public static int agvinactive = Constant.AgvQty;
+	
+	public static int cdccargoserve = 0;
+	public static int cdccargounserve = 0;
+	
+	public static int factcargoserve = 0;
+	public static int factcargounserve = 0;
+	
+	public static int totalcargoserve = 0;
+	public static int totalcargounserve = 0;
 	
 	public Central(){
 		

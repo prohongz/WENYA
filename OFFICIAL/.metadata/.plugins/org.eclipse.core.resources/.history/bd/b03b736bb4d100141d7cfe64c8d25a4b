@@ -37,6 +37,11 @@ import javax.swing.JSlider;
 
 import Simulator.Constant;
 
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings({ "unchecked", "rawtypes" , "serial"})
 public class StartUI extends JFrame{
 
@@ -45,6 +50,10 @@ public class StartUI extends JFrame{
 	private JTextField cdccargo;
 	private JTextField factcargo;
 	
+	int cdctotal = 0;
+	int facttotal = 0;
+	int cdccargode;
+	int factcargode;
 
 	
 	
@@ -167,8 +176,10 @@ public class StartUI extends JFrame{
         JComboBox SimuStarttime = new JComboBox();
         
         SimuStarttime.setModel(new DefaultComboBoxModel(new String[] {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00 ", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}));
+        SimuStarttime.setSelectedIndex(5);
         
         SimuEndday = new JTextField();
+        SimuEndday.setText("100");
         
         SimuEndday.setColumns(10);
         
@@ -293,12 +304,28 @@ public class StartUI extends JFrame{
 		JLabel lblMin = new JLabel("min");
 		
 		JLabel lblHr_2 = new JLabel("HR");
+		
+		JLabel lblNumberOfBays = new JLabel("Number of Bays:");
+		
+		JComboBox CDCBay = new JComboBox();
+		CDCBay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		
+		JLabel lblMaximumCargoLimit = new JLabel("Maximum Cargo Limit:");
+		
+		JComboBox cdccargolimit = new JComboBox();
+		cdccargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		GroupLayout gl_cdcoperation = new GroupLayout(cdcoperation);
 		gl_cdcoperation.setHorizontalGroup(
 			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_cdcoperation.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_cdcoperation.createSequentialGroup()
+							.addComponent(lblCargoProcessingTime)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(CDCTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblMin))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
 							.addComponent(lblOperationHours)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -310,12 +337,14 @@ public class StartUI extends JFrame{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblHr_2))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
-							.addComponent(lblCargoProcessingTime)
+							.addComponent(lblMaximumCargoLimit)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(cdccargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_cdcoperation.createSequentialGroup()
+							.addComponent(lblNumberOfBays)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(CDCTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblMin)))
-					.addContainerGap(252, Short.MAX_VALUE))
+							.addComponent(CDCBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(284, Short.MAX_VALUE))
 		);
 		gl_cdcoperation.setVerticalGroup(
 			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
@@ -332,7 +361,15 @@ public class StartUI extends JFrame{
 						.addComponent(lblCargoProcessingTime)
 						.addComponent(CDCTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMin))
-					.addContainerGap(289, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumCargoLimit)
+						.addComponent(cdccargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNumberOfBays)
+						.addComponent(CDCBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(237, Short.MAX_VALUE))
 		);
 		cdcoperation.setLayout(gl_cdcoperation);
 		
@@ -342,6 +379,7 @@ public class StartUI extends JFrame{
 		JLabel lblCargoDemandPer = new JLabel("Cargo Demand Per Day: ");
 		
 		cdccargo = new JTextField();
+		cdccargo.setText("10");
 		cdccargo.setColumns(10);
 		
 		JLabel lblDemandCurve = new JLabel("Demand:");
@@ -358,9 +396,13 @@ public class StartUI extends JFrame{
 		JSlider slider_9 = new JSlider();
 		JSlider slider_10 = new JSlider();
 		JSlider slider_11 = new JSlider();
+		slider_11.setEnabled(false);
 		JSlider slider_12 = new JSlider();
+		slider_12.setEnabled(false);
 		JSlider slider_13 = new JSlider();
+		slider_13.setEnabled(false);
 		JSlider slider_14 = new JSlider();
+		slider_14.setEnabled(false);
 		
 		slider.setValue(0);
 		slider.setOrientation(SwingConstants.VERTICAL);
@@ -568,6 +610,16 @@ public class StartUI extends JFrame{
 		JLabel lblMin_1 = new JLabel("min");
 		
 		JLabel lblHr_3 = new JLabel("HR");
+		
+		JLabel lblNumberOfBays_1 = new JLabel("Number of Bays: ");
+		
+		JComboBox FactBay = new JComboBox();
+		FactBay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		
+		JLabel lblMaximumCargoLimit_1 = new JLabel("Maximum Cargo Limit:");
+		
+		JComboBox factcargolimit = new JComboBox();
+		factcargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		GroupLayout gl_agvoperation = new GroupLayout(agvoperation);
 		gl_agvoperation.setHorizontalGroup(
 			gl_agvoperation.createParallelGroup(Alignment.LEADING)
@@ -584,7 +636,7 @@ public class StartUI extends JFrame{
 							.addComponent(FactoryEnd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblHr_3)
-							.addPreferredGap(ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
 							.addComponent(chckbxSameAsCdc)
 							.addGap(28))
 						.addGroup(gl_agvoperation.createSequentialGroup()
@@ -593,7 +645,17 @@ public class StartUI extends JFrame{
 							.addComponent(FactTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblMin_1)
-							.addContainerGap(334, Short.MAX_VALUE))))
+							.addContainerGap(334, Short.MAX_VALUE))
+						.addGroup(gl_agvoperation.createSequentialGroup()
+							.addComponent(lblMaximumCargoLimit_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(factcargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(374, Short.MAX_VALUE))
+						.addGroup(gl_agvoperation.createSequentialGroup()
+							.addComponent(lblNumberOfBays_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(FactBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(392, Short.MAX_VALUE))))
 		);
 		gl_agvoperation.setVerticalGroup(
 			gl_agvoperation.createParallelGroup(Alignment.LEADING)
@@ -611,7 +673,15 @@ public class StartUI extends JFrame{
 						.addComponent(lblCargoProcessingTime_1)
 						.addComponent(FactTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMin_1))
-					.addContainerGap(289, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_agvoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumCargoLimit_1)
+						.addComponent(factcargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_agvoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblNumberOfBays_1)
+						.addComponent(FactBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(237, Short.MAX_VALUE))
 		);
 		agvoperation.setLayout(gl_agvoperation);
 		
@@ -621,11 +691,13 @@ public class StartUI extends JFrame{
 		JLabel lblCargoDemandPer_1 = new JLabel("Cargo Demand Per Day: ");
 		
 		factcargo = new JTextField();
+		factcargo.setText("10");
 		factcargo.setColumns(10);
 		
 		JLabel lblDemand = new JLabel("Demand:");
 		
 		JSlider slider_16 = new JSlider();
+		slider_16.setMinorTickSpacing(1);
 		slider_16.setValue(0);
 		slider_16.setOrientation(SwingConstants.VERTICAL);
 		
@@ -670,18 +742,22 @@ public class StartUI extends JFrame{
 		slider_26.setValue(0);
 		
 		JSlider slider_27 = new JSlider();
+		slider_27.setEnabled(false);
 		slider_27.setValue(0);
 		slider_27.setOrientation(SwingConstants.VERTICAL);
 		
 		JSlider slider_28 = new JSlider();
+		slider_28.setEnabled(false);
 		slider_28.setOrientation(SwingConstants.VERTICAL);
 		slider_28.setValue(0);
 		
 		JSlider slider_29 = new JSlider();
+		slider_29.setEnabled(false);
 		slider_29.setValue(0);
 		slider_29.setOrientation(SwingConstants.VERTICAL);
 		
 		JSlider slider_30 = new JSlider();
+		slider_30.setEnabled(false);
 		slider_30.setValue(0);
 		slider_30.setOrientation(SwingConstants.VERTICAL);
 		
@@ -723,22 +799,22 @@ public class StartUI extends JFrame{
 							.addGap(29)
 							.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 44, GroupLayout.PREFERRED_SIZE)
 							.addGap(116)))
-					.addGroup(gl_agvdemand.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_agvdemand.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_agvdemand.createSequentialGroup()
 							.addComponent(slider_21, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(slider_22, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(slider_23, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18))
+							.addGap(18)
+							.addComponent(slider_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(slider_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(slider_26, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_agvdemand.createSequentialGroup()
-							.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addComponent(slider_24, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(slider_25, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(slider_26, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(10)
+							.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 46, GroupLayout.PREFERRED_SIZE)))
 					.addGap(18)
 					.addGroup(gl_agvdemand.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_agvdemand.createSequentialGroup()
@@ -1233,6 +1309,16 @@ public class StartUI extends JFrame{
 				if(chckbxSameAsCdc.isSelected()==true){
 					FactoryStart.setSelectedIndex(CDCStart.getSelectedIndex());
 				}
+				if(CDCStart.getSelectedIndex()==0){
+					slider.setValue(0);
+					slider.setEnabled(true);
+					slider_1.setValue(0);
+					slider_1.setEnabled(true);
+					slider_2.setValue(0);
+					slider_2.setEnabled(true);
+					slider_3.setValue(0);
+					slider_3.setEnabled(true);
+				}
 				if(CDCStart.getSelectedIndex()==1){
 					slider.setValue(0);
 					slider.setEnabled(false);
@@ -1240,6 +1326,8 @@ public class StartUI extends JFrame{
 					slider_1.setEnabled(true);
 					slider_2.setValue(0);
 					slider_2.setEnabled(true);
+					slider_3.setValue(0);
+					slider_3.setEnabled(true);
 				}
 				if(CDCStart.getSelectedIndex()==2){
 					slider.setValue(0);
@@ -1247,7 +1335,9 @@ public class StartUI extends JFrame{
 					slider_1.setValue(0);
 					slider_1.setEnabled(false);
 					slider_2.setValue(0);
-					slider_2.setEnabled(true);
+					slider_2.setEnabled(true);	
+					slider_3.setValue(0);
+					slider_3.setEnabled(true);
 				}
 				if(CDCStart.getSelectedIndex()==3){
 					slider.setValue(0);
@@ -1255,7 +1345,9 @@ public class StartUI extends JFrame{
 					slider_1.setValue(0);
 					slider_1.setEnabled(false);
 					slider_2.setValue(0);
-					slider_2.setEnabled(false);					
+					slider_2.setEnabled(false);
+					slider_3.setValue(0);
+					slider_3.setEnabled(true);
 				}
 				if(CDCStart.getSelectedIndex()==4){
 					slider.setValue(0);
@@ -1265,7 +1357,7 @@ public class StartUI extends JFrame{
 					slider_2.setValue(0);
 					slider_2.setEnabled(false);
 					slider_3.setValue(0);
-					slider_3.setEnabled(false);
+					slider_3.setEnabled(true);
 				}
 			}
 		});
@@ -1274,9 +1366,19 @@ public class StartUI extends JFrame{
 				if(chckbxSameAsCdc.isSelected()==true){
 					FactoryEnd.setSelectedIndex(CDCEnd.getSelectedIndex());
 				}
-				if(CDCEnd.getSelectedIndex()==1){
+				if(CDCEnd.getSelectedIndex()==0){
 					slider_11.setValue(0);
 					slider_11.setEnabled(false);
+					slider_12.setValue(0);
+					slider_12.setEnabled(false);
+					slider_13.setValue(0);
+					slider_13.setEnabled(false);
+					slider_14.setValue(0);
+					slider_14.setEnabled(false);
+				}
+				if(CDCEnd.getSelectedIndex()==1){
+					slider_11.setValue(0);
+					slider_11.setEnabled(true);
 					slider_12.setValue(0);
 					slider_12.setEnabled(false);
 					slider_13.setValue(0);
@@ -1288,23 +1390,13 @@ public class StartUI extends JFrame{
 					slider_11.setValue(0);
 					slider_11.setEnabled(true);
 					slider_12.setValue(0);
-					slider_12.setEnabled(false);
-					slider_13.setValue(0);
-					slider_13.setEnabled(false);
-					slider_14.setValue(0);
-					slider_14.setEnabled(false);
-				}
-				if(CDCEnd.getSelectedIndex()==3){
-					slider_11.setValue(0);
-					slider_11.setEnabled(true);
-					slider_12.setValue(0);
 					slider_12.setEnabled(true);
 					slider_13.setValue(0);
 					slider_13.setEnabled(false);
 					slider_14.setValue(0);
 					slider_14.setEnabled(false);					
 				}
-				if(CDCEnd.getSelectedIndex()==4){
+				if(CDCEnd.getSelectedIndex()==3){
 					slider_11.setValue(0);
 					slider_11.setEnabled(true);
 					slider_12.setValue(0);
@@ -1314,7 +1406,7 @@ public class StartUI extends JFrame{
 					slider_14.setValue(0);
 					slider_14.setEnabled(false);
 				}
-				if(CDCEnd.getSelectedIndex()==5){
+				if(CDCEnd.getSelectedIndex()==4){
 					slider_11.setValue(0);
 					slider_11.setEnabled(true);
 					slider_12.setValue(0);
@@ -1329,9 +1421,19 @@ public class StartUI extends JFrame{
 		
 		FactoryStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(FactoryStart.getSelectedIndex()==1){
+				if(FactoryStart.getSelectedIndex()==0){
 					slider_16.setValue(0);
 					slider_16.setEnabled(true);
+					slider_17.setValue(0);
+					slider_17.setEnabled(true);
+					slider_18.setValue(0);
+					slider_18.setEnabled(true);
+					slider_19.setValue(0);
+					slider_19.setEnabled(true);
+				}
+				if(FactoryStart.getSelectedIndex()==1){
+					slider_16.setValue(0);
+					slider_16.setEnabled(false);
 					slider_17.setValue(0);
 					slider_17.setEnabled(true);
 					slider_18.setValue(0);
@@ -1343,9 +1445,9 @@ public class StartUI extends JFrame{
 					slider_16.setValue(0);
 					slider_16.setEnabled(false);
 					slider_17.setValue(0);
-					slider_17.setEnabled(true);
+					slider_17.setEnabled(false);
 					slider_18.setValue(0);
-					slider_18.setEnabled(true);
+					slider_18.setEnabled(true);	
 					slider_19.setValue(0);
 					slider_19.setEnabled(true);
 				}
@@ -1355,10 +1457,9 @@ public class StartUI extends JFrame{
 					slider_17.setValue(0);
 					slider_17.setEnabled(false);
 					slider_18.setValue(0);
-					slider_18.setEnabled(true);
+					slider_18.setEnabled(false);
 					slider_19.setValue(0);
 					slider_19.setEnabled(true);
-					
 				}
 				if(FactoryStart.getSelectedIndex()==4){
 					slider_16.setValue(0);
@@ -1375,7 +1476,7 @@ public class StartUI extends JFrame{
 		
 		FactoryEnd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(FactoryEnd.getSelectedIndex()==1){
+				if(FactoryEnd.getSelectedIndex()==0){
 					slider_27.setValue(0);
 					slider_27.setEnabled(false);
 					slider_28.setValue(0);
@@ -1385,7 +1486,7 @@ public class StartUI extends JFrame{
 					slider_30.setValue(0);
 					slider_30.setEnabled(false);
 				}
-				if(FactoryEnd.getSelectedIndex()==2){
+				if(FactoryEnd.getSelectedIndex()==1){
 					slider_27.setValue(0);
 					slider_27.setEnabled(true);
 					slider_28.setValue(0);
@@ -1395,7 +1496,7 @@ public class StartUI extends JFrame{
 					slider_30.setValue(0);
 					slider_30.setEnabled(false);					
 				}
-				if(FactoryEnd.getSelectedIndex()==3){
+				if(FactoryEnd.getSelectedIndex()==2){
 					slider_27.setValue(0);
 					slider_27.setEnabled(true);
 					slider_28.setValue(0);
@@ -1405,7 +1506,7 @@ public class StartUI extends JFrame{
 					slider_30.setValue(0);
 					slider_30.setEnabled(false);
 				}
-				if(FactoryEnd.getSelectedIndex()==4){
+				if(FactoryEnd.getSelectedIndex()==3){
 					slider_27.setValue(0);
 					slider_27.setEnabled(true);
 					slider_28.setValue(0);
@@ -1415,7 +1516,7 @@ public class StartUI extends JFrame{
 					slider_30.setValue(0);
 					slider_30.setEnabled(false);
 				}
-				if(FactoryEnd.getSelectedIndex()==5){
+				if(FactoryEnd.getSelectedIndex()==4){
 					slider_27.setValue(0);
 					slider_27.setEnabled(true);
 					slider_28.setValue(0);
@@ -1596,16 +1697,43 @@ public class StartUI extends JFrame{
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		        }
-	
-				//VALIDATOR FOR AT LEAST ONE FORM OF TRANSPORTATION
-				if(chckbxEnableTruckOperation.isSelected() == false){
-					if(chckbxEnableAgvOperation.isSelected() == false){
-			               JOptionPane.showMessageDialog(null, "Please select at least one mode of transportation.");
-			               return;
-					}
-				}
 				
-				//CALCULATE DEMAND PATTERN
+				
+				
+				//TRANSFER VALUE INTO CONSTANT FOR SIMULATOR USAGE
+				
+				//TRANSFER START TIME, END DAY AND END TIME
+				String time = (String) SimuStarttime.getSelectedItem();
+				Constant.starthour = Integer.parseInt( time.split(":")[0] );
+				Constant.endday = Integer.valueOf((String) SimuEndday.getText());
+				time = (String) SimuEndtime.getSelectedItem();
+				Constant.endhour = Integer.parseInt( time.split(":")[0] );
+				
+				//TRANSFER CDC OPERATION TIME
+				time = (String) CDCStart.getSelectedItem();
+				Constant.CDCstarth = Integer.parseInt( time.split(":")[0] );
+				time = (String) CDCEnd.getSelectedItem();
+				Constant.CDCendh = Integer.parseInt( time.split(":")[0] );
+				
+				//TRANSFER FACTORY OPERATION TIME
+				time = (String) FactoryStart.getSelectedItem();
+				Constant.Factstarth = Integer.parseInt( time.split(":")[0] );
+				time = (String) FactoryEnd.getSelectedItem();
+				Constant.Factendh = Integer.parseInt( time.split(":")[0] );
+				
+				//TRANSFER CDC AND FACTORY CARGO TURNOVER
+				Constant.CDCcargoturnover = Integer.parseInt( (String) CDCTurnover.getSelectedItem());
+				Constant.Factcargoturnover = Integer.parseInt( (String) FactTurnover.getSelectedItem());
+				
+				//TRANSFER CDC AND FACTORY CARGO TURNOVER
+				Constant.CDCcargolimit = Integer.parseInt( (String) cdccargolimit.getSelectedItem());
+				Constant.Factcargolimit = Integer.parseInt( (String) factcargolimit.getSelectedItem());
+				
+				//TRANSFER CDC AND FACTORY BAY
+				Constant.CDCbay = Integer.parseInt( (String) CDCBay.getSelectedItem());
+				Constant.Factbay = Integer.parseInt( (String) FactBay.getSelectedItem());
+				
+				//CALCULATE AND TRANSFER DEMAND PATTERN
 				Constant.CDCdemandh[0] = slider.getValue();
 				Constant.CDCdemandh[1] = slider_1.getValue();
 				Constant.CDCdemandh[2] = slider_2.getValue();
@@ -1622,74 +1750,95 @@ public class StartUI extends JFrame{
 				Constant.CDCdemandh[13] = slider_13.getValue();
 				Constant.CDCdemandh[14] = slider_14.getValue();
 				
-				int cdctotal = 0;
+				Constant.Factdemandh[0] = slider_16.getValue();
+				Constant.Factdemandh[1] = slider_17.getValue();
+				Constant.Factdemandh[2] = slider_18.getValue();
+				Constant.Factdemandh[3] = slider_19.getValue();
+				Constant.Factdemandh[4] = slider_20.getValue();
+				Constant.Factdemandh[5] = slider_21.getValue();
+				Constant.Factdemandh[6] = slider_22.getValue();
+				Constant.Factdemandh[7] = slider_23.getValue();
+				Constant.Factdemandh[8] = slider_24.getValue();
+				Constant.Factdemandh[9] = slider_25.getValue();
+				Constant.Factdemandh[10] = slider_26.getValue();
+				Constant.Factdemandh[11] = slider_27.getValue();
+				Constant.Factdemandh[12] = slider_28.getValue();
+				Constant.Factdemandh[13] = slider_29.getValue();
+				Constant.Factdemandh[14] = slider_30.getValue();
+				
 				for(int i=0; i<15; i++){
 					cdctotal = cdctotal + Constant.CDCdemandh[i];
 				}
+				try{
+					if (cdctotal==0) {
+						tabbedPane.setSelectedIndex(1);
+		            	tabbedPane_3.setSelectedIndex(1);
+		                JOptionPane.showMessageDialog(null, "Please input the demand for CDC.");   
+		                return;
+		            }
+				}catch (Exception e) {
+		            e.printStackTrace();
+		        }
 				
-				Constant.CDCdemandh[0] = (Constant.CDCdemandh[0]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[1] = (Constant.CDCdemandh[1]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[2] = (Constant.CDCdemandh[2]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[3] = (Constant.CDCdemandh[3]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[4] = (Constant.CDCdemandh[4]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[5] = (Constant.CDCdemandh[5]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[6] = (Constant.CDCdemandh[6]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[7] = (Constant.CDCdemandh[7]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[8] = (Constant.CDCdemandh[8]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[9] = (Constant.CDCdemandh[9]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[10] = (Constant.CDCdemandh[10]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[11] = (Constant.CDCdemandh[11]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[12] = (Constant.CDCdemandh[12]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[13] = (Constant.CDCdemandh[13]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.CDCdemandh[14] = (Constant.CDCdemandh[14]/cdctotal)* Integer.valueOf(cdccargo.getText());
-						
-				Constant.Factdemandh[0] = slider.getValue();
-				Constant.Factdemandh[1] = slider_1.getValue();
-				Constant.Factdemandh[2] = slider_2.getValue();
-				Constant.Factdemandh[3] = slider_3.getValue();
-				Constant.Factdemandh[4] = slider_4.getValue();
-				Constant.Factdemandh[5] = slider_5.getValue();
-				Constant.Factdemandh[6] = slider_6.getValue();
-				Constant.Factdemandh[7] = slider_7.getValue();
-				Constant.Factdemandh[8] = slider_8.getValue();
-				Constant.Factdemandh[9] = slider_9.getValue();
-				Constant.Factdemandh[10] = slider_10.getValue();
-				Constant.Factdemandh[11] = slider_11.getValue();
-				Constant.Factdemandh[12] = slider_12.getValue();
-				Constant.Factdemandh[13] = slider_13.getValue();
-				Constant.Factdemandh[14] = slider_14.getValue();
-				
-				Constant.Factdemandh[0] = (Constant.Factdemandh[0]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[1] = (Constant.Factdemandh[1]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[2] = (Constant.Factdemandh[2]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[3] = (Constant.Factdemandh[3]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[4] = (Constant.Factdemandh[4]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[5] = (Constant.Factdemandh[5]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[6] = (Constant.Factdemandh[6]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[7] = (Constant.Factdemandh[7]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[8] = (Constant.Factdemandh[8]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[9] = (Constant.Factdemandh[9]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[10] = (Constant.Factdemandh[10]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[11] = (Constant.Factdemandh[11]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[12] = (Constant.Factdemandh[12]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[13] = (Constant.Factdemandh[13]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				Constant.Factdemandh[14] = (Constant.Factdemandh[14]/cdctotal)* Integer.valueOf(cdccargo.getText());
-				
-				int facttotal = 0;
 				for(int i=0; i<15; i++){
 					facttotal = facttotal + Constant.Factdemandh[i];
 				}
+				try{
+					if (facttotal==0) {
+						tabbedPane.setSelectedIndex(2);
+		            	tabbedPane_1.setSelectedIndex(1);
+		                JOptionPane.showMessageDialog(null, "Please input the demand for Factory.");   
+		                return;
+		            }
+				}catch (Exception e) {
+		            e.printStackTrace();
+		        }
+
+				cdccargode = Integer.valueOf(cdccargo.getText());
+				factcargode = Integer.valueOf(factcargo.getText());
 				
-				
-				//TRANSFER VALUE INTO CONSTANT FOR SIMULATOR USAGE
-				System.out.println("Hello, we are starting soon!");
-				
-				String time = (String) SimuStarttime.getSelectedItem();
-				Constant.starthour = Integer.parseInt( time.split(":")[0] );
-				Constant.endday = Integer.valueOf((String) SimuEndday.getText());
-				time = (String) SimuEndtime.getSelectedItem();
-				Constant.endhour = Integer.parseInt( time.split(":")[0] );
+				Constant.CDCdemandh[0] = (int) (((float) Constant.CDCdemandh[0]/cdctotal)*cdccargode);
+				Constant.CDCdemandh[1] = (int) (((float) Constant.CDCdemandh[1]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[2] = (int) (((float) Constant.CDCdemandh[2]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[3] = (int) (((float) Constant.CDCdemandh[3]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[4] = (int) (((float) Constant.CDCdemandh[4]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[5] = (int) (((float) Constant.CDCdemandh[5]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[6] = (int) (((float) Constant.CDCdemandh[6]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[7] = (int) (((float) Constant.CDCdemandh[7]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[8] = (int) (((float) Constant.CDCdemandh[8]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[9] = (int) (((float) Constant.CDCdemandh[9]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[10] = (int) (((float) Constant.CDCdemandh[10]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[11] = (int) (((float) Constant.CDCdemandh[11]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[12] = (int) (((float) Constant.CDCdemandh[12]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[13] = (int) (((float) Constant.CDCdemandh[13]/cdctotal)* cdccargode);
+				Constant.CDCdemandh[14] = (int) (((float) Constant.CDCdemandh[14]/cdctotal)* cdccargode);
 					
+				Constant.Factdemandh[0] = (int) (((float) Constant.Factdemandh[0]/facttotal)* factcargode);
+				Constant.Factdemandh[1] = (int) (((float) Constant.Factdemandh[1]/facttotal)* factcargode);
+				Constant.Factdemandh[2] = (int) (((float) Constant.Factdemandh[2]/facttotal)* factcargode);
+				Constant.Factdemandh[3] = (int) (((float) Constant.Factdemandh[3]/facttotal)* factcargode);
+				Constant.Factdemandh[4] = (int) (((float) Constant.Factdemandh[4]/facttotal)* factcargode);
+				Constant.Factdemandh[5] = (int) (((float) Constant.Factdemandh[5]/facttotal)* factcargode);
+				Constant.Factdemandh[6] = (int) (((float) Constant.Factdemandh[6]/facttotal)* factcargode);
+				Constant.Factdemandh[7] = (int) (((float) Constant.Factdemandh[7]/facttotal)* factcargode);
+				Constant.Factdemandh[8] = (int) (((float) Constant.Factdemandh[8]/facttotal)* factcargode);
+				Constant.Factdemandh[9] = (int) (((float) Constant.Factdemandh[9]/facttotal)* factcargode);
+				Constant.Factdemandh[10] = (int) (((float) Constant.Factdemandh[10]/facttotal)* factcargode);
+				Constant.Factdemandh[11] = (int) (((float) Constant.Factdemandh[11]/facttotal)* factcargode);
+				Constant.Factdemandh[12] = (int) (((float) Constant.Factdemandh[12]/facttotal)* factcargode);
+				Constant.Factdemandh[13] = (int) (((float) Constant.Factdemandh[13]/facttotal)* factcargode);
+				Constant.Factdemandh[14] = (int) (((float) Constant.Factdemandh[14]/facttotal)* factcargode);
+		
+				//VALIDATOR FOR AT LEAST ONE FORM OF TRANSPORTATION
+				if(chckbxEnableTruckOperation.isSelected() == false){
+					if(chckbxEnableAgvOperation.isSelected() == false){
+						tabbedPane.setSelectedIndex(3);
+						JOptionPane.showMessageDialog(null, "Please select at least one mode of transportation.");
+						return;
+					}
+				}
+				
+				//TRANSFER TRUCK VARIABLES
 				Constant.TruckMode = chckbxEnableTruckOperation.isSelected();
 				if(chckbxEnableTruckOperation.isSelected()==true){
 					Constant.TruckQty = Integer.valueOf((String) TruckQty.getSelectedItem());
@@ -1733,6 +1882,8 @@ public class StartUI extends JFrame{
 					System.out.println(Constant.AgvDistGap);
 					*/
 				}
+				
+				System.out.println("Be patient, we are starting soon!");
 				
 				//KILL CURRRENT WINDOW AND CALL FOR THE NEXT WINDOW
 				setVisible(false);
