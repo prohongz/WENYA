@@ -91,7 +91,8 @@ public class Save extends JFrame {
 							+ Constant.CDCstartm 
 							+ Constant.CDCendh 
 							+ Constant.CDCendm 
-							+ Constant.CDCcargoto 
+							+ Constant.CDCcargoturnover
+							+ Constant.CDCcargolimit
 							+ Constant.CDCbay + "\n");
 					
 					for(int i = 0; i < 15; i++){
@@ -102,7 +103,8 @@ public class Save extends JFrame {
 							+ Constant.Factstartm
 							+ Constant.Factendh
 							+ Constant.Factendm
-							+ Constant.Factcargoto
+							+ Constant.Factcargoturnover
+							+ Constant.Factcargolimit
 							+ Constant.Factbay + "\n");
 							
 					for(int i = 0; i < 15; i++){

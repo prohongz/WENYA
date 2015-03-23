@@ -23,7 +23,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-import Simulator.Central;
 import Simulator.Constant;
 import Simulator.DrawSim;
 import Simulator.Buildingframe;
@@ -37,6 +36,8 @@ import javax.swing.JSlider;
 import javax.swing.JLabel;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+import java.awt.Color;
+import javax.swing.SwingConstants;
 
 @SuppressWarnings("serial")
 public class SimulatorWindow extends JFrame {
@@ -75,24 +76,7 @@ public class SimulatorWindow extends JFrame {
 		realtime.start();
 		
 		JButton btnPause = new JButton("Pause");
-		btnPause.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {				
-				if (btnPause.getText() == "Pause"){
-					btnPause.setText("Resume");
-					
-					//PROCEED TO PAUSE THE SIMULATOR
-					Simu.suspend();
-				}
-				else{
-					btnPause.setText("Pause");
-					
-					//PROCEED TO RESUME THE SIMULATOR
-					Simu.resume();
-					realtime.resume();
-				}
-				
-			}
-		});
+		
 		
 		JButton btnExit = new JButton("Exit");
 		
@@ -162,21 +146,24 @@ public class SimulatorWindow extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+					.addGap(1)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, 358, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnScreenshot))
+						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+							.addGap(162)
 							.addComponent(btnSave)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnScreenshot)
-							.addGap(6)
-							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-							.addGap(6)
-							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -186,14 +173,15 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
 						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnScreenshot)
-								.addComponent(btnSave))
-							.addComponent(btnPause)
-							.addComponent(btnExit))
-						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnScreenshot)
+							.addComponent(btnPause))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnExit)
+							.addComponent(btnSave)))
+					.addContainerGap())
 		);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
 		
@@ -202,9 +190,11 @@ public class SimulatorWindow extends JFrame {
 		btnf01.setBorderPainted(false);
 		btnf01.setIcon(new ImageIcon(SimulatorWindow.class.getResource("/misc/fact.gif")));
 		btnf01.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
+		btnf01.setHorizontalTextPosition(JButton.CENTER);
+		btnf01.setVerticalTextPosition(JButton.CENTER);
 		btnf01.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(1);
+				Buildingframe frame = new Buildingframe(1, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -217,7 +207,7 @@ public class SimulatorWindow extends JFrame {
 		btnf02.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf02.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(2);
+				Buildingframe frame = new Buildingframe(2, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -230,7 +220,7 @@ public class SimulatorWindow extends JFrame {
 		btnf03.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf03.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(3);
+				Buildingframe frame = new Buildingframe(3, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -243,7 +233,7 @@ public class SimulatorWindow extends JFrame {
 		btnf04.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf04.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(4);
+				Buildingframe frame = new Buildingframe(4, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -256,7 +246,7 @@ public class SimulatorWindow extends JFrame {
 		btnf05.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf05.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(5);
+				Buildingframe frame = new Buildingframe(5, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -269,7 +259,7 @@ public class SimulatorWindow extends JFrame {
 		btnf06.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf06.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(6);
+				Buildingframe frame = new Buildingframe(6, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -282,7 +272,7 @@ public class SimulatorWindow extends JFrame {
 		btnf07.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf07.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(7);
+				Buildingframe frame = new Buildingframe(7, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -295,7 +285,7 @@ public class SimulatorWindow extends JFrame {
 		btnf08.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf08.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(8);
+				Buildingframe frame = new Buildingframe(8, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -308,7 +298,7 @@ public class SimulatorWindow extends JFrame {
 		btnf09.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf09.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(9);
+				Buildingframe frame = new Buildingframe(9, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -321,7 +311,7 @@ public class SimulatorWindow extends JFrame {
 		btnf10.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf10.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(10);
+				Buildingframe frame = new Buildingframe(10, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -334,7 +324,7 @@ public class SimulatorWindow extends JFrame {
 		btnf11.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf11.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(11);
+				Buildingframe frame = new Buildingframe(11, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -347,7 +337,7 @@ public class SimulatorWindow extends JFrame {
 		btnf12.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf12.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(12);
+				Buildingframe frame = new Buildingframe(12, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -360,7 +350,7 @@ public class SimulatorWindow extends JFrame {
 		btnf13.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf13.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(13);
+				Buildingframe frame = new Buildingframe(13, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -373,7 +363,7 @@ public class SimulatorWindow extends JFrame {
 		btnf14.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf14.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(14);
+				Buildingframe frame = new Buildingframe(14, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -386,7 +376,7 @@ public class SimulatorWindow extends JFrame {
 		btnf15.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf15.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(15);
+				Buildingframe frame = new Buildingframe(15, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -399,7 +389,7 @@ public class SimulatorWindow extends JFrame {
 		btnf30.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf30.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(30);
+				Buildingframe frame = new Buildingframe(30, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -412,7 +402,7 @@ public class SimulatorWindow extends JFrame {
 		btnf29.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf29.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(29);
+				Buildingframe frame = new Buildingframe(29, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -425,7 +415,7 @@ public class SimulatorWindow extends JFrame {
 		btnf28.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf28.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(28);
+				Buildingframe frame = new Buildingframe(28, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -438,7 +428,7 @@ public class SimulatorWindow extends JFrame {
 		btnf27.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf27.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(27);
+				Buildingframe frame = new Buildingframe(27, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -451,7 +441,7 @@ public class SimulatorWindow extends JFrame {
 		btnf26.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf26.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(26);
+				Buildingframe frame = new Buildingframe(26, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -464,7 +454,7 @@ public class SimulatorWindow extends JFrame {
 		btnf25.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf25.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(25);
+				Buildingframe frame = new Buildingframe(25, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -477,7 +467,7 @@ public class SimulatorWindow extends JFrame {
 		btnf24.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf24.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(24);
+				Buildingframe frame = new Buildingframe(24, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -490,7 +480,7 @@ public class SimulatorWindow extends JFrame {
 		btnf23.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf23.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(23);
+				Buildingframe frame = new Buildingframe(23, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -503,7 +493,7 @@ public class SimulatorWindow extends JFrame {
 		btnf22.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf22.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(22);
+				Buildingframe frame = new Buildingframe(22, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -516,7 +506,7 @@ public class SimulatorWindow extends JFrame {
 		btnf21.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf21.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(21);
+				Buildingframe frame = new Buildingframe(21, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -529,7 +519,7 @@ public class SimulatorWindow extends JFrame {
 		btnf20.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf20.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(20);
+				Buildingframe frame = new Buildingframe(20, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -542,7 +532,7 @@ public class SimulatorWindow extends JFrame {
 		btnf19.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf19.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(19);
+				Buildingframe frame = new Buildingframe(19, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -555,7 +545,7 @@ public class SimulatorWindow extends JFrame {
 		btnf18.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf18.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(18);
+				Buildingframe frame = new Buildingframe(18, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -568,7 +558,7 @@ public class SimulatorWindow extends JFrame {
 		btnf17.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf17.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(17);
+				Buildingframe frame = new Buildingframe(17, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -581,7 +571,7 @@ public class SimulatorWindow extends JFrame {
 		btnf16.setRolloverIcon(new ImageIcon("src/misc/factover.gif"));
 		btnf16.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(16);
+				Buildingframe frame = new Buildingframe(16, 'F');
 				frame.start();
 				frame.setVisible(true);
 			}
@@ -594,88 +584,268 @@ public class SimulatorWindow extends JFrame {
 		btnCDC.setRolloverIcon(new ImageIcon("src/misc/cdcover.gif"));
 		btnCDC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				Buildingframe frame = new Buildingframe(0);
+				Buildingframe frame = new Buildingframe(101, 'C');
 				frame.start();
 				frame.setVisible(true);
 			}
 		});
 		
+		JLabel label_1 = new JLabel("30");
+		label_1.setForeground(Color.WHITE);
+		label_1.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_2 = new JLabel("29");
+		label_2.setForeground(Color.WHITE);
+		label_2.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_3 = new JLabel("28");
+		label_3.setForeground(Color.WHITE);
+		label_3.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_4 = new JLabel("27");
+		label_4.setForeground(Color.WHITE);
+		label_4.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_5 = new JLabel("26");
+		label_5.setForeground(Color.WHITE);
+		label_5.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_6 = new JLabel("25");
+		label_6.setForeground(Color.WHITE);
+		label_6.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_7 = new JLabel("24");
+		label_7.setForeground(Color.WHITE);
+		label_7.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_8 = new JLabel("23");
+		label_8.setForeground(Color.WHITE);
+		label_8.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_9 = new JLabel("22");
+		label_9.setForeground(Color.WHITE);
+		label_9.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_10 = new JLabel("21");
+		label_10.setForeground(Color.WHITE);
+		label_10.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_11 = new JLabel("20");
+		label_11.setForeground(Color.WHITE);
+		label_11.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_12 = new JLabel("19");
+		label_12.setForeground(Color.WHITE);
+		label_12.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_13 = new JLabel("18");
+		label_13.setForeground(Color.WHITE);
+		label_13.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_14 = new JLabel("17");
+		label_14.setForeground(Color.WHITE);
+		label_14.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label_15 = new JLabel("16");
+		label_15.setForeground(Color.WHITE);
+		label_15.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		JLabel label = new JLabel("1");
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.WHITE);
+		
+		JLabel label_16 = new JLabel("2");
+		label_16.setHorizontalAlignment(SwingConstants.CENTER);
+		label_16.setForeground(Color.WHITE);
+		
+		JLabel label_17 = new JLabel("3");
+		label_17.setHorizontalAlignment(SwingConstants.CENTER);
+		label_17.setForeground(Color.WHITE);
+		
+		JLabel label_18 = new JLabel("4");
+		label_18.setHorizontalAlignment(SwingConstants.CENTER);
+		label_18.setForeground(Color.WHITE);
+		
+		JLabel label_19 = new JLabel("5");
+		label_19.setHorizontalAlignment(SwingConstants.CENTER);
+		label_19.setForeground(Color.WHITE);
+		
+		JLabel label_20 = new JLabel("6");
+		label_20.setHorizontalAlignment(SwingConstants.CENTER);
+		label_20.setForeground(Color.WHITE);
+		
+		JLabel label_21 = new JLabel("7");
+		label_21.setHorizontalAlignment(SwingConstants.CENTER);
+		label_21.setForeground(Color.WHITE);
+		
+		JLabel label_22 = new JLabel("8");
+		label_22.setHorizontalAlignment(SwingConstants.CENTER);
+		label_22.setForeground(Color.WHITE);
+		
+		JLabel label_23 = new JLabel("9");
+		label_23.setHorizontalAlignment(SwingConstants.CENTER);
+		label_23.setForeground(Color.WHITE);
+		
+		JLabel label_24 = new JLabel("10");
+		label_24.setHorizontalAlignment(SwingConstants.CENTER);
+		label_24.setForeground(Color.WHITE);
+		
+		JLabel label_25 = new JLabel("11");
+		label_25.setHorizontalAlignment(SwingConstants.CENTER);
+		label_25.setForeground(Color.WHITE);
+		
+		JLabel label_26 = new JLabel("12");
+		label_26.setHorizontalAlignment(SwingConstants.CENTER);
+		label_26.setForeground(Color.WHITE);
+		
+		JLabel label_27 = new JLabel("13");
+		label_27.setHorizontalAlignment(SwingConstants.CENTER);
+		label_27.setForeground(Color.WHITE);
+		
+		JLabel label_28 = new JLabel("14");
+		label_28.setHorizontalAlignment(SwingConstants.CENTER);
+		label_28.setForeground(Color.WHITE);
+		
+		JLabel label_29 = new JLabel("15");
+		label_29.setHorizontalAlignment(SwingConstants.CENTER);
+		label_29.setForeground(Color.WHITE);
+		
+		
+		
 		GroupLayout gl_Simu = new GroupLayout(Simu);
 		gl_Simu.setHorizontalGroup(
 			gl_Simu.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_Simu.createSequentialGroup()
-					.addContainerGap(199, Short.MAX_VALUE)
+				.addGroup(Alignment.LEADING, gl_Simu.createSequentialGroup()
+					.addGap(200)
 					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnCDC, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_Simu.createSequentialGroup()
-							.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf30, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_1, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_2, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf03, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf28, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_3, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf04, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf27, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_4, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf05, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_5, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf06, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf25, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_6, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf07, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf24, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_7, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf08, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf23, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_8, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf09, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf22, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_9, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf21, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf11, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf20, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_11, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf19, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(label_15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnf16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_Simu.createSequentialGroup()
-							.addComponent(btnf30, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf28, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf03, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf27, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf04, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf05, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_19, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf25, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf06, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_20, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf24, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf07, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_21, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf23, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf08, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_22, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf22, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf09, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_23, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf21, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf10, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_24, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf20, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf11, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_25, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf19, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_27, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(label_28, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
 							.addGap(3)
-							.addComponent(btnf16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
-					.addGap(121))
+							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+								.addComponent(label_29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+								.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(114, Short.MAX_VALUE))
 		);
 		gl_Simu.setVerticalGroup(
 			gl_Simu.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Simu.createSequentialGroup()
 					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf03, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf04, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf05, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf06, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -687,8 +857,46 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(btnf12, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addGap(109)
+						.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+							.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+						.addComponent(label)
+						.addComponent(label_16)
+						.addComponent(label_17)
+						.addComponent(label_18)
+						.addComponent(label_19)
+						.addComponent(label_20)
+						.addComponent(label_21)
+						.addComponent(label_22)
+						.addComponent(label_23)
+						.addComponent(label_24)
+						.addComponent(label_25)
+						.addGroup(gl_Simu.createParallelGroup(Alignment.BASELINE)
+							.addComponent(label_26)
+							.addComponent(label_27)
+							.addComponent(label_28))
+						.addComponent(label_29))
+					.addGap(63)
+					.addGroup(gl_Simu.createParallelGroup(Alignment.BASELINE)
+						.addComponent(label_1)
+						.addComponent(label_2)
+						.addComponent(label_3)
+						.addComponent(label_4)
+						.addComponent(label_5)
+						.addComponent(label_6)
+						.addComponent(label_7)
+						.addComponent(label_8)
+						.addComponent(label_9)
+						.addComponent(label_10)
+						.addComponent(label_11)
+						.addComponent(label_12)
+						.addComponent(label_13)
+						.addComponent(label_14)
+						.addComponent(label_15))
+					.addGap(5)
 					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnf26, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf30, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
@@ -705,7 +913,7 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(btnf18, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf17, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf16, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 187, Short.MAX_VALUE)
 					.addComponent(btnCDC)
 					.addGap(123))
 		);
@@ -723,6 +931,25 @@ public class SimulatorWindow extends JFrame {
 					temp = 200;
 				}
 				Constant.tsleep_ms = temp;
+			}
+		});
+		
+		btnPause.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {				
+				if (btnPause.getText() == "Pause"){
+					btnPause.setText("Resume");
+					
+					//PROCEED TO PAUSE THE SIMULATOR
+					Simu.suspend();
+				}
+				else{
+					btnPause.setText("Pause");
+					
+					//PROCEED TO RESUME THE SIMULATOR
+					Simu.resume();
+					realtime.resume();
+				}
+				
 			}
 		});
 		

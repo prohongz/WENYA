@@ -14,7 +14,8 @@ public class Constant {
 	public static int CDCstartm =0;
 	public static int CDCendh =0;
 	public static int CDCendm =0;
-	public static int CDCcargoto =0;
+	public static int CDCcargoturnover =0;
+	public static int CDCcargolimit =0;
 	public static int CDCbay =0;
 	public static int CDCdemandh[] = new int[15];
 	
@@ -23,7 +24,8 @@ public class Constant {
 	public static int Factstartm =0;
 	public static int Factendh =0;
 	public static int Factendm =0;
-	public static int Factcargoto =0;
+	public static int Factcargoturnover =0;
+	public static int Factcargolimit =0;
 	public static int Factbay =0;
 	public static int Factdemandh[] = new int[15];
 	

@@ -187,11 +187,13 @@ public class liveupdate extends JPanel implements Runnable {
 		
 		parameter.append("CDC\n" +
 		"Operation Hours: " + String.format("%02d", Constant.CDCstarth) + ":" + String.format("%02d", Constant.CDCstartm) + " - " + String.format("%02d", Constant.CDCendh) + ":" + String.format("%02d", Constant.CDCendm) + "\n");
-		parameter.append("Cargo processing time: " + Constant.CDCcargoto + " min\n\n");
+		parameter.append("Cargo processing time: " + Constant.CDCcargoturnover + " min"
+				+"\nMaximum Cargo Limit: " + Constant.CDCcargolimit + "\n\n");
 		
 		parameter.append("Factory\n" +
 		"Operation Hours: " + String.format("%02d", Constant.Factstarth) + ":" + String.format("%02d", Constant.Factstartm) + " - " + String.format("%02d", Constant.Factendh) + ":" + String.format("%02d", Constant.Factendm) + "\n");
-		parameter.append("Cargo processing time: " + Constant.Factcargoto + " min\n\n");
+		parameter.append("Cargo processing time: " + Constant.Factcargoturnover + " min"
+				+"\nMaximum Cargo Limit: " + Constant.Factcargolimit + "\n\n");
 		
 		parameter.append("Truck\n");
 		if(Constant.TruckMode == true){

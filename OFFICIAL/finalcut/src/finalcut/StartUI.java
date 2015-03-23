@@ -304,12 +304,23 @@ public class StartUI extends JFrame{
 		
 		JComboBox CDCBay = new JComboBox();
 		CDCBay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		
+		JLabel lblMaximumCargoLimit = new JLabel("Maximum Cargo Limit:");
+		
+		JComboBox cdccargolimit = new JComboBox();
+		cdccargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		GroupLayout gl_cdcoperation = new GroupLayout(cdcoperation);
 		gl_cdcoperation.setHorizontalGroup(
 			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_cdcoperation.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_cdcoperation.createSequentialGroup()
+							.addComponent(lblCargoProcessingTime)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(CDCTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(lblMin))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
 							.addComponent(lblOperationHours)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -321,11 +332,9 @@ public class StartUI extends JFrame{
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblHr_2))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
-							.addComponent(lblCargoProcessingTime)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(CDCTurnover, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(lblMin))
+							.addComponent(lblMaximumCargoLimit)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(cdccargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
 							.addComponent(lblNumberOfBays)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -349,9 +358,13 @@ public class StartUI extends JFrame{
 						.addComponent(lblMin))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumCargoLimit)
+						.addComponent(cdccargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_cdcoperation.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfBays)
 						.addComponent(CDCBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(269, Short.MAX_VALUE))
+					.addContainerGap(237, Short.MAX_VALUE))
 		);
 		cdcoperation.setLayout(gl_cdcoperation);
 		
@@ -597,6 +610,11 @@ public class StartUI extends JFrame{
 		
 		JComboBox FactBay = new JComboBox();
 		FactBay.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+		
+		JLabel lblMaximumCargoLimit_1 = new JLabel("Maximum Cargo Limit:");
+		
+		JComboBox factcargolimit = new JComboBox();
+		factcargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
 		GroupLayout gl_agvoperation = new GroupLayout(agvoperation);
 		gl_agvoperation.setHorizontalGroup(
 			gl_agvoperation.createParallelGroup(Alignment.LEADING)
@@ -624,10 +642,15 @@ public class StartUI extends JFrame{
 							.addComponent(lblMin_1)
 							.addContainerGap(334, Short.MAX_VALUE))
 						.addGroup(gl_agvoperation.createSequentialGroup()
+							.addComponent(lblMaximumCargoLimit_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(factcargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(374, Short.MAX_VALUE))
+						.addGroup(gl_agvoperation.createSequentialGroup()
 							.addComponent(lblNumberOfBays_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(FactBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(395, Short.MAX_VALUE))))
+							.addContainerGap(392, Short.MAX_VALUE))))
 		);
 		gl_agvoperation.setVerticalGroup(
 			gl_agvoperation.createParallelGroup(Alignment.LEADING)
@@ -647,9 +670,13 @@ public class StartUI extends JFrame{
 						.addComponent(lblMin_1))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_agvoperation.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblMaximumCargoLimit_1)
+						.addComponent(factcargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_agvoperation.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfBays_1)
 						.addComponent(FactBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(269, Short.MAX_VALUE))
+					.addContainerGap(237, Short.MAX_VALUE))
 		);
 		agvoperation.setLayout(gl_agvoperation);
 		
@@ -1690,9 +1717,13 @@ public class StartUI extends JFrame{
 				time = (String) FactoryEnd.getSelectedItem();
 				Constant.Factendh = Integer.parseInt( time.split(":")[0] );
 				
-				//TRANSFER CDC AND FACTORY BAY
-				Constant.CDCcargoto = Integer.parseInt( (String) CDCTurnover.getSelectedItem());
-				Constant.Factcargoto = Integer.parseInt( (String) FactTurnover.getSelectedItem());
+				//TRANSFER CDC AND FACTORY CARGO TURNOVER
+				Constant.CDCcargoturnover = Integer.parseInt( (String) CDCTurnover.getSelectedItem());
+				Constant.Factcargoturnover = Integer.parseInt( (String) FactTurnover.getSelectedItem());
+				
+				//TRANSFER CDC AND FACTORY CARGO TURNOVER
+				Constant.CDCcargolimit = Integer.parseInt( (String) cdccargolimit.getSelectedItem());
+				Constant.Factcargolimit = Integer.parseInt( (String) factcargolimit.getSelectedItem());
 				
 				//TRANSFER CDC AND FACTORY BAY
 				Constant.CDCbay = Integer.parseInt( (String) CDCBay.getSelectedItem());

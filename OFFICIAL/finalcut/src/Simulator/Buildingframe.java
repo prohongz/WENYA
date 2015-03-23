@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
@@ -29,18 +27,20 @@ public class Buildingframe extends JFrame implements Runnable {
 
 	private JPanel contentPane;
 	private Thread runner = null;
-	private int factoryaddress = 0, i=0;
+	private int buildingaddress = 0;
+	private char buildingtype = ' ';
 	
 	//for testing
 	JLabel lblNewLabel = new JLabel("New label");
 	
-	public Buildingframe(int i) {
+	public Buildingframe(int i, char type) {
 		
-		factoryaddress = i-1;
+		buildingaddress = i-1;
+		buildingtype = type;
 		if(i==0){
 			setTitle("Properties of CDC");
 		}else{
-			setTitle("Properties of Factory " + (factoryaddress+1));
+			setTitle("Properties of Factory " + (buildingaddress+1));
 		}	
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
@@ -102,26 +102,52 @@ public class Buildingframe extends JFrame implements Runnable {
 		contentPane.setLayout(gl_contentPane);
 	}
 
-	public void paint(Graphics g){
-		Graphics2D g2 = (Graphics2D) g;
-		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-		        RenderingHints.VALUE_ANTIALIAS_ON);
+	public void paint(Graphics g2){
+		//Graphics2D g2 = (Graphics2D) g;
+		g2.setFont(new Font("Arial", Font.PLAIN, 12));
+		//g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		       // RenderingHints.VALUE_ANTIALIAS_ON);
 		
-		lblNewLabel.setText(Integer.toString(i));
+		//lblNewLabel.setText(Integer.toString(i));
 		
-		for(int i=0; i < Constant.Factbay; i++){
-			g2.setColor(Color.black);
-			g2.drawRect(310, 40+(40*i), 70, 30);
-			if(Central.factdock[factoryaddress][i]==1){
-				g2.setColor(Color.cyan);
-				g2.fillRect(315, 45+(40*i), 60, 20);
+		if(buildingtype == 'F'){
+			for(int i=0; i < Constant.Factbay; i++){
 				g2.setColor(Color.black);
-				g2.drawString("Loading", 315, 60+(40*i));
-			}else if(Central.factdock[factoryaddress][i]==2){
-				g2.setColor(Color.cyan);
-				g2.fillRect(315, 45+(40*i), 60, 20);
+				g2.drawRect(310, 40+(40*i), 70, 30);
+				if(Central.factdock[buildingaddress][i]==1){
+					g2.setColor(Color.cyan);
+					g2.fillRect(315, 45+(40*i), 60, 20);
+					g2.setColor(Color.black);
+					g2.drawString("Loading", 320, 60+(40*i));
+				}else if(Central.factdock[buildingaddress][i]==2){
+					g2.setColor(Color.cyan);
+					g2.fillRect(315, 45+(40*i), 60, 20);
+					g2.setColor(Color.black);
+					g2.drawString("Unloading", 315, 60+(40*i));
+				}else{
+					g2.setColor(Color.black);
+					g2.drawString("Empty", 328, 60+(40*i));
+				}
+			}
+		}
+		if(buildingtype == 'C'){
+			for(int i=0; i < Constant.CDCbay; i++){
 				g2.setColor(Color.black);
-				g2.drawString("Unloading", 315, 60+(40*i));
+				g2.drawRect(310, 40+(40*i), 70, 30);
+				if(Central.cdcdock[i]==1){
+					g2.setColor(Color.cyan);
+					g2.fillRect(315, 45+(40*i), 60, 20);
+					g2.setColor(Color.black);
+					g2.drawString("Loading", 320, 60+(40*i));
+				}else if(Central.cdcdock[i]==2){
+					g2.setColor(Color.cyan);
+					g2.fillRect(315, 45+(40*i), 60, 20);
+					g2.setColor(Color.black);
+					g2.drawString("Unloading", 315, 60+(40*i));
+				}else{
+					g2.setColor(Color.black);
+					g2.drawString("Empty", 328, 60+(40*i));
+				}
 			}
 		}
 	}
@@ -138,10 +164,6 @@ public class Buildingframe extends JFrame implements Runnable {
 			} catch (InterruptedException e) {
 				;
 			}
-			i++;
-			System.out.print(Central.factdock[factoryaddress][0]);
-			Central.factdock[factoryaddress][0]=1;
-			Central.factdock[factoryaddress][1]=2;
 			repaint();
 		}
 	}
@@ -149,7 +171,7 @@ public class Buildingframe extends JFrame implements Runnable {
 	public void start() {
 		if (runner == null) {
 			runner = new Thread(this);
-			runner.setName("Building " + (factoryaddress+1));
+			runner.setName("Building " + (buildingaddress+1));
 			runner.start();
 		}
 	} 

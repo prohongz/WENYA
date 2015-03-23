@@ -69,4 +69,10 @@ public class Clock {
 		hour = (int) (min / 60.0);
 		return min = (int) (min - hour * 60.0);
 	}
+	
+	public static double calendtime() {
+		double temp = (Constant.endday * 24 * 60 * 60) + (Constant.endhour * 60 * 60) - (Constant.starthour * 60 * 60);
+		
+		return temp;
+	}
 }
