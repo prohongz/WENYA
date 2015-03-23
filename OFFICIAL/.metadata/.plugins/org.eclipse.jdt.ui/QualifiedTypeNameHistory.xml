@@ -49,4 +49,5 @@
 <fullyQualifiedTypeName name="java.io.Writer"/>
 <fullyQualifiedTypeName name="Simulator.Save"/>
 <fullyQualifiedTypeName name="Simulator.Factoryframe"/>
+<fullyQualifiedTypeName name="java.util.Random"/>
 </qualifiedTypeNameHistroy>

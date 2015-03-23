@@ -1,0 +1,12 @@
+package Simulator;
+
+public class Central {
+
+	Central(){
+		
+	}
+	
+	static void spawndemand(int i){
+		
+	}
+}

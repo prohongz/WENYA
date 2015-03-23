@@ -18,18 +18,22 @@ public class DrawSim extends JPanel implements Runnable{
 	int introadwidth = 41;
 	int outroadwidth = 51;
 	int hzlength = 650;
-	int vrlength = 350;
+	int vrlength = 433;
+	
 	
 	
 	//THREAD RELATED VARIABLES
-	boolean suspended = false;
+	
+	private Thread runner = null;
+	boolean simuend = false;
 	
 	//TIME RELATED VARIABLES
 	private double time = 0.;
 	private double endtime = 0.;
 	
-	private Thread runner = null;
-	boolean simuend = false;
+	//DEMAND VARIABLES
+	int hour = 0;
+	int day = 0;
 	
 	//MAIN CONTENT
 	public DrawSim(){
@@ -37,7 +41,6 @@ public class DrawSim extends JPanel implements Runnable{
 		
 		endtime = calendtime();
 		//DECLARE ALL THE VEHICLE FACTORY 
-		
 		
 		
 		
@@ -51,8 +54,9 @@ public class DrawSim extends JPanel implements Runnable{
 
 
 	       paintroad(g);
-	       
 	       clockupdate(g);
+	       //PAINT AGV
+	       //PAINT TRUCK
 	}
 
 	private void paintroad(Graphics g) {
@@ -67,80 +71,80 @@ public class DrawSim extends JPanel implements Runnable{
 		
 		//OUTER
 		g2.setColor(LIGHTGRAY);
-		g2.fillRect(200, 80, hzlength, outroadwidth);
-		g2.fillRect(200, 80+60, hzlength, outroadwidth);
+		g2.fillRect(200, 40, hzlength, outroadwidth);
+		g2.fillRect(200, 40+60, hzlength, outroadwidth);
 		
-		g2.fillRect(85, 80+115, outroadwidth, vrlength);
-		g2.fillRect(85+60, 80+115, outroadwidth, vrlength);
+		g2.fillRect(85, 40+115, outroadwidth, vrlength);
+		g2.fillRect(85+60, 40+115, outroadwidth, vrlength);
 		
 		
 		
 		/************/
 		//INNER
 		g2.setColor(Color.gray);
-		g2.fillRect(200, 85, hzlength, introadwidth);
-		g2.fillRect(200, 85+60, hzlength, introadwidth);
+		g2.fillRect(200, 45, hzlength, introadwidth);
+		g2.fillRect(200, 45+60, hzlength, introadwidth);
 		
-		g2.fillRect(90, 80+115, introadwidth, vrlength);
-		g2.fillRect(90+60, 80+115, introadwidth, vrlength);
+		g2.fillRect(90, 40+115, introadwidth, vrlength);
+		g2.fillRect(90+60, 40+115, introadwidth, vrlength);
 		
 		
 		/************/
 		
 		//DIVIDER
 		g2.setColor(Color.white);
-		g2.drawLine(200, 106, 200+hzlength, 106);
-		g2.drawLine(200, 106+59, 200+hzlength, 106+59);
-		g2.drawLine(85+25, 80+115, 85+25, 80+115+vrlength);
-		g2.drawLine(85+51+9+25, 80+115, 85+51+9+25, 80+115+vrlength);
+		g2.drawLine(200, 66, 200+hzlength, 66);
+		g2.drawLine(200, 66+59, 200+hzlength, 66+59);
+		g2.drawLine(85+25, 40+115, 85+25, 40+115+vrlength);
+		g2.drawLine(85+51+9+25, 40+115, 85+51+9+25, 40+115+vrlength);
 		
 		
 		
 		//RIGHT TOP CURVE
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(200+hzlength-outroadwidth-5, 80, 111, 111, 270, 180);		
+		g2.fillArc(200+hzlength-outroadwidth-5, 40, 111, 111, 270, 180);		
 		g2.setColor(Color.gray);
-		g2.fillArc(200+hzlength-outroadwidth-1, 80+5, 101, 101, 270, 180);
+		g2.fillArc(200+hzlength-outroadwidth-1, 40+5, 101, 101, 270, 180);
 		g2.setColor(Color.white);
-		g2.drawArc(200+hzlength-outroadwidth+20, 80+26, 59, 59, 270, 180);
+		g2.drawArc(200+hzlength-outroadwidth+20, 40+26, 59, 59, 270, 180);
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(200+hzlength-12, 80+46, 19, 19, 270, 180);
+		g2.fillArc(200+hzlength-12, 40+46, 19, 19, 270, 180);
 		g2.setColor(DARKGREEN);
-		g2.fillArc(200+hzlength-8, 80+51, 9, 9, 270, 180);
+		g2.fillArc(200+hzlength-8, 40+51, 9, 9, 270, 180);
 		
 		//LEFT TOP CURVE
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85, 80, 115*2, 115*2, 90, 90); //1
+		g2.fillArc(85, 40, 115*2, 115*2, 90, 90); //1
 		g2.setColor(Color.gray);
-		g2.fillArc(85+5, 80+5, (115-5)*2, (115-5)*2, 90, 90);//2
+		g2.fillArc(85+5, 40+5, (115-5)*2, (115-5)*2, 90, 90);//2
 		g2.setColor(Color.white);
-		g2.drawArc(85+25, 80+25+1, (115-25)*2, (115-25)*2, 90, 90);
+		g2.drawArc(85+25, 40+25+1, (115-25)*2, (115-25)*2, 90, 90);
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85+46, 80+46, (115-46)*2, (115-46)*2, 90, 90); //3
+		g2.fillArc(85+46, 40+46, (115-46)*2, (115-46)*2, 90, 90); //3
 		g2.setColor(DARKGREEN);
-		g2.fillArc(85+51, 80+51, (115-51)*2, (115-51)*2, 90, 90); //4
+		g2.fillArc(85+51, 40+51, (115-51)*2, (115-51)*2, 90, 90); //4
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85+60, 80+60, (115-60)*2, (115-60)*2, 90, 90);
+		g2.fillArc(85+60, 40+60, (115-60)*2, (115-60)*2, 90, 90);
 		g2.setColor(Color.gray);
-		g2.fillArc(85+65, 80+65, (115-65)*2, (115-65)*2, 90, 90);
+		g2.fillArc(85+65, 40+65, (115-65)*2, (115-65)*2, 90, 90);
 		g2.setColor(Color.white);
-		g2.drawArc(85+85, 80+85, (115-85)*2, (115-85)*2, 90, 90);
+		g2.drawArc(85+85, 40+85, (115-85)*2, (115-85)*2, 90, 90);
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85+106, 80+106, (115-106)*2, (115-106)*2, 90, 90);
+		g2.fillArc(85+106, 40+106, (115-106)*2, (115-106)*2, 90, 90);
 		g2.setColor(DARKGREEN);
-		g2.fillArc(85+111, 80+111, (115-111)*2, (115-111)*2, 90, 90);
+		g2.fillArc(85+111, 40+111, (115-111)*2, (115-111)*2, 90, 90);
 		
 		//LEFT BOTTOM CURVE
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85, 80+115+vrlength-56, 111, 111, 180, 180);		
+		g2.fillArc(85, 40+115+vrlength-56, 111, 111, 180, 180);		
 		g2.setColor(Color.gray);
-		g2.fillArc(85+5, 80+115+vrlength-52, 101, 101, 180, 180);
+		g2.fillArc(85+5, 40+115+vrlength-52, 101, 101, 180, 180);
 		g2.setColor(Color.white);
-		g2.drawArc(85+5+20, 80+115+vrlength-56, 59, 59, 180, 180);
+		g2.drawArc(85+5+20, 40+115+vrlength-32, 59+1, 59, 180, 180);
 		g2.setColor(LIGHTGRAY);
-		g2.fillArc(85, 80+115+vrlength-56, 19, 19, 180, 180);
+		g2.fillArc(85+5+20+21, 40+115+vrlength-12, 19, 19, 180, 180);
 		g2.setColor(DARKGREEN);
-		g2.fillArc(85, 80+115+vrlength-56, 9, 9, 180, 180);
+		g2.fillArc(85+5+20+21+5, 40+115+vrlength-8, 9, 9, 180, 180);
 		
 	}
 
@@ -165,9 +169,8 @@ public class DrawSim extends JPanel implements Runnable{
 		day = (int) (hour / 24.0);
 		hour = (int) (hour - day * 24.0);
 		
-		String str_time = "Day / Time - ";
-		String timeString = str_time
-				+ "DAY " + (new Integer(day)).toString()
+		String str_time = "Day / Time: ";
+		String timeString = "DAY " + (new Integer(day)).toString()
 				+ ((hour > 9) ? " / " : " / 0") +(new Integer(hour)).toString()
 				+ ((min > 9) ? ":" : ":0") +(new Integer(min)).toString()
 				+ ((sec > 9) ? ":" : ":0") + (new Integer(sec)).toString();
@@ -178,6 +181,10 @@ public class DrawSim extends JPanel implements Runnable{
 		// display new time
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.setColor(Color.black);
+		g.drawString(str_time, x0, y0);
+		
+		x0 = 10; // start position of time display (left upper corner)
+		y0 = 40;
 		g.drawString(timeString, x0, y0);
 	}
 
@@ -203,16 +210,51 @@ public class DrawSim extends JPanel implements Runnable{
 			//Check for end of simulation
 			if(time >= endtime){
 				if(simuend == false){
-					suspended = true;
+					Constant.suspended = true;
 				}
 			}
 
-			//SIMULATE NEW TIMESTEP (IE UPDATE ALL THE VARIABLES)
-			if(Result.active > 962){
-				Result.active = 0;
+			///////////////////////////////////////////////////////
+			//SIMULATE NEW TIMESTEP (IE UPDATE ALL THE VARIABLES)//
+			///////////////////////////////////////////////////////
+	
+			//CENTRAL HEADQUARTER
+			if(time%3600 == 0){
+				hour = (int) ((time / 60.0) / 60.0);
+				day = (int) (hour / 24.0);
+				hour = (int) (hour - day * 24.0);
+				
+				//OPERATION FROM 06:00 - 21:00, BUT LAST DEMAND AT 20:00
+				if(hour >= 6 && hour <= 20){
+					//GENERATE A NEW DEMAND WITH TIMING ALLOCATION
+					for(int i = 0; i < (Constant.Factdemandh[hour-6]); i++){
+						//?????[Central.spawnfactdemand()].demandcount++;
+						//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+						//NOT SPAWN IMMEDIATELY
+						
+						//SET TIMING
+						
+					}
+					
+					for(int i = 0; i < (Constant.CDCdemandh[hour-6]); i++){
+						//?????.demandcount++;
+						//?????.cargo = spawndemandtarget();
+						
+						//SET TIMING
+					
+					}
+				}
 			}
-			Result.active++;
-			//System.out.println(Result.active);
+			
+			//AGV
+			if(Constant.AgvMode == true){
+				
+			}
+			
+			//TRUCK
+			if(Constant.TruckMode == true){
+				
+			}
 			
 			//CALCULATE THE NEW TIME BASED ON THE TIME SPEED
 			time+=Constant.TIMESTEP_S;
@@ -220,11 +262,10 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			//FOR SUSPENSION OF THREAD
 			synchronized (this) {
-				while (suspended){
+				while (Constant.suspended){
 					try {
 						wait();
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}				
@@ -246,12 +287,12 @@ public class DrawSim extends JPanel implements Runnable{
 	} 
 	
 	public void suspend() {
-		suspended = true;
+		Constant.suspended = true;
 	}
 	   
 	public synchronized void resume() {
-		System.out.println("Resume");
-		suspended = false;
+		System.out.println("Simulator resuming...");
+		Constant.suspended = false;
 		notify();
 	}
 	

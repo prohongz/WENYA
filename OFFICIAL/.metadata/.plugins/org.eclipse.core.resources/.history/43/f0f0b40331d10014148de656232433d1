@@ -1,6 +1,8 @@
 package Simulator;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
@@ -109,16 +111,6 @@ public class Buildingframe extends JFrame implements Runnable {
 	@Override
 	public void run() {
 		while (Thread.currentThread() == runner) {
-			try {
-				//ADJUST THE SPEED OF THE SIMULATOR HERE (
-				//[max delay: 200 - 1 sec by 1 sec]
-				//[min delay: 5 - keep the CPU load at ~50%]
-				Thread.sleep(Constant.tsleep_ms);
-				
-			} catch (InterruptedException e) {
-				;
-			}
-			
 			i++;
 			repaint();
 		}

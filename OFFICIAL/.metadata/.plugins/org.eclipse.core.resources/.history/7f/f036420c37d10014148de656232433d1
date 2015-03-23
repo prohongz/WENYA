@@ -54,7 +54,7 @@ public class DrawSim extends JPanel implements Runnable{
 
 
 	       paintroad(g);
-	       Clock.clockupdate(g, time);
+	       Clock.clockupdate(g);
 	       //PAINT AGV
 	       //PAINT TRUCK
 	}
