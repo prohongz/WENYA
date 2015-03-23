@@ -37,6 +37,11 @@ import javax.swing.JSlider;
 
 import Simulator.Constant;
 
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings({ "unchecked", "rawtypes" , "serial"})
 public class StartUI extends JFrame{
 

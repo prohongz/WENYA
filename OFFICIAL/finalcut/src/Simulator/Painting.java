@@ -10,7 +10,11 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 public class Painting {
 
 	//DRAWING VARIABLES

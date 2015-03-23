@@ -20,12 +20,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings("serial")
 public class Preset extends JFrame {
 	
 	byte[] bs = new byte[32];
 	String name[] = new String[100];
-	int i = 0;
+	int presentcount = 0;
 
 	private JPanel contentPane;
 	/**
@@ -60,13 +65,13 @@ public class Preset extends JFrame {
 		
 		
 		//i is the number of preset in the txt file 'Preset'
-		i = loadpreset();
+		presentcount = loadpreset();
 		//System.out.print("There is/are " + i + " preset(s).\n");
 		
 		JLabel lblSelectTheFollowing = new JLabel("Select one of the presets and press OK to continue:");
 		
 		JComboBox comboboxMode = new JComboBox();
-		for(int k=0; k<i; k++){
+		for(int k=0; k<presentcount; k++){
 			comboboxMode.addItem(name[k]);
 		}
 		comboboxMode.addItem("Custom");
@@ -74,7 +79,7 @@ public class Preset extends JFrame {
 		JButton btnOK = new JButton("OK");
 		btnOK.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(comboboxMode.getSelectedIndex() == i){
+				if(comboboxMode.getSelectedIndex() == presentcount){
 					System.out.println("Setting custom preset");
 					setVisible(false);
 					dispose();

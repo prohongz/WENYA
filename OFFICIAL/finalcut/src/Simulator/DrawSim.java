@@ -9,6 +9,13 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+/**MAIN BRAIN OF THE SIMULATOR
+ * RUN() is the main portion that determines the flow of events. 
+ * 
+ * @author Sim Hong Xun
+ * 
+ * */
+
 @SuppressWarnings({"serial", "unused"})
 public class DrawSim extends JPanel implements Runnable{
 	

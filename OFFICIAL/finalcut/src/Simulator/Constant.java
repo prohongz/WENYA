@@ -1,5 +1,10 @@
 package Simulator;
 
+/**Constant is used to store intermediate values between the transition from Preset interface to Simulator interface.
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 public class Constant {
 
 	public static int starthour =0;

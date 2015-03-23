@@ -25,7 +25,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings("serial")
 public class Save extends JFrame {
 

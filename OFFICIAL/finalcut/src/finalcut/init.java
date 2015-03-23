@@ -3,7 +3,11 @@ package finalcut;
 import java.awt.EventQueue;
 
 import javax.swing.UIManager;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 public class init {
 
 	public static void main(String[] args){

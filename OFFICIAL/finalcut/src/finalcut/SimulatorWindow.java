@@ -38,7 +38,11 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import java.awt.Color;
 import javax.swing.SwingConstants;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings("serial")
 public class SimulatorWindow extends JFrame {
 

@@ -1,7 +1,11 @@
 package Simulator;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings("rawtypes")
 public class Result {
 

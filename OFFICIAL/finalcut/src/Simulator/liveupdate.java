@@ -17,7 +17,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.JLayeredPane;
 
 import java.awt.event.ActionListener;
-
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
 @SuppressWarnings("serial")
 public class liveupdate extends JPanel implements Runnable {
 	
