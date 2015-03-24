@@ -2,12 +2,13 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="totalTimeThisStep_ms" key="selection"/>
+		<item value="efficiency" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="effiency"/>
 			<item value="totalTimeThisStep_ms"/>
 			<item value="time"/>
 			<item value="clock"/>
@@ -15,9 +16,9 @@
 			<item value="bntf01"/>
 			<item value="run"/>
 			<item value="Factoryframe"/>
-			<item value="pause"/>
 		</list>
 		<list key="replacehistory">
+			<item value="efficiency"/>
 			<item value="Clock.time"/>
 			<item value="btnf17"/>
 			<item value="btnf16"/>

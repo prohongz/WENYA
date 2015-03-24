@@ -46,6 +46,8 @@ public class Constant {
 	public static double TruckDistGap = .0;
 	public static double TruckPoliteness = .0;
 	public static double TruckChanging = .0;
+	public static double Truckfewcargo = .0;
+	public static double Truckfewocargo = .0;
 	
 	public static boolean AgvMode = false;
 	public static int AgvQty = 0;
@@ -54,6 +56,8 @@ public class Constant {
 	public static double AgvDecSpd = .0;
 	public static double AgvTimeGap = .0;
 	public static double AgvDistGap = .0;
+	public static double Agvfewcargo = .0;
+	public static double Agvfewocargo = .0;
 	
 	static final double TIMESTEP_S = 0.2;   // simulation time step
 	public static int tsleep_ms = 20;

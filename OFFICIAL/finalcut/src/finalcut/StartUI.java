@@ -55,6 +55,7 @@ public class StartUI extends JFrame{
 	int cdccargode;
 	int factcargode;
 
+
 	
 	
 
@@ -314,7 +315,7 @@ public class StartUI extends JFrame{
 		JLabel lblMaximumCargoLimit = new JLabel("Maximum Cargo Limit:");
 		
 		JComboBox cdccargolimit = new JComboBox();
-		cdccargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"}));
+		cdccargolimit.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "15", "20"}));
 		GroupLayout gl_cdcoperation = new GroupLayout(cdcoperation);
 		gl_cdcoperation.setHorizontalGroup(
 			gl_cdcoperation.createParallelGroup(Alignment.LEADING)
@@ -984,6 +985,30 @@ public class StartUI extends JFrame{
 		JLabel lblMs_3 = new JLabel("m/s\u00B2");
 		lblMs_3.setEnabled(false);
 		
+		JSeparator separator_2 = new JSeparator();
+		
+		JLabel lblFuelefficiencyWith = new JLabel("Fuel Consumption with Cargo:");
+		lblFuelefficiencyWith.setEnabled(false);
+		
+		JLabel lblFuelConsumptionWithout = new JLabel("Fuel Consumption without Cargo:");
+		lblFuelConsumptionWithout.setEnabled(false);
+		
+		JTextField Truckfewcargo = new JTextField();
+		Truckfewcargo.setText("27");
+		Truckfewcargo.setEnabled(false);
+		Truckfewcargo.setColumns(10);
+		
+		JTextField Truckfewocargo = new JTextField();
+		Truckfewocargo.setText("17");
+		Truckfewocargo.setEnabled(false);
+		Truckfewocargo.setColumns(10);
+		
+		JLabel lblLitreskm = new JLabel("Litres/Km");
+		lblLitreskm.setEnabled(false);
+		
+		JLabel lblLitreskm_1 = new JLabel("Litres/Km");
+		lblLitreskm_1.setEnabled(false);
+		
 		GroupLayout gl_Subtruck = new GroupLayout(Subtruck);
 		gl_Subtruck.setHorizontalGroup(
 			gl_Subtruck.createParallelGroup(Alignment.LEADING)
@@ -991,7 +1016,7 @@ public class StartUI extends JFrame{
 					.addContainerGap()
 					.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_Subtruck.createSequentialGroup()
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
 							.addContainerGap())
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblQuantity)
@@ -1021,7 +1046,7 @@ public class StartUI extends JFrame{
 								.addGroup(gl_Subtruck.createSequentialGroup()
 									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 										.addComponent(TruckAccSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(TruckSpd, 0, 36, Short.MAX_VALUE))
+										.addComponent(TruckSpd, 0, 45, Short.MAX_VALUE))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblKmh_1)
@@ -1030,25 +1055,41 @@ public class StartUI extends JFrame{
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblMinimumDistanceGap)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(TruckDistGap, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(TruckDistGap, 0, 33, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblM_1)
 							.addGap(422))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 562, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(17, Short.MAX_VALUE))
+							.addContainerGap(19, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblPolitenessFactor)
 							.addGap(18)
 							.addComponent(TruckPolite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(434, Short.MAX_VALUE))
+							.addContainerGap(436, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblChangingThreshold)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(TruckChanging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblMs_3)
-							.addContainerGap(409, Short.MAX_VALUE))))
+							.addContainerGap(411, Short.MAX_VALUE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 562, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(19, Short.MAX_VALUE))
+						.addGroup(gl_Subtruck.createSequentialGroup()
+							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblFuelefficiencyWith)
+								.addComponent(lblFuelConsumptionWithout))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(Truckfewocargo, 0, 0, Short.MAX_VALUE)
+								.addComponent(Truckfewcargo, GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblLitreskm)
+								.addComponent(lblLitreskm_1))
+							.addGap(299))))
 		);
 		gl_Subtruck.setVerticalGroup(
 			gl_Subtruck.createParallelGroup(Alignment.LEADING)
@@ -1099,7 +1140,19 @@ public class StartUI extends JFrame{
 						.addComponent(lblChangingThreshold)
 						.addComponent(TruckChanging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblMs_3))
-					.addContainerGap(74, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFuelefficiencyWith)
+						.addComponent(Truckfewcargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLitreskm))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
+						.addComponent(Truckfewocargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblFuelConsumptionWithout)
+						.addComponent(lblLitreskm_1))
+					.addContainerGap(14, Short.MAX_VALUE))
 		);
 		Subtruck.setLayout(gl_Subtruck);
 		Truck.setLayout(gl_Truck);
@@ -1196,6 +1249,30 @@ public class StartUI extends JFrame{
 		JLabel lblM = new JLabel("m");
 		lblM.setEnabled(false);
 		
+		JSeparator separator_5 = new JSeparator();
+		
+		JLabel lblFuelefficiencyWith_1 = new JLabel("Fuel efficiency with Cargo:");
+		lblFuelefficiencyWith_1.setEnabled(false);
+		
+		JLabel lblFuelefficiencyWithout = new JLabel("Fuel efficiency without Cargo:");
+		lblFuelefficiencyWithout.setEnabled(false);
+		
+		JTextField Agvfewcargo = new JTextField();
+		Agvfewcargo.setText("21");
+		Agvfewcargo.setEnabled(false);
+		Agvfewcargo.setColumns(10);
+		
+		JTextField Agvfewocargo = new JTextField();
+		Agvfewocargo.setText("10");
+		Agvfewocargo.setEnabled(false);
+		Agvfewocargo.setColumns(10);
+		
+		JLabel lblLitreskm_2 = new JLabel("Litres/Km");
+		lblLitreskm_2.setEnabled(false);
+		
+		JLabel lblLitreskm_3 = new JLabel("Litres/Km");
+		lblLitreskm_3.setEnabled(false);
+		
 
 		GroupLayout gl_SubAGV = new GroupLayout(SubAGV);
 		gl_SubAGV.setHorizontalGroup(
@@ -1203,7 +1280,7 @@ public class StartUI extends JFrame{
 				.addGroup(gl_SubAGV.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator_3, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
+						.addComponent(separator_3, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblQuantity_1)
@@ -1226,13 +1303,10 @@ public class StartUI extends JFrame{
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING, false)
 								.addComponent(AgvSpd, Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(AgvAccSpd, Alignment.TRAILING, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_SubAGV.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblMs))
-								.addGroup(Alignment.TRAILING, gl_SubAGV.createSequentialGroup()
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblKmh))))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.TRAILING)
+								.addComponent(lblMs)
+								.addComponent(lblKmh)))
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblMaximumDeceleration_1)
@@ -1246,7 +1320,20 @@ public class StartUI extends JFrame{
 								.addGroup(gl_SubAGV.createSequentialGroup()
 									.addComponent(AgvDecSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(lblMs_1)))))
+									.addComponent(lblMs_1))))
+						.addComponent(separator_5, GroupLayout.PREFERRED_SIZE, 566, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_SubAGV.createSequentialGroup()
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblFuelefficiencyWithout)
+								.addComponent(lblFuelefficiencyWith_1))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(Agvfewcargo, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+								.addComponent(Agvfewocargo, Alignment.LEADING, 0, 0, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblLitreskm_3)
+								.addComponent(lblLitreskm_2))))
 					.addContainerGap())
 		);
 		gl_SubAGV.setVerticalGroup(
@@ -1287,7 +1374,19 @@ public class StartUI extends JFrame{
 						.addComponent(lblNewLabel)
 						.addComponent(AgvDistGap, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblM))
-					.addContainerGap(133, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(separator_5, GroupLayout.PREFERRED_SIZE, 1, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFuelefficiencyWith_1)
+						.addComponent(Agvfewcargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLitreskm_2))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFuelefficiencyWithout)
+						.addComponent(Agvfewocargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblLitreskm_3))
+					.addContainerGap(86, Short.MAX_VALUE))
 		);
 		SubAGV.setLayout(gl_SubAGV);
 		AGV.setLayout(gl_AGV);
@@ -1557,6 +1656,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setEnabled(true);
 					TruckPolite.setEnabled(true);
 					TruckChanging.setEnabled(true);
+					Truckfewcargo.setEnabled(true);
+					Truckfewocargo.setEnabled(true);
 				}
 				if(TruckMode.getSelectedItem()=="Patient"){
 					System.out.println("Be patient");
@@ -1567,6 +1668,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setSelectedIndex(0);
 					TruckPolite.setSelectedIndex(0);
 					TruckChanging.setSelectedIndex(0);
+					Truckfewcargo.setText("27");
+					Truckfewocargo.setText("17");
 					TruckSpd.setEnabled(false);
 					TruckAccSpd.setEnabled(false);
 					TruckDecSpd.setEnabled(false);
@@ -1574,6 +1677,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setEnabled(false);
 					TruckPolite.setEnabled(false);
 					TruckChanging.setEnabled(false);
+					Truckfewcargo.setEnabled(false);
+					Truckfewocargo.setEnabled(false);
 				}
 				if(TruckMode.getSelectedItem()=="Normal"){
 					System.out.println("Be patient");
@@ -1584,6 +1689,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setSelectedIndex(0);
 					TruckPolite.setSelectedIndex(0);
 					TruckChanging.setSelectedIndex(0);
+					Truckfewcargo.setText("27");
+					Truckfewocargo.setText("17");
 					TruckSpd.setEnabled(false);
 					TruckAccSpd.setEnabled(false);
 					TruckDecSpd.setEnabled(false);
@@ -1591,6 +1698,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setEnabled(false);
 					TruckPolite.setEnabled(false);
 					TruckChanging.setEnabled(false);
+					Truckfewcargo.setEnabled(false);
+					Truckfewocargo.setEnabled(false);
 				}
 				if(TruckMode.getSelectedItem()=="Aggressive"){
 					System.out.println("Be patient");
@@ -1601,6 +1710,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setSelectedIndex(0);
 					TruckPolite.setSelectedIndex(0);
 					TruckChanging.setSelectedIndex(0);
+					Truckfewcargo.setText("27");
+					Truckfewocargo.setText("17");
 					TruckSpd.setEnabled(false);
 					TruckAccSpd.setEnabled(false);
 					TruckDecSpd.setEnabled(false);
@@ -1608,6 +1719,8 @@ public class StartUI extends JFrame{
 					TruckDistGap.setEnabled(false);
 					TruckPolite.setEnabled(false);
 					TruckChanging.setEnabled(false);
+					Truckfewcargo.setEnabled(false);
+					Truckfewocargo.setEnabled(false);
 				}	
 			}
 		});
@@ -1622,6 +1735,8 @@ public class StartUI extends JFrame{
 					AgvDecSpd.setEnabled(true);
 					AgvTimeGap.setEnabled(true);
 					AgvDistGap.setEnabled(true);
+					Agvfewcargo.setEnabled(true);
+					Agvfewocargo.setEnabled(true);
 				}
 				if(AgvMode.getSelectedItem()=="Slow"){
 					System.out.println("Be slow");
@@ -1630,11 +1745,15 @@ public class StartUI extends JFrame{
 					AgvDecSpd.setSelectedIndex(0);
 					AgvTimeGap.setSelectedIndex(0);
 					AgvDistGap.setSelectedIndex(0);
+					Agvfewcargo.setText("27");
+					Agvfewocargo.setText("17");
 					AgvSpd.setEnabled(false);
 					AgvAccSpd.setEnabled(false);
 					AgvDecSpd.setEnabled(false);
 					AgvTimeGap.setEnabled(false);
 					AgvDistGap.setEnabled(false);
+					Agvfewcargo.setEnabled(false);
+					Agvfewocargo.setEnabled(false);
 				}
 				if(AgvMode.getSelectedItem()=="Normal"){
 					System.out.println("Be normal");
@@ -1643,11 +1762,15 @@ public class StartUI extends JFrame{
 					AgvDecSpd.setSelectedIndex(0);
 					AgvTimeGap.setSelectedIndex(0);
 					AgvDistGap.setSelectedIndex(0);
+					Agvfewcargo.setText("27");
+					Agvfewocargo.setText("17");
 					AgvSpd.setEnabled(false);
 					AgvAccSpd.setEnabled(false);
 					AgvDecSpd.setEnabled(false);
 					AgvTimeGap.setEnabled(false);
 					AgvDistGap.setEnabled(false);
+					Agvfewcargo.setEnabled(false);
+					Agvfewocargo.setEnabled(false);
 				}
 				if(AgvMode.getSelectedItem()=="Fast"){
 					System.out.println("Be fast");
@@ -1656,11 +1779,15 @@ public class StartUI extends JFrame{
 					AgvDecSpd.setSelectedIndex(0);
 					AgvTimeGap.setSelectedIndex(0);
 					AgvDistGap.setSelectedIndex(0);
+					Agvfewcargo.setText("27");
+					Agvfewocargo.setText("17");
 					AgvSpd.setEnabled(false);
 					AgvAccSpd.setEnabled(false);
 					AgvDecSpd.setEnabled(false);
 					AgvTimeGap.setEnabled(false);
 					AgvDistGap.setEnabled(false);
+					Agvfewcargo.setEnabled(false);
+					Agvfewocargo.setEnabled(false);
 				}	
 			}
 		});
@@ -1687,14 +1814,6 @@ public class StartUI extends JFrame{
 		                JOptionPane.showMessageDialog(null, "Please enter digits only for number of CDC Cargos.");   
 		                return;
 		            }
-		            data = factcargo.getText();
-		            if (!data.matches(regex)) {
-		            	tabbedPane.setSelectedIndex(2);
-		            	tabbedPane_1.setSelectedIndex(1);
-		                JOptionPane.showMessageDialog(null, "Please enter digits only for number of Factory Cargos.");   
-		                return;
-		            }
-
 		        } catch (Exception e) {
 		            e.printStackTrace();
 		        }
@@ -1781,9 +1900,24 @@ public class StartUI extends JFrame{
 		            e.printStackTrace();
 		        }
 				
+				try {
+		            String regex = "[0-9]+";
+		            String data = factcargo.getText();
+	            if (!data.matches(regex)) {
+		            	tabbedPane.setSelectedIndex(2);
+		            	tabbedPane_1.setSelectedIndex(1);
+		                JOptionPane.showMessageDialog(null, "Please enter digits only for number of Factory Cargos.");   
+		                return;
+		            }
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+			
+	        
 				for(int i=0; i<15; i++){
 					facttotal = facttotal + Constant.Factdemandh[i];
 				}
+				
 				try{
 					if (facttotal==0) {
 						tabbedPane.setSelectedIndex(2);
@@ -1842,6 +1976,25 @@ public class StartUI extends JFrame{
 				//TRANSFER TRUCK VARIABLES
 				Constant.TruckMode = chckbxEnableTruckOperation.isSelected();
 				if(chckbxEnableTruckOperation.isSelected()==true){
+					
+					try {
+			            String regex = "[0-9]+";
+			            String data = Truckfewcargo.getText();
+			            if (!data.matches(regex)) {
+			            	tabbedPane.setSelectedIndex(3);
+			                JOptionPane.showMessageDialog(null, "Please enter digits only for Truck fuel efficiency.");   
+			                return;
+			            }
+			            data = Truckfewocargo.getText();
+			            if (!data.matches(regex)) {
+			            	tabbedPane.setSelectedIndex(3);
+			                JOptionPane.showMessageDialog(null, "Please enter digits only for Truck fuel efficiency.");   
+			                return;
+			            }
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        }
+					
 					Constant.TruckQty = Integer.valueOf((String) TruckQty.getSelectedItem());
 					Constant.TruckSpd = Double.parseDouble((String) TruckSpd.getSelectedItem());
 					Constant.TruckAccSpd = Double.parseDouble((String) TruckAccSpd.getSelectedItem());
@@ -1850,6 +2003,8 @@ public class StartUI extends JFrame{
 					Constant.TruckDistGap = Double.parseDouble((String) TruckDistGap.getSelectedItem());
 					Constant.TruckPoliteness = Double.parseDouble((String) TruckPolite.getSelectedItem());
 					Constant.TruckChanging = Double.parseDouble((String) TruckChanging.getSelectedItem());
+					Constant.Truckfewcargo = Double.parseDouble((String) Truckfewcargo.getText());
+					Constant.Truckfewocargo = Double.parseDouble((String) Truckfewocargo.getText());
 					
 					/*//TEST PURPOSE
 					System.out.println(Constant.TruckMode);
@@ -1864,14 +2019,36 @@ public class StartUI extends JFrame{
 					*/
 				}
 				
+					
 				Constant.AgvMode = chckbxEnableAgvOperation.isSelected();
 				if(chckbxEnableAgvOperation.isSelected()==true){
+					
+					try {
+			            String regex = "[0-9]+";
+			            String data = Agvfewcargo.getText();
+			            if (!data.matches(regex)) {
+			            	tabbedPane.setSelectedIndex(4);
+			                JOptionPane.showMessageDialog(null, "Please enter digits only for AGV fuel efficiency.");   
+			                return;
+			            }
+			            data = Agvfewocargo.getText();
+			            if (!data.matches(regex)) {
+			            	tabbedPane.setSelectedIndex(4);
+			                JOptionPane.showMessageDialog(null, "Please enter digits only for AGV fuel efficiency.");   
+			                return;
+			            }
+			        } catch (Exception e) {
+			            e.printStackTrace();
+			        }
+					
 					Constant.AgvQty = Integer.valueOf((String) AgvQty.getSelectedItem());
 					Constant.AgvSpd = Double.parseDouble((String) AgvSpd.getSelectedItem());
 					Constant.AgvAccSpd = Double.parseDouble((String) AgvAccSpd.getSelectedItem());
 					Constant.AgvDecSpd = Double.parseDouble((String) AgvDecSpd.getSelectedItem());
 					Constant.AgvTimeGap = Double.parseDouble((String) AgvTimeGap.getSelectedItem());
 					Constant.AgvDistGap = Double.parseDouble((String) AgvDistGap.getSelectedItem());
+					Constant.Agvfewcargo = Double.parseDouble((String) Agvfewcargo.getText());
+					Constant.Agvfewocargo = Double.parseDouble((String) Agvfewocargo.getText());
 
 					/*TEST PURPOSE
 					System.out.println(Constant.AgvMode);

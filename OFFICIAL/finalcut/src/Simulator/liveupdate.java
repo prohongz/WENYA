@@ -417,7 +417,9 @@ public class liveupdate extends JPanel implements Runnable {
 			parameter.append("\nTruck Time Gap: " + Constant.TruckTimeGap);
 			parameter.append("\nTruck Distance Gap: " + Constant.TruckDistGap);
 			parameter.append("\nTruck Politeness: " + Constant.TruckPoliteness);
-			parameter.append("\nTruck Changing Lane duration: " + Constant.TruckChanging + "\n\n");
+			parameter.append("\nTruck Changing Lane duration: " + Constant.TruckChanging);
+			parameter.append("\nTruck Fuel efficiency with Cargo: " + Constant.Truckfewcargo);
+			parameter.append("\nTruck Fuel efficiency w/o Cargo: " + Constant.Truckfewocargo + "\n\n");
 		}else{
 			parameter.append("DISABLED\n\n");
 		}
@@ -429,7 +431,9 @@ public class liveupdate extends JPanel implements Runnable {
 			parameter.append("\nAGV Acceleration Speed: " + Constant.AgvAccSpd);
 			parameter.append("\nAGV Deceleration Speed: " + Constant.AgvDecSpd);
 			parameter.append("\nAGV Time Gap: " + Constant.AgvTimeGap);
-			parameter.append("\nAGV Distance Gap: " + Constant.AgvDistGap + "\n\n");
+			parameter.append("\nAGV Distance Gap: " + Constant.AgvDistGap);
+			parameter.append("\nAGV Fuel efficiency with Cargo: " + Constant.Agvfewcargo);
+			parameter.append("\nAGV Fuel efficiency w/o Cargo: " + Constant.Agvfewocargo + "\n\n");
 		}else{
 			parameter.append("DISABLED\n\n");
 		}
@@ -512,11 +516,6 @@ public class liveupdate extends JPanel implements Runnable {
 				}				
 			}
 		}
-	}
-	
-	private Object Integer(int day) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public void start() {

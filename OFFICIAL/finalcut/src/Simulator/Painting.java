@@ -152,7 +152,7 @@ public class Painting {
 		//DRAWING FOR CDC DEMAND STOCK
 		g2.setColor(Color.BLACK);
 		g2.setFont(new Font("Calibri", Font.PLAIN, 11));
-		g2.drawString("  CDC", x, y+10);
+		g2.drawString("  CDC", x, y+30);
 		g2.drawString("N", x+37, y);
 		g2.drawString("P", x+37+30, y);
 		
@@ -160,40 +160,40 @@ public class Painting {
 			if(Central.cdcdemandcount == Constant.CDCcargolimit){
 				g2.drawString("CDC", x, y+10);
 				g2.setColor(Color.RED);
-				g2.drawImage(image2, x, y+15, null);
+				g2.drawImage(image2, x, y+35, null);
 			}else{
 				g2.setColor(Color.GREEN);
 				
 			}
-			g2.drawRect(x+30, y+40-(4*Central.cdcdemandcount), 20, (4*Central.cdcdemandcount));
+			g2.drawRect(x+30, y+80-(4*Central.cdcdemandcount), 20, (4*Central.cdcdemandcount));
 		}
 		
 		for(int i=0; i<Constant.CDCcargolimit; i++){
 			g2.setColor(Color.BLACK);
-			g2.drawRect(x+30, y+40-(4*i), 20, 4);
+			g2.drawRect(x+30, y+80-(4*i), 20, 4);
 		}
 		
 		if(Central.cdcprioritycount > 0){
 			if(Central.cdcprioritycount == 10){
 				g2.setColor(Color.RED);
-				g2.drawImage(image, x, y+15, null);
+				g2.drawImage(image, x, y+35, null);
 			}else{
 				g2.setColor(Color.GREEN);
 			}
-			g2.drawRect(x+30, y+40-(4*Central.cdcprioritycount), 20, (4*Central.cdcprioritycount));
+			g2.drawRect(x+30, y+80-(4*Central.cdcprioritycount), 20, (4*Central.cdcprioritycount));
 		}
 		
-		for(int i=0; i<10; i++){
+		for(int i=0; i<20; i++){
 			g2.setColor(Color.BLACK);
-			g2.drawRect(x+30+30, y+40-(4*i), 20, 4);
+			g2.drawRect(x+30+30, y+80-(4*i), 20, 4);
 		}
 		
 		x = 425;
-		y = 280;
+		y = 335;
 		space = 55;
 		
-		//DRAWING FOR FACT 1-6 DEMAND STOCK
-		for(int i=0; i<6; i++){
+		//DRAWING FOR FACT 1-5 DEMAND STOCK
+		for(int i=0; i<5; i++){
 			g2.setColor(Color.BLACK);
 			g2.drawString("    F" + (i+1), x, y+10+(i*space));
 			g2.drawString("N", x+37, y+(i*space));
@@ -235,10 +235,10 @@ public class Painting {
 		x = 425+(1*gap);
 		y = 225;
 		space = 55;
-		counter = 6;
+		counter = 5;
 		
-		//DRAWING FOR FACT 7-13 DEMAND STOCK
-		for(int i=6; i<13; i++){
+		//DRAWING FOR FACT 6-12 DEMAND STOCK
+		for(int i=5; i<12; i++){
 			g2.setColor(Color.BLACK);
 			g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
 			g2.drawString("N", x+37, y+((i-counter)*space));
@@ -280,10 +280,10 @@ public class Painting {
 		x = 425+(2*gap);
 		y = 225;
 		space = 55;
-		counter = 13;
+		counter = 12;
 		
-		//DRAWING FOR FACT 7-13 DEMAND STOCK
-		for(int i=13; i<20; i++){
+		//DRAWING FOR FACT 13-19 DEMAND STOCK
+		for(int i=12; i<19; i++){
 			g2.setColor(Color.BLACK);
 			g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
 			g2.drawString("N", x+37, y+((i-counter)*space));
@@ -325,10 +325,10 @@ public class Painting {
 		x = 425+(3*gap);
 		y = 225;
 		space = 55;
-		counter = 20;
+		counter = 19;
 		
 		//DRAWING FOR FACT 20-26 DEMAND STOCK
-		for(int i=20; i<27; i++){
+		for(int i=19; i<26; i++){
 			g2.setColor(Color.BLACK);
 			g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
 			g2.drawString("N", x+37, y+((i-counter)*space));
@@ -370,10 +370,10 @@ public class Painting {
 		x = 425+(4*gap);
 		y = 225;
 		space = 55;
-		counter = 27;
+		counter = 26;
 		
-		//DRAWING FOR FACT 27-30 DEMAND STOCK
-		for(int i=27; i<30; i++){
+		//DRAWING FOR FACT 26-30 DEMAND STOCK
+		for(int i=26; i<30; i++){
 			g2.setColor(Color.BLACK);
 			g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
 			g2.drawString("N", x+37, y+((i-counter)*space));
