@@ -53,7 +53,7 @@ public class SimulatorWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public SimulatorWindow() {
-		setTitle("Bulim Industrial Simulator");
+		setTitle("Wenya Industrial Simulator");
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,7 +128,16 @@ public class SimulatorWindow extends JFrame {
 		simuspeedbar.setMaximum(21);
 		simuspeedbar.setInverted(true);
 		
-		
+		simuspeedbar.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent arg0) {
+				int temp = 20;
+				temp = simuspeedbar.getValue();
+				if(temp == 21){
+					temp = 200;
+				}
+				Constant.tsleep_ms = temp;
+			}
+		});
 		
 		JLabel lblSimulatorSpeed = new JLabel("Simulator Speed:");
 		lblSimulatorSpeed.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -143,8 +152,8 @@ public class SimulatorWindow extends JFrame {
 							.addGap(6)
 							.addComponent(lblSimulatorSpeed, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
-							.addGap(29)
+							.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+							.addGap(46)
 							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
@@ -170,17 +179,17 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
 						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.BASELINE)
-							.addComponent(btnPause)
-							.addComponent(btnScreenshot))
-						.addComponent(simuspeedbar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnExit)
 								.addComponent(btnSave))
+							.addComponent(simuspeedbar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addComponent(lblSimulatorSpeed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnPause)
+							.addComponent(btnScreenshot)))
 					.addContainerGap())
 		);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -921,17 +930,6 @@ public class SimulatorWindow extends JFrame {
 		realtimepanel.setLayout(new GridLayout(0, 1, 0, 0));
 		realtimepanel.add(realtime);
 		contentPane.setLayout(gl_contentPane);
-		
-		simuspeedbar.addChangeListener(new ChangeListener() {
-			public void stateChanged(ChangeEvent arg0) {
-				int temp = 20;
-				temp = simuspeedbar.getValue();
-				if(temp == 21){
-					temp = 200;
-				}
-				Constant.tsleep_ms = temp;
-			}
-		});
 		
 		btnPause.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {				

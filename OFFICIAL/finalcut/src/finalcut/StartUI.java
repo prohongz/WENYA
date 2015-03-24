@@ -63,7 +63,7 @@ public class StartUI extends JFrame{
 	 */
 	
 	public StartUI() {
-		setTitle("Wenya Industrial Simulator");
+		setTitle("Bulim Industrial Simulator");
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

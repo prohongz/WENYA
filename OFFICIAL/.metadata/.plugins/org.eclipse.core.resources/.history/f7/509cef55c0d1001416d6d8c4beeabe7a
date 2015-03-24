@@ -38,7 +38,7 @@ public class Preset extends JFrame {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Preset() {
-		setTitle("BIS Mode Selector");
+		setTitle("WIS Mode Selector");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Preset.class.getResource("/misc/Icon.gif")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(300, 150);

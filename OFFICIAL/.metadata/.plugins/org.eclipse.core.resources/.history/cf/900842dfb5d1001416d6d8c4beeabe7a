@@ -53,7 +53,7 @@ public class SimulatorWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public SimulatorWindow() {
-		setTitle("Bulim Industrial Simulator");
+		setTitle("Wenya Industrial Simulator");
 		setFont(new Font("Arial", Font.PLAIN, 12));
 		setIconImage(Toolkit.getDefaultToolkit().getImage(StartUI.class.getResource("/misc/Icon.gif")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -111,6 +111,32 @@ public class SimulatorWindow extends JFrame {
 			}
 		});
 		
+		JPanel timepanel = new JPanel();      
+		JSlider simuspeedbar = new JSlider();
+		simuspeedbar.setValue(20);
+		simuspeedbar.setMaximum(21);
+		simuspeedbar.setInverted(true);
+		
+		JLabel lblSimulatorSpeed = new JLabel("Simulator Speed:");
+		GroupLayout gl_timepanel = new GroupLayout(timepanel);
+		gl_timepanel.setHorizontalGroup(
+			gl_timepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_timepanel.createSequentialGroup()
+					.addComponent(lblSimulatorSpeed)
+					.addGap(18)
+					.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(150, Short.MAX_VALUE))
+		);
+		gl_timepanel.setVerticalGroup(
+			gl_timepanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_timepanel.createSequentialGroup()
+					.addGroup(gl_timepanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(lblSimulatorSpeed, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+						.addComponent(simuspeedbar, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap())
+		);
+		timepanel.setLayout(gl_timepanel);
+		
 		JButton btnSave = new JButton("Save");
 		btnSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -121,17 +147,7 @@ public class SimulatorWindow extends JFrame {
 		});
 		
 		JLabel lblScale = new JLabel("Scale - 1 pixel : 2.31 metres");
-		lblScale.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScale.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		JSlider simuspeedbar = new JSlider();
-		simuspeedbar.setValue(20);
-		simuspeedbar.setMaximum(21);
-		simuspeedbar.setInverted(true);
-		
-		
-		
-		JLabel lblSimulatorSpeed = new JLabel("Simulator Speed:");
-		lblSimulatorSpeed.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblScale.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -140,47 +156,41 @@ public class SimulatorWindow extends JFrame {
 					.addGap(1)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(6)
-							.addComponent(lblSimulatorSpeed, GroupLayout.PREFERRED_SIZE, 138, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(simuspeedbar, GroupLayout.PREFERRED_SIZE, 357, GroupLayout.PREFERRED_SIZE)
-							.addGap(29)
-							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 214, GroupLayout.PREFERRED_SIZE)
+							.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 564, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
 							.addComponent(btnPause, GroupLayout.PREFERRED_SIZE, 71, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(btnScreenshot)
-							.addPreferredGap(ComponentPlacement.RELATED))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnScreenshot))
 						.addComponent(panel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 962, GroupLayout.PREFERRED_SIZE))
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(162)
 							.addComponent(btnSave)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(10)
-							.addComponent(realtimepanel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(btnExit, GroupLayout.PREFERRED_SIZE, 61, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(panel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
+						.addComponent(realtimepanel, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
+						.addComponent(panel, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.BASELINE)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnScreenshot)
 							.addComponent(btnPause)
-							.addComponent(btnScreenshot))
-						.addComponent(simuspeedbar, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(btnExit)
-								.addComponent(btnSave))
-							.addComponent(lblSimulatorSpeed, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE))
+							.addComponent(lblScale, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(btnExit)
+							.addComponent(btnSave)))
 					.addContainerGap())
 		);
 		panel.setLayout(new GridLayout(0, 1, 0, 0));
@@ -714,8 +724,8 @@ public class SimulatorWindow extends JFrame {
 		
 		GroupLayout gl_Simu = new GroupLayout(Simu);
 		gl_Simu.setHorizontalGroup(
-			gl_Simu.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_Simu.createSequentialGroup()
+			gl_Simu.createParallelGroup(Alignment.TRAILING)
+				.addGroup(Alignment.LEADING, gl_Simu.createSequentialGroup()
 					.addGap(200)
 					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
 						.addComponent(btnCDC, GroupLayout.PREFERRED_SIZE, 197, GroupLayout.PREFERRED_SIZE)
@@ -839,7 +849,7 @@ public class SimulatorWindow extends JFrame {
 							.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
 								.addComponent(label_29, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 								.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(120, Short.MAX_VALUE))
+					.addContainerGap(114, Short.MAX_VALUE))
 		);
 		gl_Simu.setVerticalGroup(
 			gl_Simu.createParallelGroup(Alignment.LEADING)
@@ -858,8 +868,9 @@ public class SimulatorWindow extends JFrame {
 						.addComponent(btnf13, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf14, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnf15, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
+							.addComponent(btnf01, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnf02, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_Simu.createParallelGroup(Alignment.LEADING)
 						.addComponent(label)
