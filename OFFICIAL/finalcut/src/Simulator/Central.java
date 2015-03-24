@@ -35,10 +35,14 @@ public class Central {
 	public static int totalcargoserve = 0;
 	public static int totalcargounserve = 0;
 	
+	public static int totalfuel = 0;
+	
+	
 	public Central(){
 		
 	}
 	
+	//FOR CDC
 	static int spawnfactdemand(){
 		Random randomgen = new Random();
 		int factorynumber = randomgen.nextInt(30);
@@ -51,6 +55,7 @@ public class Central {
 		return factorynumber;
 	}
 	
+	//FOR CDC AND FACTORY
 	static int spawndemandtime(){
 		Random randomgen = new Random();
 		int demandtime = randomgen.nextInt(60);

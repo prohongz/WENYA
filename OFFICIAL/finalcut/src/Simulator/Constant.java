@@ -15,6 +15,8 @@ public class Constant {
 	public static int endhour =0;
 	public static int endminute =0;
 	
+	public static double fuelcost = .0;
+	
 	public static int CDCstarth =0;
 	public static int CDCstartm =0;
 	public static int CDCendh =0;

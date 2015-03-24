@@ -36,6 +36,8 @@ import javax.swing.JTextField;
 import javax.swing.JSlider;
 
 import Simulator.Constant;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 /**
  * 
@@ -46,9 +48,6 @@ import Simulator.Constant;
 public class StartUI extends JFrame{
 
 	private JPanel contentPane;
-	private JTextField SimuEndday;
-	private JTextField cdccargo;
-	private JTextField factcargo;
 	
 	int cdctotal = 0;
 	int facttotal = 0;
@@ -151,12 +150,16 @@ public class StartUI extends JFrame{
 		tabbedPane_2.addTab("General", null, General, null);
 		
 		JPanel timepanel = new JPanel();
+		
+		JPanel costpanel = new JPanel();
 		GroupLayout gl_General = new GroupLayout(General);
 		gl_General.setHorizontalGroup(
 			gl_General.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_General.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 509, GroupLayout.PREFERRED_SIZE)
+					.addGroup(gl_General.createParallelGroup(Alignment.LEADING)
+						.addComponent(costpanel, GroupLayout.PREFERRED_SIZE, 506, GroupLayout.PREFERRED_SIZE)
+						.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 509, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap(12, Short.MAX_VALUE))
 		);
 		gl_General.setVerticalGroup(
@@ -164,11 +167,62 @@ public class StartUI extends JFrame{
 				.addGroup(gl_General.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(timepanel, GroupLayout.PREFERRED_SIZE, 103, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(232, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(costpanel, GroupLayout.PREFERRED_SIZE, 47, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(179, Short.MAX_VALUE))
 		);
 		TitledBorder titledBorder = BorderFactory.createTitledBorder("Time");
         titledBorder.setTitleJustification(TitledBorder.LEFT);
         timepanel.setBorder(titledBorder);
+        TitledBorder titledBorder1 = BorderFactory.createTitledBorder("Cost");
+        titledBorder.setTitleJustification(TitledBorder.LEFT);
+        costpanel.setBorder(titledBorder1);
+        
+        JLabel lblFuel = new JLabel("Fuel:");
+        
+        JTextField fuelcost = new JTextField();
+        fuelcost.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		char c = arg0.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE) || c=='.')){
+        			arg0.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for Fuel Cost.");  
+        		}
+        	}
+        });
+        fuelcost.setText("1.300");
+        fuelcost.setColumns(10);
+        
+        JLabel label_5 = new JLabel("$");
+        
+        JLabel lblPerLitres = new JLabel("per litres");
+        GroupLayout gl_costpanel = new GroupLayout(costpanel);
+        gl_costpanel.setHorizontalGroup(
+        	gl_costpanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_costpanel.createSequentialGroup()
+        			.addContainerGap()
+        			.addComponent(lblFuel)
+        			.addGap(51)
+        			.addComponent(label_5)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(fuelcost, GroupLayout.PREFERRED_SIZE, 59, GroupLayout.PREFERRED_SIZE)
+        			.addPreferredGap(ComponentPlacement.RELATED)
+        			.addComponent(lblPerLitres)
+        			.addContainerGap(290, Short.MAX_VALUE))
+        );
+        gl_costpanel.setVerticalGroup(
+        	gl_costpanel.createParallelGroup(Alignment.LEADING)
+        		.addGroup(gl_costpanel.createSequentialGroup()
+        			.addGroup(gl_costpanel.createParallelGroup(Alignment.BASELINE)
+        				.addComponent(lblFuel)
+        				.addComponent(fuelcost, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+        				.addComponent(label_5)
+        				.addComponent(lblPerLitres))
+        			.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        costpanel.setLayout(gl_costpanel);
+        
         
         JLabel lblStartTime = new JLabel("Start Time:");
         
@@ -179,7 +233,8 @@ public class StartUI extends JFrame{
         SimuStarttime.setModel(new DefaultComboBoxModel(new String[] {"00:00", "01:00", "02:00", "03:00", "04:00", "05:00", "06:00", "07:00", "08:00", "09:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00 ", "17:00", "18:00", "19:00", "20:00", "21:00", "22:00", "23:00"}));
         SimuStarttime.setSelectedIndex(5);
         
-        SimuEndday = new JTextField();
+        JTextField SimuEndday = new JTextField();
+        
         SimuEndday.setText("100");
         
         SimuEndday.setColumns(10);
@@ -344,7 +399,7 @@ public class StartUI extends JFrame{
 							.addComponent(cdccargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 						.addGroup(gl_cdcoperation.createSequentialGroup()
 							.addComponent(lblNumberOfBays)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGap(7)
 							.addComponent(CDCBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap(284, Short.MAX_VALUE))
 		);
@@ -380,8 +435,20 @@ public class StartUI extends JFrame{
 		
 		JLabel lblCargoDemandPer = new JLabel("Cargo Demand Per Day: ");
 		
-		cdccargo = new JTextField();
-		cdccargo.setText("10");
+		JTextField cdccargo = new JTextField();
+		cdccargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+        			tabbedPane.setSelectedIndex(1);
+        			tabbedPane_3.setSelectedIndex(1);
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the number of CDC cargo per day.");  
+        		}
+			}
+		});
+		cdccargo.setText("100");
 		cdccargo.setColumns(10);
 		
 		JLabel lblDemandCurve = new JLabel("Demand:");
@@ -650,14 +717,14 @@ public class StartUI extends JFrame{
 							.addContainerGap(334, Short.MAX_VALUE))
 						.addGroup(gl_agvoperation.createSequentialGroup()
 							.addComponent(lblMaximumCargoLimit_1)
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addComponent(factcargolimit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(374, Short.MAX_VALUE))
+							.addContainerGap())
 						.addGroup(gl_agvoperation.createSequentialGroup()
 							.addComponent(lblNumberOfBays_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(FactBay, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(392, Short.MAX_VALUE))))
+							.addContainerGap())))
 		);
 		gl_agvoperation.setVerticalGroup(
 			gl_agvoperation.createParallelGroup(Alignment.LEADING)
@@ -692,8 +759,20 @@ public class StartUI extends JFrame{
 		
 		JLabel lblCargoDemandPer_1 = new JLabel("Cargo Demand Per Day: ");
 		
-		factcargo = new JTextField();
-		factcargo.setText("10");
+		JTextField factcargo = new JTextField();
+		factcargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+        			tabbedPane.setSelectedIndex(2);
+        			tabbedPane_1.setSelectedIndex(1);
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the number of factory cargo per day.");  
+        		}
+			}
+		});
+		factcargo.setText("100");
 		factcargo.setColumns(10);
 		
 		JLabel lblDemand = new JLabel("Demand:");
@@ -994,11 +1073,31 @@ public class StartUI extends JFrame{
 		lblFuelConsumptionWithout.setEnabled(false);
 		
 		JTextField Truckfewcargo = new JTextField();
+		Truckfewcargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the fuel efficiency.");  
+        		}
+			}
+		});
 		Truckfewcargo.setText("27");
 		Truckfewcargo.setEnabled(false);
 		Truckfewcargo.setColumns(10);
 		
 		JTextField Truckfewocargo = new JTextField();
+		Truckfewocargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the fuel efficiency.");  
+        		}
+			}
+		});
 		Truckfewocargo.setText("17");
 		Truckfewocargo.setEnabled(false);
 		Truckfewocargo.setColumns(10);
@@ -1258,11 +1357,31 @@ public class StartUI extends JFrame{
 		lblFuelefficiencyWithout.setEnabled(false);
 		
 		JTextField Agvfewcargo = new JTextField();
+		Agvfewcargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the fuel efficiency.");  
+        		}
+			}
+		});
 		Agvfewcargo.setText("21");
 		Agvfewcargo.setEnabled(false);
 		Agvfewcargo.setColumns(10);
 		
 		JTextField Agvfewocargo = new JTextField();
+		Agvfewocargo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			e.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for the fuel efficiency.");  
+        		}
+			}
+		});
 		Agvfewocargo.setText("10");
 		Agvfewocargo.setEnabled(false);
 		Agvfewocargo.setColumns(10);
@@ -1280,20 +1399,20 @@ public class StartUI extends JFrame{
 				.addGroup(gl_SubAGV.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
-						.addComponent(separator_3, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+						.addComponent(separator_3, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblQuantity_1)
 								.addComponent(lblAgvMode))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
-								.addComponent(AgvMode, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(AgvMode, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addComponent(lblNewLabel)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(AgvDistGap, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.UNRELATED)
+							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblM))
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
@@ -1386,7 +1505,7 @@ public class StartUI extends JFrame{
 						.addComponent(lblFuelefficiencyWithout)
 						.addComponent(Agvfewocargo, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblLitreskm_3))
-					.addContainerGap(86, Short.MAX_VALUE))
+					.addContainerGap(74, Short.MAX_VALUE))
 		);
 		SubAGV.setLayout(gl_SubAGV);
 		AGV.setLayout(gl_AGV);
@@ -1797,29 +1916,8 @@ public class StartUI extends JFrame{
 			@Override
 			public void mouseReleased(MouseEvent arg0) {
 				
-				//VALIDATOR FOR END DAY
-				try {
-		            String regex = "[0-9]+";
-		            String data = SimuEndday.getText();
-		            if (!data.matches(regex)) {
-		            	tabbedPane.setSelectedIndex(0);
-		            	tabbedPane_2.setSelectedIndex(0);
-		                JOptionPane.showMessageDialog(null, "Please enter digits only for End day.");   
-		                return;
-		            }
-		            data = cdccargo.getText();
-		            if (!data.matches(regex)) {
-		            	tabbedPane.setSelectedIndex(1);
-		            	tabbedPane_3.setSelectedIndex(1);
-		                JOptionPane.showMessageDialog(null, "Please enter digits only for number of CDC Cargos.");   
-		                return;
-		            }
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-				
-				
-				
+				String regex = "[0-9]+";
+		
 				//TRANSFER VALUE INTO CONSTANT FOR SIMULATOR USAGE
 				
 				//TRANSFER START TIME, END DAY AND END TIME
@@ -1828,6 +1926,8 @@ public class StartUI extends JFrame{
 				Constant.endday = Integer.valueOf((String) SimuEndday.getText());
 				time = (String) SimuEndtime.getSelectedItem();
 				Constant.endhour = Integer.parseInt( time.split(":")[0] );
+				
+				Constant.fuelcost = Double.parseDouble((String) fuelcost.getText());
 				
 				//TRANSFER CDC OPERATION TIME
 				time = (String) CDCStart.getSelectedItem();
@@ -1870,6 +1970,20 @@ public class StartUI extends JFrame{
 				Constant.CDCdemandh[13] = slider_13.getValue();
 				Constant.CDCdemandh[14] = slider_14.getValue();
 				
+				for(int i=0; i<15; i++){
+					cdctotal = cdctotal + Constant.CDCdemandh[i];
+				}
+				try{
+					if (cdctotal==0) {
+						tabbedPane.setSelectedIndex(1);
+		            	tabbedPane_3.setSelectedIndex(1);
+		                JOptionPane.showMessageDialog(null, "Please input the demand for CDC.");   
+		                return;
+		            }
+				}catch (Exception e) {
+		            e.printStackTrace();
+		        }
+				
 				Constant.Factdemandh[0] = slider_16.getValue();
 				Constant.Factdemandh[1] = slider_17.getValue();
 				Constant.Factdemandh[2] = slider_18.getValue();
@@ -1886,34 +2000,6 @@ public class StartUI extends JFrame{
 				Constant.Factdemandh[13] = slider_29.getValue();
 				Constant.Factdemandh[14] = slider_30.getValue();
 				
-				for(int i=0; i<15; i++){
-					cdctotal = cdctotal + Constant.CDCdemandh[i];
-				}
-				try{
-					if (cdctotal==0) {
-						tabbedPane.setSelectedIndex(1);
-		            	tabbedPane_3.setSelectedIndex(1);
-		                JOptionPane.showMessageDialog(null, "Please input the demand for CDC.");   
-		                return;
-		            }
-				}catch (Exception e) {
-		            e.printStackTrace();
-		        }
-				
-				try {
-		            String regex = "[0-9]+";
-		            String data = factcargo.getText();
-	            if (!data.matches(regex)) {
-		            	tabbedPane.setSelectedIndex(2);
-		            	tabbedPane_1.setSelectedIndex(1);
-		                JOptionPane.showMessageDialog(null, "Please enter digits only for number of Factory Cargos.");   
-		                return;
-		            }
-		        } catch (Exception e) {
-		            e.printStackTrace();
-		        }
-			
-	        
 				for(int i=0; i<15; i++){
 					facttotal = facttotal + Constant.Factdemandh[i];
 				}
@@ -1978,7 +2064,6 @@ public class StartUI extends JFrame{
 				if(chckbxEnableTruckOperation.isSelected()==true){
 					
 					try {
-			            String regex = "[0-9]+";
 			            String data = Truckfewcargo.getText();
 			            if (!data.matches(regex)) {
 			            	tabbedPane.setSelectedIndex(3);
@@ -2024,7 +2109,6 @@ public class StartUI extends JFrame{
 				if(chckbxEnableAgvOperation.isSelected()==true){
 					
 					try {
-			            String regex = "[0-9]+";
 			            String data = Agvfewcargo.getText();
 			            if (!data.matches(regex)) {
 			            	tabbedPane.setSelectedIndex(4);
@@ -2101,6 +2185,17 @@ public class StartUI extends JFrame{
 				}	
 			}
 		});
+		
+		SimuEndday.addKeyListener(new KeyAdapter() {
+        	@Override
+        	public void keyTyped(KeyEvent arg0) {
+        		char c = arg0.getKeyChar();
+        		if(!(Character.isDigit(c)|| (c==KeyEvent.VK_BACK_SPACE) || (c==KeyEvent.VK_DELETE))){
+        			arg0.consume();
+	                JOptionPane.showMessageDialog(null, "Please enter digits only for End Day.");  
+        		}
+        	}
+        });
 	}
 	
 	//SET ENABLED FOR PANEL COMPONENTS

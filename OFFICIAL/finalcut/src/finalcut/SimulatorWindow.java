@@ -124,9 +124,9 @@ public class SimulatorWindow extends JFrame {
 		lblScale.setHorizontalAlignment(SwingConstants.CENTER);
 		lblScale.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		JSlider simuspeedbar = new JSlider();
-		simuspeedbar.setValue(20);
-		simuspeedbar.setMaximum(21);
-		simuspeedbar.setInverted(true);
+		simuspeedbar.setMinimum(1);
+		simuspeedbar.setValue(2);
+		simuspeedbar.setMaximum(4);
 		
 		
 		
@@ -936,10 +936,18 @@ public class SimulatorWindow extends JFrame {
 		
 		simuspeedbar.addChangeListener(new ChangeListener() {
 			public void stateChanged(ChangeEvent arg0) {
-				int temp = 20;
-				temp = simuspeedbar.getValue();
-				if(temp == 21){
+				int temp = simuspeedbar.getValue();
+				if(temp == 1){
 					temp = 200;
+				}
+				if(temp == 2){
+					temp = 20;
+				}
+				if(temp == 3){
+					temp = 1;
+				}
+				if(temp == 4){
+					temp = 0;
 				}
 				Constant.tsleep_ms = temp;
 			}

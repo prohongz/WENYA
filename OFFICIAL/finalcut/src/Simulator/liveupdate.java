@@ -21,6 +21,7 @@ import javax.swing.JLayeredPane;
 import java.awt.event.ActionListener;
 
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 /**
  * 
  * @author Sim Hong Xun
@@ -36,6 +37,9 @@ public class liveupdate extends JPanel implements Runnable {
 	JLabel rttruckinactive = new JLabel("0");
 	JLabel rtagvactive = new JLabel("0");
 	JLabel rtagvinactive = new JLabel("0");
+	
+	JLabel rtfuel = new JLabel("0 Litres");
+	JLabel rtfuelcost = new JLabel("$0.00");
 	
 	JLabel rtday = new JLabel("0");
 	JLabel rthour = new JLabel("00");
@@ -96,14 +100,14 @@ public class liveupdate extends JPanel implements Runnable {
 					.addContainerGap()
 					.addComponent(rttimepanel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(rtvehpanel, GroupLayout.PREFERRED_SIZE, 193, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(317, Short.MAX_VALUE))
+					.addComponent(rtvehpanel, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(254, Short.MAX_VALUE))
 		);
 		
 		JLabel lblDay = new JLabel("Day ");
 		lblDay.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
-		JLabel lblTime = new JLabel("Time - ");
+		JLabel lblTime = new JLabel("Time  - ");
 		lblTime.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		
 		
@@ -206,39 +210,69 @@ public class liveupdate extends JPanel implements Runnable {
 		
 		JSeparator separator_1 = new JSeparator();
 		
+		JSeparator separator_2 = new JSeparator();
+		
+		JLabel lblTotalFuelConsumed = new JLabel("Total fuel consumed:");
+		lblTotalFuelConsumed.setToolTipText("Refer to Specific Real Time Data for individual vehicle fuel consumption.");
+		lblTotalFuelConsumed.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rtfuel.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		rtfuel.setToolTipText("Refer to Specific Real Time Data for individual vehicle fuel consumption.");
+		rtfuel.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JLabel lblAmountSpentOn = new JLabel("Amount spent on Fuel:");
+		lblAmountSpentOn.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rtfuelcost.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		rtfuelcost.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
 		GroupLayout gl_rtvehpanel = new GroupLayout(rtvehpanel);
 		gl_rtvehpanel.setHorizontalGroup(
 			gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rtvehpanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_rtvehpanel.createSequentialGroup()
 							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblActiveVehicles)
-								.addComponent(lblInactiveVehicles))
+								.addGroup(gl_rtvehpanel.createSequentialGroup()
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblActiveVehicles)
+										.addComponent(lblInactiveVehicles))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(rtinactive, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
+										.addComponent(rtactive, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(separator, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_rtvehpanel.createSequentialGroup()
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNumberOfActive)
+										.addComponent(lblNumberOfInactive))
+									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(rttruckinactive)
+										.addComponent(rttruckactive)))
+								.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_rtvehpanel.createSequentialGroup()
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblNumberOfActive_1)
+										.addComponent(lblNumberOfInactive_1))
+									.addGap(17)
+									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+										.addComponent(rtagvinactive)
+										.addComponent(rtagvactive)))
+								.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
+							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_rtvehpanel.createSequentialGroup()
+							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblAmountSpentOn)
+								.addComponent(lblTotalFuelConsumed))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(rtinactive, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)
-								.addComponent(rtactive, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
-						.addComponent(separator, GroupLayout.PREFERRED_SIZE, 219, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_rtvehpanel.createSequentialGroup()
-							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNumberOfActive)
-								.addComponent(lblNumberOfInactive))
-							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(rttruckinactive)
-								.addComponent(rttruckactive)))
-						.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_rtvehpanel.createSequentialGroup()
-							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblNumberOfActive_1)
-								.addComponent(lblNumberOfInactive_1))
-							.addGap(17)
-							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-								.addComponent(rtagvinactive)
-								.addComponent(rtagvactive))))
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+								.addComponent(rtfuel, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+								.addComponent(rtfuelcost, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+							.addGap(20))))
 		);
 		gl_rtvehpanel.setVerticalGroup(
 			gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
@@ -271,7 +305,17 @@ public class liveupdate extends JPanel implements Runnable {
 					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfInactive_1)
 						.addComponent(rtagvinactive))
-					.addContainerGap(14, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 4, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblTotalFuelConsumed)
+						.addComponent(rtfuel))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblAmountSpentOn)
+						.addComponent(rtfuelcost))
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		rtagvinactive.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		rtagvactive.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -393,7 +437,8 @@ public class liveupdate extends JPanel implements Runnable {
 		parameter.setText("GENERAL\r\n");
 		parameter.append("Start Time: " + String.format("%02d", Constant.starthour) + ":" + String.format("%02d", Constant.startminute) +
 				"\nEnd Day: Day " + Constant.endday +
-				"\nEnd Time: " + String.format("%02d", Constant.endhour) + ":" + String.format("%02d", Constant.endminute) + "\n\n");
+				"\nEnd Time: " + String.format("%02d", Constant.endhour) + ":" + String.format("%02d", Constant.endminute) + 
+				"\nFuel Cost: $" + String.format("%1$,.3f", Constant.fuelcost) + "\n\n");
 		parameter.append("CARGO\n");
 		
 		parameter.append("CDC\n" +
@@ -501,6 +546,9 @@ public class liveupdate extends JPanel implements Runnable {
 			
 			rtagvactive.setText(Integer.toString(Central.agvactive));
 			rtagvinactive.setText(Integer.toString(Central.agvinactive));
+			
+			rtfuel.setText(Integer.toString(Central.totalfuel) + " Litres");
+			rtfuelcost.setText("$" + String.format("%.3f", (Constant.fuelcost * Central.totalfuel)));
 			
 			
 			

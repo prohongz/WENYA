@@ -4,10 +4,15 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 /**
@@ -113,6 +118,8 @@ public class Painting {
 		g2.setColor(DARKGREEN);
 		g2.fillArc(85+5+20+21+5, 40+115+vrlength-8, 9, 9, 180, 180);
 		
+		
+		
 	}
 	
 	public static void paintfactoryqueue(Graphics g) {
@@ -190,7 +197,7 @@ public class Painting {
 		
 		x = 425;
 		y = 335;
-		space = 55;
+		space = 58;
 		
 		//DRAWING FOR FACT 1-5 DEMAND STOCK
 		for(int i=0; i<5; i++){
@@ -234,7 +241,7 @@ public class Painting {
 		
 		x = 425+(1*gap);
 		y = 225;
-		space = 55;
+		space = 58;
 		counter = 5;
 		
 		//DRAWING FOR FACT 6-12 DEMAND STOCK
@@ -279,7 +286,7 @@ public class Painting {
 		
 		x = 425+(2*gap);
 		y = 225;
-		space = 55;
+		space = 58;
 		counter = 12;
 		
 		//DRAWING FOR FACT 13-19 DEMAND STOCK
@@ -324,7 +331,7 @@ public class Painting {
 		
 		x = 425+(3*gap);
 		y = 225;
-		space = 55;
+		space = 58;
 		counter = 19;
 		
 		//DRAWING FOR FACT 20-26 DEMAND STOCK
@@ -369,7 +376,7 @@ public class Painting {
 		
 		x = 425+(4*gap);
 		y = 225;
-		space = 55;
+		space = 58;
 		counter = 26;
 		
 		//DRAWING FOR FACT 26-30 DEMAND STOCK
@@ -411,5 +418,9 @@ public class Painting {
 				g2.drawRect(x+30+30, y+40-(4*k)+((i-counter)*space), 20, 4);
 			}		
 		}
+	}
+
+	public static void testing(Graphics g) {
+
 	}
 }

@@ -43,7 +43,7 @@ public class DrawSim extends JPanel implements Runnable{
 	ArrayList<AGV> Agvforce = new ArrayList<AGV>();
 	ArrayList<Truck> Truckforce = new ArrayList<Truck>();
 	ArrayList<Factory> Factoryforce = new ArrayList<Factory>();
-	ArrayList<CDC> CDCforce = new ArrayList<CDC>();
+	CDC CDCforce = new CDC();
 	
 	//MAIN CONTENT
 	public DrawSim(){
@@ -56,7 +56,13 @@ public class DrawSim extends JPanel implements Runnable{
 		
 		for(int i=0; i < Constant.TruckQty; i++){
 			Truckforce.add(new Truck());
-		}		
+		}
+		
+		for(int i=0; i < 30; i++){
+			Factoryforce.add(new Factory());
+		}
+		
+		CDCforce = new CDC();
 		
 	}
 	
@@ -69,7 +75,7 @@ public class DrawSim extends JPanel implements Runnable{
 	       if(Constant.AgvMode == true){
 				//CALCULATE NEW LOCATION
 				for(AGV x: Agvforce){
-					x.drawupdate(g);
+					x.drawupdate(g, 'a');
 				}
 	       }
 			
@@ -77,11 +83,12 @@ public class DrawSim extends JPanel implements Runnable{
 	       if(Constant.TruckMode == true){
 				//CALCULATE NEW LOCATION
 				for(Truck x: Truckforce){
-					x.drawupdate(g);
+					x.drawupdate(g, 't');
 				}
 	       }
 	       
 	       Painting.paintfactoryqueue(g);
+	       //Painting.testing(g);
 	}
 
 	@Override
@@ -124,36 +131,30 @@ public class DrawSim extends JPanel implements Runnable{
 						
 						//GENERATE A NEW DEMAND WITH TIMING ALLOCATION						
 						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour(Clock.time)-6]); i++){
-							//DETERMINE WHICH FACTORY TO DELIVER THE CARGO TO
-							//IS TO TELL CDC IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+							//DELIVERY LOCATION WILL ONLY BE SPAWN WHEN THE DEMAND IS CALLED FOR
+							//THIS IS JUST TO TELL THE CDC/FACTORY THAT THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
 							//NOT SPAWN IMMEDIATELY
-							//[DELIVER LOCATION: RANDOM FACTORY (0-29) (Default)]
-							
-							//?????.demandcount++;
-							
-							//SET TIMING & DESTINATION
-							//STORE TO CDC
-							Clock.returnhour(Clock.time);
-							Central.spawndemandtime();
-							Central.spawndemandtarget();
-						}
-						
-						for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(Clock.time)-6]); i++){
-							//DETERMINE WHICH FACTORY TO SPAWN THE DEMAND
-							//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
-							//NOT SPAWN IMMEDIATELY
-							//[DELIVER LOCATION: CDC (100) (Default)]
-							//MODIFY HERE TO CHANGE THE DELIVER LOCATION
-							
-							//?????[Central.spawnfactdemand()].demandcount++;
-							//System.out.println("Count " + i + ": " + Central.spawnfactdemand());
 							
 							//SET CARGO TIMING
-							//STORE TO FACTORY
+							//STORE TO CDC
 							Clock.returnhour(Clock.time);
-							Central.spawndemandtime();
-							//TARGET = 100
+							CDCforce.addminutedemand(Central.spawndemandtime());
 						}
+						
+						for(Factory x: Factoryforce){
+							for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(Clock.time)-6]); i++){
+								//DETERMINE WHICH FACTORY TO SPAWN THE DEMAND
+								//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+								//NOT SPAWN IMMEDIATELY
+								//[DELIVER LOCATION: CDC (100) (Default)]
+								
+								//SET CARGO TIMING
+								//STORE TO FACTORY
+								Clock.returnhour(Clock.time);
+								x.addminutedemand(Central.spawndemandtime());
+							}
+						}
+						
 					}
 					demandtiming = 1;
 				}else{
@@ -167,9 +168,11 @@ public class DrawSim extends JPanel implements Runnable{
 			////////////////////////////////////////////////////////
 			
 			//CDC
-			
+			CDCforce
 			//IF THERE IS DEMAND INFORM CENTRAL
 			//NORMAL OR PRIORITY QUEUE
+			//[DELIVER LOCATION: RANDOM FACTORY (0-29) (Default)]
+			
 			
 			//FACTORY
 			for(Factory x: Factoryforce){

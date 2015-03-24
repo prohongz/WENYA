@@ -9,11 +9,22 @@ import java.util.PriorityQueue;
  */
 public class Building {
 
-	PriorityQueue<Cargo> Cargolist = new PriorityQueue<Cargo>();
+	private int minutedemand[] = new int[60];
 	
 	Building(){
-		
+		minutedemand = new int[60];
 	}
 	
+	void addminutedemand(int minute){
+		minutedemand[minute]++;
+	}
+	
+	void subminutedemand(int minute){
+		minutedemand[minute]--;
+	}
+	
+	int getminutedemand(int minute){
+		return minutedemand[minute];
+	}
 	
 }
