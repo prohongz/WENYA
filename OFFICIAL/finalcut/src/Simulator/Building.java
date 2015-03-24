@@ -1,7 +1,4 @@
 package Simulator;
-
-
-import java.util.PriorityQueue;
 /**
  * 
  * @author Sim Hong Xun
@@ -10,9 +7,37 @@ import java.util.PriorityQueue;
 public class Building {
 
 	private int minutedemand[] = new int[60];
+	private int normalqueue = 0;
+	private int priorityqueue = 0;
 	
 	Building(){
 		minutedemand = new int[60];
+		normalqueue = 0;
+		priorityqueue = 0;
+	}
+	
+	void addnormalqueue(){
+		normalqueue++;
+	}
+	
+	void subnormalqueue(){
+		normalqueue--;
+	}
+	
+	int getnormalqueue(){
+		return normalqueue;
+	}
+	
+	void addpriorityqueue(){
+		priorityqueue++;
+	}
+	
+	void subpriorityqueue(){
+		priorityqueue--;
+	}
+	
+	int getpriorityqueue(){
+		return priorityqueue;
 	}
 	
 	void addminutedemand(int minute){

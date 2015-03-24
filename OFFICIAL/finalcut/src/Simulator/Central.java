@@ -13,8 +13,11 @@ public class Central {
 	//MAIN PLOT
 	public static int cdcdemandcount = 0;
 	public static int[] factdemandcount = new int[30];
+	//public static int[] factdemandcount = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,};
+	
 	public static int cdcprioritycount = 0;
 	public static int[] factprioritycount = new int[30];
+	//public static int[] factprioritycount = {10, 10, 10, 10, 10, 10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,10, 10, 10, 10, 10,};
 	
 	public static int[][] factdock = new int[30][Constant.Factbay];
 	public static int[] cdcdock = new int[Constant.CDCbay];

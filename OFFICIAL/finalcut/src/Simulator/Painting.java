@@ -4,16 +4,10 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javax.imageio.ImageIO;
 /**
  * 
@@ -165,14 +159,14 @@ public class Painting {
 		
 		if(Central.cdcdemandcount > 0){
 			if(Central.cdcdemandcount == Constant.CDCcargolimit){
-				g2.drawString("CDC", x, y+10);
 				g2.setColor(Color.RED);
+				g2.drawString("  CDC", x, y+30);
 				g2.drawImage(image2, x, y+35, null);
 			}else{
-				g2.setColor(Color.GREEN);
-				
+				g2.setColor(Color.GREEN);	
 			}
-			g2.drawRect(x+30, y+80-(4*Central.cdcdemandcount), 20, (4*Central.cdcdemandcount));
+			
+			g2.fillRect(x+30, y+84-(4*Central.cdcdemandcount), 20, (4*Central.cdcdemandcount));
 		}
 		
 		for(int i=0; i<Constant.CDCcargolimit; i++){
@@ -181,13 +175,15 @@ public class Painting {
 		}
 		
 		if(Central.cdcprioritycount > 0){
-			if(Central.cdcprioritycount == 10){
+			if(Central.cdcprioritycount >= 20){
 				g2.setColor(Color.RED);
 				g2.drawImage(image, x, y+35, null);
+				g2.fillRect(x+30+30, y+84-(4*20), 20, (4*20));
 			}else{
 				g2.setColor(Color.GREEN);
+				g2.fillRect(x+30+30, y+84-(4*Central.cdcprioritycount), 20, (4*Central.cdcprioritycount));
 			}
-			g2.drawRect(x+30, y+80-(4*Central.cdcprioritycount), 20, (4*Central.cdcprioritycount));
+			
 		}
 		
 		for(int i=0; i<20; i++){
@@ -209,12 +205,12 @@ public class Painting {
 			if(Central.factdemandcount[i] > 0){
 				if(Central.factdemandcount[i] == Constant.Factcargolimit){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+(i*space));
-					g2.drawImage(image2, x, y+15, null);
+					g2.drawString("    F" + (i+1), x, y+10+(i*space));
+					g2.drawImage(image2, x, y+15+(i*space), null);
 				}else{
 					g2.setColor(Color.GREEN);
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factdemandcount[i])+(i*space), 20, (4*Central.factdemandcount[i]));
+				g2.fillRect(x+30, y+44-(4*Central.factdemandcount[i])+(i*space), 20, (4*Central.factdemandcount[i]));
 			}
 			
 			for(int j=0; j<Constant.Factcargolimit; j++){
@@ -223,14 +219,14 @@ public class Painting {
 			}
 			
 			if(Central.factprioritycount[i] > 0){
-				if(Central.factprioritycount[i] == 10){
+				if(Central.factprioritycount[i] >= 10){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+(i*space));
-					g2.drawImage(image, x, y+15, null);
+					g2.drawImage(image, x, y+15+(i*space), null);
+					g2.fillRect(x+30+30, y+44-(4*10)+((i-counter)*space), 20, (4*10));
 				}else{
 					g2.setColor(Color.GREEN);
+					g2.fillRect(x+30+30, y+44-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factprioritycount[i])+(i*space), 20, (4*Central.factprioritycount[i]));
 			}
 			
 			for(int k=0; k<10; k++){
@@ -254,12 +250,12 @@ public class Painting {
 			if(Central.factdemandcount[i] > 0){
 				if(Central.factdemandcount[i] == Constant.Factcargolimit){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image2, x, y+15, null);
+					g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
+					g2.drawImage(image2, x, y+15+((i-counter)*space), null);
 				}else{
 					g2.setColor(Color.GREEN);
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
+				g2.fillRect(x+30, y+44-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
 			}
 			
 			for(int j=0; j<Constant.Factcargolimit; j++){
@@ -268,14 +264,14 @@ public class Painting {
 			}
 			
 			if(Central.factprioritycount[i] > 0){
-				if(Central.factprioritycount[i] == 10){
+				if(Central.factprioritycount[i] >= 10){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image, x, y+15, null);
+					g2.drawImage(image, x, y+15+((i-counter)*space), null);
+					g2.fillRect(x+30+30, y+44-(4*10)+((i-counter)*space), 20, (4*10));
 				}else{
 					g2.setColor(Color.GREEN);
+					g2.fillRect(x+30+30, y+44-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 			}
 			
 			for(int k=0; k<10; k++){
@@ -299,12 +295,12 @@ public class Painting {
 			if(Central.factdemandcount[i] > 0){
 				if(Central.factdemandcount[i] == Constant.Factcargolimit){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image2, x, y+15, null);
+					g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
+					g2.drawImage(image2, x, y+15+((i-counter)*space), null);
 				}else{
 					g2.setColor(Color.GREEN);
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
+				g2.fillRect(x+30, y+44-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
 			}
 			
 			for(int j=0; j<Constant.Factcargolimit; j++){
@@ -313,14 +309,14 @@ public class Painting {
 			}
 			
 			if(Central.factprioritycount[i] > 0){
-				if(Central.factprioritycount[i] == 10){
+				if(Central.factprioritycount[i] >= 10){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image, x, y+15, null);
+					g2.drawImage(image, x, y+15+((i-counter)*space), null);
+					g2.fillRect(x+30+30, y+44-(4*10)+((i-counter)*space), 20, (4*10));
 				}else{
 					g2.setColor(Color.GREEN);
+					g2.fillRect(x+30+30, y+44-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 			}
 			
 			for(int k=0; k<10; k++){
@@ -344,12 +340,12 @@ public class Painting {
 			if(Central.factdemandcount[i] > 0){
 				if(Central.factdemandcount[i] == Constant.Factcargolimit){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image2, x, y+15, null);
+					g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
+					g2.drawImage(image2, x, y+15+((i-counter)*space), null);
 				}else{
 					g2.setColor(Color.GREEN);
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
+				g2.fillRect(x+30, y+44-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
 			}
 			
 			for(int j=0; j<Constant.Factcargolimit; j++){
@@ -358,14 +354,14 @@ public class Painting {
 			}
 			
 			if(Central.factprioritycount[i] > 0){
-				if(Central.factprioritycount[i] == 10){
+				if(Central.factprioritycount[i] >= 10){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image, x, y+15, null);
+					g2.drawImage(image, x, y+15+((i-counter)*space), null);
+					g2.fillRect(x+30+30, y+44-(4*10)+((i-counter)*space), 20, (4*10));
 				}else{
 					g2.setColor(Color.GREEN);
+					g2.fillRect(x+30+30, y+44-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
 			}
 			
 			for(int k=0; k<10; k++){
@@ -389,12 +385,12 @@ public class Painting {
 			if(Central.factdemandcount[i] > 0){
 				if(Central.factdemandcount[i] == Constant.Factcargolimit){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image2, x, y+15, null);
+					g2.drawString("    F" + (i+1), x, y+10+((i-counter)*space));
+					g2.drawImage(image2, x, y+15+((i-counter)*space), null);
 				}else{
 					g2.setColor(Color.GREEN);
 				}
-				g2.drawRect(x+30, y+40-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
+				g2.fillRect(x+30, y+44-(4*Central.factdemandcount[i])+((i-counter)*space), 20, (4*Central.factdemandcount[i]));
 			}
 			
 			for(int j=0; j<Constant.Factcargolimit; j++){
@@ -403,14 +399,14 @@ public class Painting {
 			}
 			
 			if(Central.factprioritycount[i] > 0){
-				if(Central.factprioritycount[i] == 10){
+				if(Central.factprioritycount[i] >= 10){
 					g2.setColor(Color.RED);
-					g2.drawString("Factory " + (i+1), x, y+10+((i-counter)*space));
-					g2.drawImage(image, x, y+15, null);
+					g2.drawImage(image, x, y+15+((i-counter)*space), null);
+					g2.fillRect(x+30+30, y+44-(4*10)+((i-counter)*space), 20, (4*10));
 				}else{
 					g2.setColor(Color.GREEN);
-				}
-				g2.drawRect(x+30, y+40-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
+					g2.fillRect(x+30+30, y+44-(4*Central.factprioritycount[i])+((i-counter)*space), 20, (4*Central.factprioritycount[i]));
+				}	
 			}
 			
 			for(int k=0; k<10; k++){

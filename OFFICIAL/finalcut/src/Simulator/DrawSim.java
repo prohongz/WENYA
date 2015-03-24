@@ -59,7 +59,7 @@ public class DrawSim extends JPanel implements Runnable{
 		}
 		
 		for(int i=0; i < 30; i++){
-			Factoryforce.add(new Factory());
+			Factoryforce.add(new Factory(i));
 		}
 		
 		CDCforce = new CDC();
@@ -121,36 +121,35 @@ public class DrawSim extends JPanel implements Runnable{
 			/////////////////////////////////////////////////////////
 			
 			
-			//CENTRAL HEADQUARTER
+			//SPAWN DEMAND TIMING
 			if((int) Clock.time%3600 == 0){
 				
 				if(demandtiming == 5){  //CHANGE THIS IF TIMESTEP_S IS CHANGED
 
 					//OPERATION FROM 06:00 - 21:00, BUT LAST DEMAND AT 20:00
-					if(Clock.returnhour(Clock.time) >= 6 && Clock.returnhour(Clock.time) <= 20){
+					if(Clock.returnhour() >= 6 && Clock.returnhour() <= 20){
 						
 						//GENERATE A NEW DEMAND WITH TIMING ALLOCATION						
-						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour(Clock.time)-6]); i++){
-							//DELIVERY LOCATION WILL ONLY BE SPAWN WHEN THE DEMAND IS CALLED FOR
-							//THIS IS JUST TO TELL THE CDC/FACTORY THAT THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
+						for(int i = 0; i < (Constant.CDCdemandh[Clock.returnhour()-6]); i++){
+							//DELIVERY LOCATION WILL ONLY BE SPAWN WHEN THE DEMAND IS CALLED FOR BY CENTRAL
+							//THIS IS JUST TO TELL THE CDC THAT THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
 							//NOT SPAWN IMMEDIATELY
 							
 							//SET CARGO TIMING
 							//STORE TO CDC
-							Clock.returnhour(Clock.time);
+							Clock.returnhour();
 							CDCforce.addminutedemand(Central.spawndemandtime());
 						}
 						
 						for(Factory x: Factoryforce){
-							for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour(Clock.time)-6]); i++){
-								//DETERMINE WHICH FACTORY TO SPAWN THE DEMAND
+							for(int i = 0; i < (Constant.Factdemandh[Clock.returnhour()-6]); i++){
+								//DELIVERY LOCATION WILL ONLY BE SPAWN WHEN THE DEMAND IS CALLED FOR BY CENTRAL
 								//IS TO TELL FACTORY IN THIS HOUR, THERE IS GOING TO BE THIS DEMAND AT THIS PARTICULAR TIME
 								//NOT SPAWN IMMEDIATELY
-								//[DELIVER LOCATION: CDC (100) (Default)]
 								
 								//SET CARGO TIMING
 								//STORE TO FACTORY
-								Clock.returnhour(Clock.time);
+								Clock.returnhour();
 								x.addminutedemand(Central.spawndemandtime());
 							}
 						}
@@ -162,23 +161,54 @@ public class DrawSim extends JPanel implements Runnable{
 				}
 			}
 			
-			////////////////////////////////////////////////////////
-			//CDC AND FACTORY CALL FOR VEHICLES TO CLEAR DEMAND   //
-			//PRIORTY GOES TO TRUCK FIRST THEN AGV IF BOTH ENABLED//
-			////////////////////////////////////////////////////////
+			//////////////////////////////////////////////////////////
+			//CDC AND FACTORY NOTIFY CENTRAL FOR VEH TO CLEAR DEMAND//
+			//PRIORTY GOES TO TRUCK FIRST THEN AGV IF BOTH ENABLED  //
+			//////////////////////////////////////////////////////////
 			
 			//CDC
-			CDCforce
-			//IF THERE IS DEMAND INFORM CENTRAL
-			//NORMAL OR PRIORITY QUEUE
-			//[DELIVER LOCATION: RANDOM FACTORY (0-29) (Default)]
-			
+			//IF THERE IS DEMAND, INFORM CENTRAL
+			//NORMAL OR PRIORTY QUEUE
+			if(CDCforce.getminutedemand( Clock.returnminute() ) > 0){
+				//OWNSELF TAKE NOTE AND NOTIFY CENTRAL AT THE SAME TIME
+				//[DELIVER LOCATION: RANDOM FACTORY (0-29) (Default)]
+				if(CDCforce.getnormalqueue() != Constant.CDCcargolimit){
+					CDCforce.addnormalqueue();
+					Central.cdcdemandcount++;
+					
+					CDCforce.subminutedemand( Clock.returnminute() );
+				}else{
+					CDCforce.addpriorityqueue();
+					Central.cdcprioritycount++;
+					
+					CDCforce.subminutedemand( Clock.returnminute() );
+				}
+			}
 			
 			//FACTORY
 			for(Factory x: Factoryforce){
 				//IF THERE IS DEMAND, INFORM CENTRAL
 				//NORMAL OR PRIORTY QUEUE
+				if(x.getminutedemand( Clock.returnminute() ) > 0){
+					//OWNSELF TAKE NOTE AND NOTIFY CENTRAL AT THE SAME TIME
+					//[DELIVER LOCATION: CDC (100) (Default)]
+					if(x.getnormalqueue() != Constant.Factcargolimit){
+						x.addnormalqueue();
+						Central.factdemandcount[x.getfactorynumber()]++;
+						
+						x.subminutedemand( Clock.returnminute() );
+					}else{
+						x.addpriorityqueue();
+						Central.factprioritycount[x.getfactorynumber()]++;
+						
+						x.subminutedemand( Clock.returnminute() );
+					}
+				}
 			}
+			
+			//CENTRAL [BRAIN FOR CDC AND FACTORY]
+			
+			
 			
 			//TRUCK
 			if(Constant.TruckMode == true){

@@ -1,0 +1,12 @@
+package Simulator;
+/**
+ * 
+ * @author Sim Hong Xun
+ *
+ */
+public class Factory extends Building{
+
+	Factory(){
+		
+	}
+}

@@ -7,7 +7,10 @@ public class Clock {
 	static int day=0, hour=0, min=0, sec=0;
 	
 	Clock(){
-		;
+		day=0;
+		hour=0;
+		min=0;
+		sec=0;
 	}
 	
 	public static void clockupdate() {
@@ -23,10 +26,10 @@ public class Clock {
 		hour = (int) (hour - day * 24.0);
 	}
 	
-	public static int returnhour(double t){
+	public static int returnhour(){
 
-		min = (int) (t / 60.0);
-		sec = (int) (t - min * 60.0);
+		min = (int) (time / 60.0);
+		sec = (int) (time - min * 60.0);
 		
 		hour = (int) (min / 60.0);
 		min = (int) (min - hour * 60.0);
@@ -35,10 +38,10 @@ public class Clock {
 		return hour = (int) (hour - day * 24.0);
 	}
 	
-	public int returnminute(double t){
+	public static int returnminute(){
 
-		min = (int) (t / 60.0);
-		sec = (int) (t - min * 60.0);
+		min = (int) (time / 60.0);
+		sec = (int) (time - min * 60.0);
 		
 		hour = (int) (min / 60.0);
 		return min = (int) (min - hour * 60.0);
