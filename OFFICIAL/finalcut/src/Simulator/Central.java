@@ -47,6 +47,11 @@ public class Central {
 	
 	public static int totalfuel = 0;
 	
+	public static int[] trucklocation = new int[Constant.TruckQty];
+	public static int[] agvlocation = new int[Constant.AgvQty];
+	
+	public static int[] factdistance = new int [30];
+	
 	
 	public Central(){
 		

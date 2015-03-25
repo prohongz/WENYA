@@ -1,4 +1,7 @@
 package Simulator;
+
+import java.awt.Point;
+
 /**
  * 
  * @author Sim Hong Xun
@@ -9,11 +12,21 @@ public class Building {
 	private int minutedemand[] = new int[60];
 	private int normalqueue = 0;
 	private int priorityqueue = 0;
+	private Point location;
 	
 	Building(){
 		minutedemand = new int[60];
 		normalqueue = 0;
 		priorityqueue = 0;
+		location = new Point(0,0);
+	}
+	
+	void setlocation(Point x){
+		location = x;
+	}
+	
+	Point getlocation(){
+		return location;
 	}
 	
 	void addnormalqueue(){

@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+import java.awt.SystemColor;
 /**
  * 
  * @author Sim Hong Xun
@@ -405,9 +406,9 @@ public class liveupdate extends JPanel implements Runnable {
 			gl_rtpanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rtpanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_rtpanel.createParallelGroup(Alignment.LEADING)
-						.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-						.addGroup(gl_rtpanel.createSequentialGroup()
+					.addGroup(gl_rtpanel.createParallelGroup(Alignment.TRAILING)
+						.addComponent(layeredPane, Alignment.LEADING)
+						.addGroup(Alignment.LEADING, gl_rtpanel.createSequentialGroup()
 							.addComponent(btnCdc)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(btnFactory)
@@ -427,16 +428,29 @@ public class liveupdate extends JPanel implements Runnable {
 						.addComponent(btnTruck)
 						.addComponent(btnAgv))
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(layeredPane, GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-					.addContainerGap())
+					.addComponent(layeredPane, GroupLayout.PREFERRED_SIZE, 560, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(22, Short.MAX_VALUE))
 		);
 		
 		JPanel rtcdcpnl = new JPanel();
 		rtcdcpnl.setBounds(0, 0, 252, 560);
 		layeredPane.add(rtcdcpnl);
-		
-		
-		rtcdcpnl.add(lblCdc);
+		GroupLayout gl_rtcdcpnl = new GroupLayout(rtcdcpnl);
+		gl_rtcdcpnl.setHorizontalGroup(
+			gl_rtcdcpnl.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_rtcdcpnl.createSequentialGroup()
+					.addGap(56)
+					.addComponent(lblCdc)
+					.addContainerGap(180, Short.MAX_VALUE))
+		);
+		gl_rtcdcpnl.setVerticalGroup(
+			gl_rtcdcpnl.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rtcdcpnl.createSequentialGroup()
+					.addGap(19)
+					.addComponent(lblCdc)
+					.addContainerGap(527, Short.MAX_VALUE))
+		);
+		rtcdcpnl.setLayout(gl_rtcdcpnl);
 		
 		JPanel rtfactpnl = new JPanel();
 		rtfactpnl.setBounds(0, 0, 252, 560);
@@ -449,15 +463,53 @@ public class liveupdate extends JPanel implements Runnable {
 		rttruckpnl.setBounds(0, 0, 252, 560);
 		layeredPane.add(rttruckpnl);
 		
-		JLabel lblTr = new JLabel("tr");
-		rttruckpnl.add(lblTr);
+		JTextArea txtrPhaseIdle = new JTextArea();
+		txtrPhaseIdle.setBackground(SystemColor.menu);
+		txtrPhaseIdle.setFont(new Font("Tahoma", Font.PLAIN, 10));
+		txtrPhaseIdle.setLineWrap(true);
+		txtrPhaseIdle.setText("Phase 0: Idle\r\nPhase 1: Driving to factory empty\r\nPhase 2: Driving to CDC w cargo\r\nPhase 3: Driving to factory w cargo\r\nPhase 4: Driving to CDC empty\r\nPhase 5: Driving to CDC on order\r\nPhase 6: Loading/Unloading");
+		GroupLayout gl_rttruckpnl = new GroupLayout(rttruckpnl);
+		gl_rttruckpnl.setHorizontalGroup(
+			gl_rttruckpnl.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rttruckpnl.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(txtrPhaseIdle, GroupLayout.PREFERRED_SIZE, 232, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
+		);
+		gl_rttruckpnl.setVerticalGroup(
+			gl_rttruckpnl.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rttruckpnl.createSequentialGroup()
+					.addGap(5)
+					.addComponent(txtrPhaseIdle, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(299, Short.MAX_VALUE))
+		);
+		rttruckpnl.setLayout(gl_rttruckpnl);
 		
 		JPanel rtagvpnl = new JPanel();
 		rtagvpnl.setBounds(0, 0, 252, 560);
 		layeredPane.add(rtagvpnl);
 		
-		JLabel lblAgv = new JLabel("agv");
-		rtagvpnl.add(lblAgv);
+		JTextArea txtrPhaseIdle_1 = new JTextArea();
+		txtrPhaseIdle_1.setLineWrap(true);
+		txtrPhaseIdle_1.setBackground(SystemColor.menu);
+		txtrPhaseIdle_1.setFont(new Font("OCR A Extended", Font.PLAIN, 10));
+		txtrPhaseIdle_1.setText("Phase 0: Idle\r\nPhase 1: Driving to factory empty\r\nPhase 2: Driving to CDC w cargo\r\nPhase 3: Driving to factory w cargo\r\nPhase 4: Driving to CDC empty\r\nPhase 5: Driving to CDC on order\r\nPhase 6: Loading/Unloading");
+		GroupLayout gl_rtagvpnl = new GroupLayout(rtagvpnl);
+		gl_rtagvpnl.setHorizontalGroup(
+			gl_rtagvpnl.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_rtagvpnl.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(txtrPhaseIdle_1, GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+					.addContainerGap())
+		);
+		gl_rtagvpnl.setVerticalGroup(
+			gl_rtagvpnl.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rtagvpnl.createSequentialGroup()
+					.addGap(5)
+					.addComponent(txtrPhaseIdle_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(474, Short.MAX_VALUE))
+		);
+		rtagvpnl.setLayout(gl_rtagvpnl);
 		rtpanel.setLayout(gl_rtpanel);
 		
 		JPanel Settingpanel = new JPanel();

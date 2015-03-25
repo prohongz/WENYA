@@ -1,0 +1,77 @@
+package Simulator;
+
+import java.util.Random;
+
+/**CENTRAL CLASS ACTS LIKE A HEADQUARTER CONTAIN ALL THE INFORMATION FOR VEHICLES, FACTORIES, CDC
+ * 
+ * @author Sim Hong Xun
+ * 
+ * */
+
+public class Central {
+
+	//MAIN PLOT
+	public static int cdcdemandcount = 0;
+	public static int[] factdemandcount = new int[30];
+	
+	public static int cdcprioritycount = 0;
+	public static int[] factprioritycount = new int[30];
+	
+	public static int cdcdemandcountx = 0;
+	public static int[] factdemandcountx = new int[30];
+	
+	public static int cdcprioritycountx = 0;
+	public static int[] factprioritycountx = new int[30];
+	
+	public static int cdcoverload = 0;
+	public static int factoverload = 0;
+	
+	public static int[][] factdock = new int[30][Constant.Factbay];
+	public static int[] cdcdock = new int[Constant.CDCbay];
+	
+	//REAL TIME PLOT
+	public static int truckactive = 0;
+	public static int truckinactive = Constant.TruckQty;
+	
+	public static int agvactive = 0;
+	public static int agvinactive = Constant.AgvQty;
+	
+	public static int cdccargoserve = 0;
+	public static int cdccargounserve = 0;
+	
+	public static int factcargoserve = 0;
+	public static int factcargounserve = 0;
+	
+	public static int totalcargoserve = 0;
+	public static int totalcargounserve = 0;
+	
+	public static int totalfuel = 0;
+	
+	public static int[] trucklocation = new int[Constant.TruckQty];
+	public static int[] agvlocation = new int[Constant.AgvQty];
+	
+	
+	public Central(){
+		
+	}
+	
+	//FOR CDC
+	static int spawnfactdemand(){
+		Random randomgen = new Random();
+		int factorynumber = randomgen.nextInt(30);
+		return factorynumber;
+	}
+	
+	static int spawndemandtarget(){
+		Random randomgen = new Random();
+		int factorynumber = randomgen.nextInt(30);
+		return factorynumber;
+	}
+	
+	//FOR CDC AND FACTORY
+	static int spawndemandtime(){
+		Random randomgen = new Random();
+		int demandtime = randomgen.nextInt(60);
+		return demandtime;
+	}
+}

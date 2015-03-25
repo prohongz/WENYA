@@ -1,4 +1,5 @@
 package Simulator;
+
 /**
  * 
  * @author Sim Hong Xun
@@ -7,6 +8,7 @@ package Simulator;
 public class Factory extends Building{
 
 	private int factorynumber = 0;
+	
 	
 	Factory(int number){
 		super();

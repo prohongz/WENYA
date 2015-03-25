@@ -5,9 +5,12 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 /**
  * 
@@ -112,7 +115,8 @@ public class Painting {
 		g2.setColor(DARKGREEN);
 		g2.fillArc(85+5+20+21+5, 40+115+vrlength-8, 9, 9, 180, 180);
 		
-		
+		g2.setColor(Color.black);
+		g2.fillRect(100, 440, 1, 1);
 		
 	}
 	
@@ -453,5 +457,28 @@ public class Painting {
 
 	public static void testing(Graphics g) {
 
-	}
+		Graphics2D g2 = (Graphics2D) g;
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+		        RenderingHints.VALUE_ANTIALIAS_ON);
+		
+			BufferedImage image = null;
+			try {
+
+						image = ImageIO.read(new File ("src/misc/Truck.gif"));
+
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			AffineTransform at = new AffineTransform();
+	
+			at.translate(20, 500);
+			//at.translate(position.x, position.y);
+			//at.rotate(Math.PI/4);
+	        at.translate(-image.getWidth()/2, -image.getHeight()/2);
+	        at.scale(0.5, 0.5);
+	        g2.drawImage(image, at, null);
+		}
+	
 }
