@@ -27,24 +27,11 @@ public class Clock {
 	}
 	
 	public static int returnhour(){
-
-		min = (int) (time / 60.0);
-		sec = (int) (time - min * 60.0);
-		
-		hour = (int) (min / 60.0);
-		min = (int) (min - hour * 60.0);
-		
-		day = (int) (hour / 24.0);
-		return hour = (int) (hour - day * 24.0);
+		return hour;
 	}
 	
 	public static int returnminute(){
-
-		min = (int) (time / 60.0);
-		sec = (int) (time - min * 60.0);
-		
-		hour = (int) (min / 60.0);
-		return min = (int) (min - hour * 60.0);
+		return min;
 	}
 	
 	public static double calendtime() {

@@ -179,6 +179,9 @@ public class DrawSim extends JPanel implements Runnable{
 					CDCforce.subminutedemand( Clock.returnminute() );
 				}else{
 					CDCforce.addpriorityqueue();
+					if(Central.cdcprioritycount >= 20){
+						Central.cdcoverload++;
+					}
 					Central.cdcprioritycount++;
 					
 					CDCforce.subminutedemand( Clock.returnminute() );
@@ -199,6 +202,9 @@ public class DrawSim extends JPanel implements Runnable{
 						x.subminutedemand( Clock.returnminute() );
 					}else{
 						x.addpriorityqueue();
+						if(Central.factprioritycount[x.getfactorynumber()] >= 10){
+							Central.factoverload++;
+						}
 						Central.factprioritycount[x.getfactorynumber()]++;
 						
 						x.subminutedemand( Clock.returnminute() );
@@ -208,28 +214,525 @@ public class DrawSim extends JPanel implements Runnable{
 			
 			//CENTRAL [BRAIN FOR CDC AND FACTORY]
 			
+			/////////////////////////////ALLOCATE VEHICLE FOR CDC PRIORITY LIST////////////////////////////////////////
+			int temp = 0;
+			temp = Central.cdcprioritycount;
+			boolean notsuccess = true;
+			for(int i =0; i<temp; i++){
+				if(Constant.AgvMode==true && Constant.TruckMode==true){
+					
+					//FOR CDC IDEAL CASE GET PHASE 0 VEHICLE
+					if(Constant.Truckpriority == true){
+						//Search for free TRUCK first then AGV second				
+						for(Truck x: Truckforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO TRUCK
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcprioritycount--;
+								Central.cdcprioritycountx++;
+								notsuccess = false;
+								break;
+							}
+						}
+						for(AGV x: Agvforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO AGV
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcprioritycount--;
+								Central.cdcprioritycountx++;
+								notsuccess = false;
+								break;
+							}	
+						}
+						if(notsuccess == true){
+							//find the closest phase 4 vehicles    <-----------------------------------------------------
+						}
+						//IN EVENT WHERE THERE IS NO VEHICLE TO ALLOCATE TO 
+						//DO NOTHING BUT CONTINUE ON FIRST
+					}else{
+						//Search for free AGV first then TRUCK second
+						for(AGV x: Agvforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO AGV
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcprioritycount--;
+								Central.cdcprioritycountx++;
+								notsuccess = false;
+								break;
+							}	
+						}
+						for(Truck x: Truckforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO TRUCK
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcprioritycount--;
+								Central.cdcprioritycountx++;
+								notsuccess = false;
+								break;
+							}
+						}
+						if(notsuccess = true){
+							//find the closest phase 4 vehicles    <-----------------------------------------------------
+						}
+					}
+				}
+				//ONLY TRUCK
+				if(Constant.AgvMode==false && Constant.TruckMode==true){
+					for(Truck x: Truckforce){
+						if(x.getphase() == 0){
+							
+							//ALLOCATE DESTINATION TO TRUCK
+							x.setdestination(Central.spawnfactdemand());
+							
+							//if allocated success
+							x.setphase(1);
+							Central.cdcprioritycount--;
+							Central.cdcprioritycountx++;
+							notsuccess = false;
+							break;
+						}
+					}
+					if(notsuccess == true){
+						//find the closest phase 4 truck    <-----------------------------------------------------
+					}
+				}
+				//ONLY AGV
+				if(Constant.AgvMode==true && Constant.TruckMode==false){
+					for(AGV x: Agvforce){
+						if(x.getphase() == 0){
+							
+							//ALLOCATE DESTINATION TO AGV
+							x.setdestination(Central.spawnfactdemand());
+							
+							//if allocated success
+							x.setphase(1);
+							Central.cdcprioritycount--;
+							Central.cdcprioritycountx++;
+							notsuccess = false;
+							break;
+						}	
+					}
+					if(notsuccess == true){
+						//find the closest phase 4 agv    <-----------------------------------------------------
+					}
+				}
+				notsuccess = false;
+			}
+			
+			/////////////////////////////////////ALLOCATE VEHICLE FOR FACTORY PRIORITY LIST//////////////////////////////////
+			for(int i=0; i<30; i++){
+				temp = Central.factprioritycount[i];
+				for(int j =0; j<temp; j++){
+					
+					//FOR FACT IDEAL CASE GET PHASE 4 VEHICLE CLOSE BY
+					if(Constant.AgvMode==true && Constant.TruckMode==true){
+						if(Constant.Truckpriority == true){
+							
+							//find the closest phase 4 truck    <-----------------------------------------------------
+							//find the closest phase 4 agv      <-----------------------------------------------------
+							
+							if(notsuccess == true){
+								for(Truck x: Truckforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factprioritycount[i]--;
+										Central.factprioritycountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+							if(notsuccess == true){
+								for(AGV x: Agvforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factprioritycount[i]--;
+										Central.factprioritycountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+						}else{
+							//find the closest phase 4 agv    <-----------------------------------------------------
+							//find the closest phase 4 truck  <-----------------------------------------------------
+							
+							if(notsuccess == true){
+								for(AGV x: Agvforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factprioritycount[i]--;
+										Central.factprioritycountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+							if(notsuccess == true){
+								for(Truck x: Truckforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factprioritycount[i]--;
+										Central.factprioritycountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+						}
+					}
+					
+					if(Constant.AgvMode==false && Constant.TruckMode==true){
+						//find the closest phase 4 truck    <-----------------------------------------------------
+						
+						if(notsuccess == true){
+							for(Truck x: Truckforce){
+								if(x.getphase() == 0){
+									
+									//ALLOCATE DESTINATION TO TRUCK
+									x.setdestination(i);
+									
+									//if allocated success
+									x.setphase(1);
+									Central.factprioritycount[i]--;
+									Central.factprioritycountx[i]++;
+									notsuccess = false;
+									break;
+								}
+							}
+						}
+					}
+					
+					if(Constant.AgvMode==true && Constant.TruckMode==false){
+						//find the closest phase 4 agv      <-----------------------------------------------------
+						
+						if(notsuccess == true){
+							for(AGV x: Agvforce){
+								if(x.getphase() == 0){
+									
+									//ALLOCATE DESTINATION TO TRUCK
+									x.setdestination(i);
+									
+									//if allocated success
+									x.setphase(1);
+									Central.factprioritycount[i]--;
+									Central.factprioritycountx[i]++;
+									notsuccess = false;
+									break;
+								}
+							}
+						}
+					}
+					
+				}
+				notsuccess = false;
+			}
+			
+			///////////////////////////////////ALLOCATE VEHICLE FOR CDC NORMAL LIST//////////////////////////////////////
+			temp = Central.cdcdemandcount;
+			for(int i =0; i<temp; i++){
+				if(Constant.AgvMode==true && Constant.TruckMode==true){
+					
+					//FOR CDC IDEAL CASE GET PHASE 0 VEHICLE
+					if(Constant.Truckpriority == true){
+						//Search for free TRUCK first then AGV second				
+						for(Truck x: Truckforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO TRUCK
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcdemandcount--;
+								Central.cdcdemandcountx++;
+								notsuccess = false;
+							}
+						}
+						for(AGV x: Agvforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO AGV
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcdemandcount--;
+								Central.cdcdemandcountx++;
+								notsuccess = false;
+							}	
+						}
+						if(notsuccess == true){
+							//find the closest phase 4 vehicles    <-----------------------------------------------------
+						}
+						//IN EVENT WHERE THERE IS NO VEHICLE TO ALLOCATE TO 
+						//DO NOTHING BUT CONTINUE ON FIRST
+					}else{
+						//Search for free AGV first then TRUCK second
+						for(AGV x: Agvforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO AGV
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcdemandcount--;
+								Central.cdcdemandcountx++;
+								notsuccess = false;
+							}	
+						}
+						for(Truck x: Truckforce){
+							if(x.getphase() == 0){
+								
+								//ALLOCATE DESTINATION TO TRUCK
+								x.setdestination(Central.spawnfactdemand());
+								
+								//if allocated success
+								x.setphase(1);
+								Central.cdcdemandcount--;
+								Central.cdcdemandcountx++;
+								notsuccess = false;
+							}
+						}
+						if(notsuccess = true){
+							//find the closest phase 4 vehicles    <-----------------------------------------------------
+						}
+					}
+				}
+				//ONLY TRUCK
+				if(Constant.AgvMode==false && Constant.TruckMode==true){
+					for(Truck x: Truckforce){
+						if(x.getphase() == 0){
+							
+							//ALLOCATE DESTINATION TO TRUCK
+							x.setdestination(Central.spawnfactdemand());
+							
+							//if allocated success
+							x.setphase(1);
+							Central.cdcdemandcount--;
+							Central.cdcdemandcountx++;
+							notsuccess = false;
+						}
+					}
+					if(notsuccess == true){
+							//find the closest phase 4 truck    <-----------------------------------------------------
+					}
+				}
+				//ONLY AGV
+				if(Constant.AgvMode==true && Constant.TruckMode==false){
+					for(AGV x: Agvforce){
+						if(x.getphase() == 0){
+							
+							//ALLOCATE DESTINATION TO AGV
+							x.setdestination(Central.spawnfactdemand());
+							
+							//if allocated success
+							x.setphase(1);
+							Central.cdcdemandcount--;
+							Central.cdcdemandcountx++;
+							notsuccess = false;
+						}	
+					}
+					if(notsuccess == true){
+						//find the closest phase 4 agv    <-----------------------------------------------------
+					}
+				}
+				notsuccess = false;
+			}
+			
+			/////////////////////////////////ALLOCATE VEHICLE FOR FACTORY NORMAL LIST////////////////////////////////////
+			for(int i=0; i<30; i++){
+				temp = Central.factdemandcount[i];
+				for(int j =0; j<temp; j++){
+					
+					//FOR FACT IDEAL CASE GET PHASE 4 VEHICLE CLOSE BY
+					if(Constant.AgvMode==true && Constant.TruckMode==true){
+						if(Constant.Truckpriority == true){
+							
+							//find the closest phase 4 truck    <-----------------------------------------------------
+							//find the closest phase 4 agv      <-----------------------------------------------------
+							
+							if(notsuccess == true){
+								for(Truck x: Truckforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factdemandcount[i]--;
+										Central.factdemandcountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+							if(notsuccess == true){
+								for(AGV x: Agvforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factdemandcount[i]--;
+										Central.factdemandcountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+						}else{
+							//find the closest phase 4 agv    <-----------------------------------------------------
+							//find the closest phase 4 truck  <-----------------------------------------------------
+							
+							if(notsuccess == true){
+								for(AGV x: Agvforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factdemandcount[i]--;
+										Central.factdemandcountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+							if(notsuccess == true){
+								for(Truck x: Truckforce){
+									if(x.getphase() == 0){
+										
+										//ALLOCATE DESTINATION TO TRUCK
+										x.setdestination(i);
+										
+										//if allocated success
+										x.setphase(1);
+										Central.factdemandcount[i]--;
+										Central.factdemandcountx[i]++;
+										notsuccess = false;
+										break;
+									}
+								}
+							}
+						}
+					}
+					
+					if(Constant.AgvMode==false && Constant.TruckMode==true){
+						//find the closest phase 4 truck    <-----------------------------------------------------
+						
+						if(notsuccess == true){
+							for(Truck x: Truckforce){
+								if(x.getphase() == 0){
+									
+									//ALLOCATE DESTINATION TO TRUCK
+									x.setdestination(i);
+									
+									//if allocated success
+									x.setphase(1);
+									Central.factdemandcount[i]--;
+									Central.factdemandcountx[i]++;
+									notsuccess = false;
+									break;
+								}
+							}
+						}
+					}
+					
+					if(Constant.AgvMode==true && Constant.TruckMode==false){
+						//find the closest phase 4 agv      <-----------------------------------------------------
+						
+						if(notsuccess == true){
+							for(AGV x: Agvforce){
+								if(x.getphase() == 0){
+									
+									//ALLOCATE DESTINATION TO TRUCK
+									x.setdestination(i);
+									
+									//if allocated success
+									x.setphase(1);
+									Central.factdemandcount[i]--;
+									Central.factdemandcountx[i]++;
+									notsuccess = false;
+									break;
+								}
+							}
+						}
+					}
+					
+				}
+				notsuccess = false;
+			}
 			
 			
-			//TRUCK
+			/////////////////////////////////
+			//           TRUCK             //
+			/////////////////////////////////
+			
 			if(Constant.TruckMode == true){
 				for(Truck x: Truckforce){
-					//CHECK WITH CENTRAL FOR DEMAND IN NORMAL OR PRIORITY QUEUE
-					
 					//PLOT ROUTE TO DESTINATION
 					
 					//CALCULATE NEW LOCATION
+					
+					//CALCULATE FUEL
 				}
 			}
 			
-			//AGV
+			/////////////////////////////////
+			//             AGV             //
+			/////////////////////////////////
+			
 			if(Constant.AgvMode == true){
 
 				for(AGV x: Agvforce){
-					//CHECK WITH CENTRAL FOR DEMAND IN NORMAL OR PRIORITY QUEUE
-					
 					//PLOT ROUTE TO DESTINATION
 					
 					//CALCULATE NEW LOCATION
+					
+					//CALCULATE FUEL
 				}
 			}
 			

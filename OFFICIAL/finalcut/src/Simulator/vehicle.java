@@ -26,12 +26,42 @@ public class Vehicle {
 	
 	private double loadingclock = .0;
 	
+	private int Phase = 0;
+	private int destination = 100;
+	
+	/*
+	Phase 0: Idle
+	Phase 1: Driving to factory empty (to pick up cargo)
+	Phase 2: Driving to CDC w cargo
+	Phase 3: Driving to factory w cargo
+	Phase 4: Driving to CDC empty
+	Phase 5: Driving to CDC on order
+	phase 6: Loading/Unloading
+	*/
 	
 	Vehicle(){
 		position = new Point(10,10);
 		mode = false;
 		cargo = false;
 		loadingclock = .0;
+		Phase = 0;
+		destination = 100;
+	}
+	
+	void setphase(int i){
+		Phase = i;
+	}
+	
+	int getphase(){
+		return Phase;
+	}
+	
+	void setdestination(int i){
+		destination = i;
+	}
+	
+	int getdestination(){
+		return destination;
 	}
 	
 	//FOR SETTING WAITING TIME 

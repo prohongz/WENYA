@@ -37,7 +37,7 @@ public class Constant {
 	public static int Factdemandh[] = new int[15];
 	
 	
-	
+	public static boolean Truckpriority = false;
 	
 	public static boolean TruckMode = false;
 	public static int TruckQty = 0;

@@ -1108,6 +1108,9 @@ public class StartUI extends JFrame{
 		JLabel lblLitreskm_1 = new JLabel("Litres/Km");
 		lblLitreskm_1.setEnabled(false);
 		
+		JCheckBox chckbxPriorityOverAgv = new JCheckBox("Priority over AGV");
+		chckbxPriorityOverAgv.setEnabled(false);
+		
 		GroupLayout gl_Subtruck = new GroupLayout(Subtruck);
 		gl_Subtruck.setHorizontalGroup(
 			gl_Subtruck.createParallelGroup(Alignment.LEADING)
@@ -1115,12 +1118,15 @@ public class StartUI extends JFrame{
 					.addContainerGap()
 					.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_Subtruck.createSequentialGroup()
-							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 571, Short.MAX_VALUE)
+							.addComponent(separator, GroupLayout.DEFAULT_SIZE, 569, Short.MAX_VALUE)
 							.addContainerGap())
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblQuantity)
 							.addGap(18)
-							.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+							.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(163)
+							.addComponent(chckbxPriorityOverAgv)
+							.addContainerGap())
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblPresetMode)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -1145,7 +1151,7 @@ public class StartUI extends JFrame{
 								.addGroup(gl_Subtruck.createSequentialGroup()
 									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 										.addComponent(TruckAccSpd, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-										.addComponent(TruckSpd, 0, 45, Short.MAX_VALUE))
+										.addComponent(TruckSpd, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 									.addPreferredGap(ComponentPlacement.RELATED)
 									.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblKmh_1)
@@ -1154,28 +1160,28 @@ public class StartUI extends JFrame{
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblMinimumDistanceGap)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(TruckDistGap, 0, 33, Short.MAX_VALUE)
+							.addComponent(TruckDistGap, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblM_1)
 							.addGap(422))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 562, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(19, Short.MAX_VALUE))
+							.addContainerGap(17, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblPolitenessFactor)
 							.addGap(18)
 							.addComponent(TruckPolite, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(436, Short.MAX_VALUE))
+							.addContainerGap(434, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(lblChangingThreshold)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(TruckChanging, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(lblMs_3)
-							.addContainerGap(411, Short.MAX_VALUE))
+							.addContainerGap(409, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 562, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap(19, Short.MAX_VALUE))
+							.addContainerGap(17, Short.MAX_VALUE))
 						.addGroup(gl_Subtruck.createSequentialGroup()
 							.addGroup(gl_Subtruck.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblFuelefficiencyWith)
@@ -1196,7 +1202,8 @@ public class StartUI extends JFrame{
 					.addContainerGap()
 					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblQuantity)
-						.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(TruckQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxPriorityOverAgv))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_Subtruck.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPresetMode)
@@ -1392,6 +1399,9 @@ public class StartUI extends JFrame{
 		JLabel lblLitreskm_3 = new JLabel("Litres/Km");
 		lblLitreskm_3.setEnabled(false);
 		
+		JCheckBox chckbxPriorityOverTruck = new JCheckBox("Priority over Truck");
+		chckbxPriorityOverTruck.setEnabled(false);
+		
 
 		GroupLayout gl_SubAGV = new GroupLayout(SubAGV);
 		gl_SubAGV.setHorizontalGroup(
@@ -1406,7 +1416,10 @@ public class StartUI extends JFrame{
 								.addComponent(lblAgvMode))
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addGroup(gl_SubAGV.createParallelGroup(Alignment.LEADING)
-								.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_SubAGV.createSequentialGroup()
+									.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+									.addGap(169)
+									.addComponent(chckbxPriorityOverTruck))
 								.addComponent(AgvMode, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)))
 						.addGroup(gl_SubAGV.createSequentialGroup()
 							.addComponent(lblNewLabel)
@@ -1461,7 +1474,8 @@ public class StartUI extends JFrame{
 					.addContainerGap()
 					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblQuantity_1)
-						.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(AgvQty, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(chckbxPriorityOverTruck))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_SubAGV.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblAgvMode)
@@ -1752,14 +1766,30 @@ public class StartUI extends JFrame{
 		chckbxEnableTruckOperation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				TruckMode.setSelectedIndex(0);
-				enableComponents(Subtruck, chckbxEnableTruckOperation.isSelected());				
+				enableComponents(Subtruck, chckbxEnableTruckOperation.isSelected());	
+				if(chckbxEnableAgvOperation.isSelected() == true && chckbxEnableTruckOperation.isSelected() == true)
+				{
+					chckbxPriorityOverAgv.setEnabled(true);
+					chckbxPriorityOverTruck.setEnabled(true);
+				}else{
+					chckbxPriorityOverAgv.setEnabled(false);
+					chckbxPriorityOverTruck.setEnabled(false);
+				}
+				
 			}
 		});
 		
 		chckbxEnableAgvOperation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				AgvMode.setSelectedIndex(0);				
-				enableComponents(SubAGV, chckbxEnableAgvOperation.isSelected());			
+				enableComponents(SubAGV, chckbxEnableAgvOperation.isSelected());
+				if(chckbxEnableTruckOperation.isSelected() == true && chckbxEnableAgvOperation.isSelected() == true ){
+					chckbxPriorityOverAgv.setEnabled(true);
+					chckbxPriorityOverTruck.setEnabled(true);
+				}else{
+					chckbxPriorityOverAgv.setEnabled(false);
+					chckbxPriorityOverTruck.setEnabled(false);
+				}
 			}
 		});
 		
@@ -2143,6 +2173,13 @@ public class StartUI extends JFrame{
 					System.out.println(Constant.AgvTimeGap);
 					System.out.println(Constant.AgvDistGap);
 					*/
+				}
+				
+				if(chckbxEnableAgvOperation.isSelected()==true && chckbxEnableTruckOperation.isSelected()==true){
+					if(chckbxPriorityOverAgv.isSelected()==true)
+						Constant.Truckpriority = true;
+					if(chckbxPriorityOverTruck.isSelected()==true)
+						Constant.Truckpriority = false;
 				}
 				
 				System.out.println("Be patient, we are starting soon!");

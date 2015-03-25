@@ -47,6 +47,9 @@ public class liveupdate extends JPanel implements Runnable {
 	JLabel rtsec = new JLabel("00");
 	
 	JLabel lblCdc = new JLabel("cdc");
+	
+	JLabel rtcdccargooverload = new JLabel("0");
+	JLabel rtfactcargooverload = new JLabel("0");
 	////////////
 	
 	private Thread runner = null;
@@ -82,6 +85,10 @@ public class liveupdate extends JPanel implements Runnable {
         titledBorder.setTitleJustification(TitledBorder.LEFT);
         rttimepanel.setBorder(titledBorder1);
 		
+		JPanel rtcargopanel = new JPanel();
+		TitledBorder titledBorder2 = BorderFactory.createTitledBorder("Cargo - Related");
+        titledBorder.setTitleJustification(TitledBorder.LEFT);
+        rtcargopanel.setBorder(titledBorder2);
 		
 		
 		GroupLayout gl_operpanel = new GroupLayout(operpanel);
@@ -89,9 +96,10 @@ public class liveupdate extends JPanel implements Runnable {
 			gl_operpanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_operpanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_operpanel.createParallelGroup(Alignment.TRAILING)
-						.addComponent(rtvehpanel, Alignment.LEADING, GroupLayout.PREFERRED_SIZE, 251, Short.MAX_VALUE)
-						.addComponent(rttimepanel, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+					.addGroup(gl_operpanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(rtvehpanel, GroupLayout.PREFERRED_SIZE, 251, Short.MAX_VALUE)
+						.addComponent(rttimepanel, GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
+						.addComponent(rtcargopanel, GroupLayout.PREFERRED_SIZE, 249, GroupLayout.PREFERRED_SIZE))
 					.addContainerGap())
 		);
 		gl_operpanel.setVerticalGroup(
@@ -101,8 +109,52 @@ public class liveupdate extends JPanel implements Runnable {
 					.addComponent(rttimepanel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(rtvehpanel, GroupLayout.PREFERRED_SIZE, 256, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(254, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(rtcargopanel, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(141, Short.MAX_VALUE))
 		);
+		
+		JLabel lblCdcCargoOverload = new JLabel("CDC Cargo overload:");
+		lblCdcCargoOverload.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JLabel lblFactoryCargoOverload = new JLabel("Factory Cargo overload:");
+		lblFactoryCargoOverload.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		
+		rtcdccargooverload.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rtcdccargooverload.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		rtfactcargooverload.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		rtfactcargooverload.setHorizontalAlignment(SwingConstants.RIGHT);
+		GroupLayout gl_rtcargopanel = new GroupLayout(rtcargopanel);
+		gl_rtcargopanel.setHorizontalGroup(
+			gl_rtcargopanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rtcargopanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_rtcargopanel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblCdcCargoOverload)
+						.addComponent(lblFactoryCargoOverload))
+					.addPreferredGap(ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+					.addGroup(gl_rtcargopanel.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(rtfactcargooverload, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(rtcdccargooverload, GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
+					.addContainerGap())
+		);
+		gl_rtcargopanel.setVerticalGroup(
+			gl_rtcargopanel.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_rtcargopanel.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_rtcargopanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblCdcCargoOverload)
+						.addComponent(rtcdccargooverload))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_rtcargopanel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblFactoryCargoOverload)
+						.addComponent(rtfactcargooverload))
+					.addContainerGap(32, Short.MAX_VALUE))
+		);
+		rtcargopanel.setLayout(gl_rtcargopanel);
 		
 		JLabel lblDay = new JLabel("Day ");
 		lblDay.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -233,7 +285,7 @@ public class liveupdate extends JPanel implements Runnable {
 			gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_rtvehpanel.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.TRAILING)
+					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_rtvehpanel.createSequentialGroup()
 							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_rtvehpanel.createSequentialGroup()
@@ -249,29 +301,29 @@ public class liveupdate extends JPanel implements Runnable {
 									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblNumberOfActive)
 										.addComponent(lblNumberOfInactive))
-									.addPreferredGap(ComponentPlacement.UNRELATED)
+									.addGap(38)
 									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-										.addComponent(rttruckinactive)
-										.addComponent(rttruckactive)))
+										.addComponent(rttruckinactive, GroupLayout.DEFAULT_SIZE, 26, Short.MAX_VALUE)
+										.addComponent(rttruckactive, GroupLayout.DEFAULT_SIZE, 21, Short.MAX_VALUE)))
 								.addComponent(separator_1, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE)
 								.addGroup(gl_rtvehpanel.createSequentialGroup()
 									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 										.addComponent(lblNumberOfActive_1)
 										.addComponent(lblNumberOfInactive_1))
-									.addGap(17)
+									.addGap(46)
 									.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
-										.addComponent(rtagvinactive)
-										.addComponent(rtagvactive)))
+										.addComponent(rtagvinactive, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+										.addComponent(rtagvactive, GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)))
 								.addComponent(separator_2, GroupLayout.PREFERRED_SIZE, 220, GroupLayout.PREFERRED_SIZE))
-							.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_rtvehpanel.createSequentialGroup()
+							.addContainerGap())
+						.addGroup(gl_rtvehpanel.createSequentialGroup()
 							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(lblAmountSpentOn)
 								.addComponent(lblTotalFuelConsumed))
 							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.LEADING)
 								.addComponent(rtfuel, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
-								.addComponent(rtfuelcost, GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE))
+								.addComponent(rtfuelcost, GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE))
 							.addGap(20))))
 		);
 		gl_rtvehpanel.setVerticalGroup(
@@ -290,7 +342,7 @@ public class liveupdate extends JPanel implements Runnable {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfActive)
-						.addComponent(rttruckactive))
+						.addComponent(rttruckactive, GroupLayout.PREFERRED_SIZE, 15, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_rtvehpanel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblNumberOfInactive)
@@ -439,7 +491,6 @@ public class liveupdate extends JPanel implements Runnable {
 				"\nEnd Day: Day " + Constant.endday +
 				"\nEnd Time: " + String.format("%02d", Constant.endhour) + ":" + String.format("%02d", Constant.endminute) + 
 				"\nFuel Cost: $" + String.format("%1$,.3f", Constant.fuelcost) + "\n\n");
-		parameter.append("CARGO\n");
 		
 		parameter.append("CDC\n" +
 		"Operation Hours: " + String.format("%02d", Constant.CDCstarth) + ":" + String.format("%02d", Constant.CDCstartm) + " - " + String.format("%02d", Constant.CDCendh) + ":" + String.format("%02d", Constant.CDCendm) + "\n");
@@ -481,6 +532,10 @@ public class liveupdate extends JPanel implements Runnable {
 			parameter.append("\nAGV Fuel efficiency w/o Cargo: " + Constant.Agvfewocargo + "\n\n");
 		}else{
 			parameter.append("DISABLED\n\n");
+		}
+		
+		if(Constant.TruckMode == true && Constant.AgvMode == true){
+			parameter.append("Vehicle Priority: " + ((Constant.Truckpriority == true) ? "Truck" : "AGV")+ "\n\n");
 		}
 		
 		parameter.setCaretPosition(0);
@@ -550,8 +605,8 @@ public class liveupdate extends JPanel implements Runnable {
 			rtfuel.setText(Integer.toString(Central.totalfuel) + " Litres");
 			rtfuelcost.setText("$" + String.format("%.3f", (Constant.fuelcost * Central.totalfuel)));
 			
-			
-			
+			rtcdccargooverload.setText(Integer.toString(Central.cdcoverload));
+			rtfactcargooverload.setText(Integer.toString(Central.factoverload));
 
 			synchronized (this) {
 				while (Constant.suspended){
